@@ -44,6 +44,7 @@
 %\usepackage{titlesec}
 \setcounter{tocdepth}{3}% Include \subsubsection in ToC
 
+\usepackage[toc,page]{appendix}
 
 %% AMS PACKAGES - Chances are you will want some or all of these if writing a math dissertation.
 \usepackage{amsmath, amscd, amssymb, amsthm}
@@ -207,12 +208,12 @@ Professor Smyth, Tamara\\
 %Edited the ucsd.cls file. Abstract becomes questions from committee.
 \begin{abstract}
 
-\textbf{Question one (Tom Erbe):} what spatial instruments/pieces already exist? How has spatial music developed in the last 30 years? Are any of these instruments FOSS/FOSH? How might spatial music evolve with the proliferation of robotics and machine learning. In other words: what is the next frontier for spatial music?
+\textbf{Question one (Tom Erbe):} what spatial instruments/pieces already exist? How has spatial music developed in the last 30 years? Are any of these instruments FOSS/FOSH? Propose some systems that one might employ for real-time spatial sound synthesis. What is novel about these?
 
 \par
 \vspace{2mm}
 
-\textbf{Question two (Tamara Smyth):} how does one go about recording/capturing spatial music using FOSS? What techniques exist for this? What are the limitations today of these recording technologies? What other documentation/formats/files does one need to create? Beyond recording, how does FOSS aid in the ability of computer music composers to have their works survive technological shifts (changes in OS, protocols, etc.)?   
+\textbf{Question two (Tamara Smyth):} how does one go about recording/capturing spatial music using FOSS? What techniques exist for this? What are the limitations today of these recording technologies? What other documentation/formats/files does one need to create? Beyond recording, how does FOSS aid in the ability of computer music composers to have their works survive technological shifts (changes in OS, protocols, etc.)?  
 
 \par
 \vspace{2mm}
@@ -223,21 +224,7 @@ Professor Smyth, Tamara\\
 
 \end{frontmatter}
 
-
 %% DISSERTATION
-
-%\chapter{Introduction}
-% This is only a test.
-
-
-% \begin{figure}[h] 
-%   \begin{center}*\end{center}
-%     \caption{A figure of Vonnegut.\index{Vonnegut}} 
-% \end{figure}
-
-% A common strategy here is to include files for each of the chapters. I.e.,
-% \chapter{Final notes}
-%   Remove me in case of abdominal pain.
 
 %intro
 \include{q0}
@@ -257,16 +244,15 @@ Professor Smyth, Tamara\\
 %conclusion
 \include{q4}
 
-%conclusion
-%\include{q4}
+\appendix
 
-%   \include{chapter1.tex}
-%   \include{chapter2.tex}
-% etc.  Of course, if you prefer, you can just start with
-%   \chapter{My First Chapter Name}
-% and start typing away.  
+\include{a1}%appendix for math things related to chapter 1
+%\include{a2}%appendix for math things related to chapter 1
+%\include{a3}%appendix for math things related to chapter 1
 
-% \appendix
+\include{p1}
+\include{p2}
+\include{p3}
 
 
 %% END MATTER

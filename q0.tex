@@ -1,10 +1,16 @@
 \chapter{Introduction}
 
-This document constitutes our efforts to organize a body of work concerning the development of spatial music instruments, software/hardware, and XR frameworks, which can jointly be used for musical experiments. The focus of this work is to use open source and low-cost solutions which might allow for greater proliferation of spatial music and easier reproduction of these works in the years to come. In this work we will talk about the history of pioneering composers of \textit{spatial music} and discuss at length what available systems exist to for the creation, documentation and dissemination of these works.
+This document constitutes my efforts to organize a body of work concerning the development of spatial music instruments, software/hardware, and systems using XR frameworks, which can jointly be used for musical experiments. The focus of this work is to use open source and low-cost solutions which might allow for greater proliferation of spatial music and easier reproduction of these works in the years to come. In this work we will talk about the history of pioneering composers of \textit{spatial music} and discuss at length what available systems exist to for the creation, documentation and dissemination of these works.
 
 \section{Physics of Sound}
 
+%sabine 
+
 \section{Auditory System}
+
+% https://commons.wikimedia.org/wiki/Ear#/media/File:Ear-anatomy.png
+
+\section{Neurophysiology of Spatial Sound}
 
 \section{Art of Spatial Sound}
 
@@ -86,7 +92,7 @@ In contrast, differentiating between positions 2 and 4 should be substantially e
 \centering
 \includegraphics[width=0.5\textwidth]{img/body-planes.jpg}
 %\captionsetup{justification=centering}
-\caption{Body Planes - wikimedia commons}
+\caption{Body Planes \cite{body_planes_pic}}
 \label{fig:body-planes}
 \end{figure}
 
@@ -126,12 +132,33 @@ The precedence effect can be summarized by the following three phenomena:
     \item \textit{Lag Discrimination Suppression}: the direction of the lagging sound is suppressed.  
 \end{enumerate}
 
-\subsection{Binaural Synthesis}
+\subsection{Doppler Shift}
+
+\textit{Doppler shift} is another auditory cue, related to \textit{auditory parallax}, which can aid in our estimation of source distance and direction. Doppler shift is the phenomenon we experience when we perceive the pitch of an ambulance's siren change as it approaches and moves away from us. Specifically, as the siren moves towards us, the pitch seems to increase, and as it moves away, it seems to decrease. \cite{lavalle2016virtual} provides a whole chapter on the auditory mechanisms involved in Virtual Reality (VR). The book covers the fundamentals of optics, interaction, and tracking, and is recommended for anybody interested in Extended Reality (XR). Equation \ref{eq:doppler}, from chapter 11, describes our perceived frequency of sound as a function of it's velocity. By combining this auditory cue with distance based intensity dampening we can realistically simulate moving sources.
+
+\begin{equation}
+f_{r}=\left(\frac{s+v_{r}}{s+v_{s}}\right) f_{s}
+\label{eq:doppler}
+\end{equation}
+
+Where: 
+\begin{enumerate}
+    \item $f_r$ is the resulting frequency.
+    \item $s$ is the speed of sound (343.2 m/s roughly at C 20\textdegree).
+    \item $v_r$ is the velocity of the receiver (negative if receiver is moving away). 
+    \item $v_s$ is the velocity of the source (negative is the source is moving away).
+    \item $f_s$ is the original frequency of the source.
+\end{enumerate}
+
+\subsection{Binaural Synthesis Errors}
 
 Of particular importance to our work is the use of binaural synthesis for the simulation of acoustic spaces. Binaural synthesis allows us to experiment with \textit{spatial music} without the need for sophisticated and often inaccessible loudspeaker systems. In binaural synthesis, sound sources are \textit{convolved}\footnote{Convolution of a source with an impulse response if equivalent to applying a filter.} with HRIRs dynamically to simulate surround sound experiences. Binaural synthesis has become increasingly popular with the growth of \textit{extended reality} (XR) systems. Several problems, such as: personalized HRTFs, externalization problems, and localization errors; persist. 
 
 Poor \textit{externalization}\footnote{Also sometimes refered to as Inside-the-Head Locatedness (IHL).}, the degree to which listeners perceive sources as originating inside their head, can be mitigated by the use of a head-tracking system. The systems, based on \textit{inertial measurement units} (IMU), monitor the orientation of the listener and adjusts the soundfield accordingly - ideally in real-time. When no rotation adjustment is included, our auditory system assumes that sources must be originating from inside our head, as this is the only rational conclusion for sources without dynamic filtering based on BIRs. The subtle spectral changes from location to location, provided by head-tracking, provide a way to disambiguate between source positions. The addition of diffuse field modeling, in the form of reverberation unit, also supports improved \textit{externalization}(\cite{sakamoto1976out}). 
+
 %%%%%%%%%%%%%%
+
+\todo[inline]{This later section will likely be moved to q2 under binaural synthesis}
 
 \cite{cuevas20193d} provides an extensive literature review on the subject of \textit{binaural spatialization}. In this particular text, one of the most comprehensive readings on binaural synthesis, the authors describe the steps undertaken for each part of the "signal chain". Figure \ref{fig:3dti-chain} shows a diagram of the implementation. 
 
