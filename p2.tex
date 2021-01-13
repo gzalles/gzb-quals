@@ -1,0 +1,40 @@
+\chapter{Proposal TRS} \label{ch:prop-trs}
+
+%This is my proposal for the work I would like to pursue over the next few years with Tamara's support. It relates to chapter two of this paper. 
+
+\section{Introduction}
+%topic/purpose, thesis statement
+Over the 21st century we have seen a renewed interest in the field of virtual spatial acoustics as investments in Extended Reality (XR) systems have exploded. With the proliferation of Head Mounted Displays (HMDs) as entertainment systems for personal use a number of composers and sound engineers have expectedly began researching the use of Spherical Microphone Arrays (SMA) towards musical ends. 
+Generally, although not exclusively, SMAs are associated with a technology known as Ambisonics, developed in the 1970's by Michael Gerzon et al. The initial formulations of the system, denominated First Order Ambisonics (FOA), consisted of deriving three orthogonal figure-8 microphones, to encode sound particle velocity in 3D. The system is based on the theory of \textit{spherical harmonics} used in the field of computer graphics and astronomy. 
+
+In the simplest sense, spherical harmonics can be considered basis functions of 3D spherical phenomena, much the same way that simplest trigonometric function can be considered a basis for 2D phenomena. The well known Discrete Fourier Transform (DFT) is used to decompose complex sound events into a sum of $\sin$ and $\cos$ waves of varying amplitude, phase, and frequency. Much the same way, spherical harmonics aim at decomposing spherical representations of sound events into a sum of increasing order spherical harmonics. In this domain, the order of the harmonic can be considered equivalent to the frequency of DFT basis functions, phase can be considered equivalent to spin\footnote{Spin is the name given to the rotation/orientation of the harmonic.}, and amplitude can be considered equivalent to the radius of the sphere enclosing each harmonic. 
+
+A lot of work has been done under the last 20 years to extend FOA into Higher Order Ambisonics (HOA) providing a larger sweet spot\footnote{Area within which audience members can sit and get a "coherent" sound image.} and improved directionality. Various designs have been documented and evaluated in available publications however very few have been documented to the extent that these can be reproduced by people without technical backgrounds. In the commercial sector a few FOA and HOA solutions exist however most of these remain economically unviable for most artists. 
+
+The aim of this work is to contribute to some already existing HOA designs considering principally cost and quality in the design process. The present author has already been involved in the process of constructing a low-cost FOA microphone using Micro-Electronic Mechanical Sensors (MEMS). The novelty of our designs, as we envision them, is a set of hardware and software solutions aimed at artists wishing to construct HOA arrays using MEMS. Unlike traditional electret condenser microphones (ECM), MEMS capsules often come equipped with Analog to Digital Converters (ADC) allowing direct integration with Micro-Controller Units (MCU). The reduced cost of these MCUs over studio ADCs make these capsules ideal for anybody building a HOA array on a budget. 
+\subsection{HOA Array Encoding}
+
+A complex process of the fabrication of these devices is the transformation between raw microphone signals to spherical harmonics. In the field of ambisonics this is referred to as A to B (A2B) format conversion\footnote{Originally there were many other formats but today we rarely encounter them in the field.}. A2B format conversion in FOA can trivially be accomplished via a sum-and-difference matrix wherein each of the capsules oriented in a tetrahedral configuration is combined linearly to derive the dipole\footnote{Di-pole: having two polarities, such as figure-8 microphones in which the phase of the front and rear elements is inverted.} elements of the system. Additional considerations have been presented by many authors over the years focused primarily at compensating for the impossibility of co-locating the N capsules perfectly at a single point in space.
+
+In our latest publication \cite{zalles2019effects}, we exploited the size of the MEMS to increase the coincidence towards increasing the spatial aliasing frequency to good effect. The polar plots resulting from acoustic measurements of the constructed device, in this case a tetrahedral FOA MEMS array, showed improvement in the polar response of dipole elements as a result of increased coincident - as predicted by the theory. No phase compensation was needed in order to generate the velocity elements in the system, however, we did encounter the unexpected consequence that the omnidirectional response\footnote{Channel W.} was difficult to generate. Further investigation is required to evaluate is any phase corrections can be introduced to this system in order to obtain a more pure omni-directional element.
+
+Our latest efforts, not yet published, involved using recordings taken with these two arrays to perceptually evaluate their sound quality in a listening experiment. Another standing project, which at most constitutes a proof of concept\footnote{It remains unclear whether this efforts constitutes enough for a publication at this time.}, involved building a Second Order Ambisonic (2OA) microphone using the designs provided by Fernando Lopez-Lezcano \cite{lopez2019sphear} and analog MEMS capsules\footnote{Analog MEMS capsules do not have built-in ADCs, so an 8-channel audio interface was purchased using a grant obtained for this project.}. The build we created, with the help of Alex Tung\footnote{UCSD student responsible for some additional CAD designs for the enclosure.}, is an initial attempt at employing and understanding the A2B format conversion processes provided by Fernando along with his publication. 
+
+Our goal is to switch to digital MEMS capsules once this process is completed and develop a robust HOA system that can be built at a substantially lower cost than originally presented. While it would be simple enough to swap ECMs in Fernando's designs as a way to lower the financial burden the cost of an 8-channel interface is already roughly \$250\footnote{For a new sound-card, with analog gain control, which is not ideal.}. In contrast, the selected interface by MiniDSP\footnote{Ideally we would like to swap over to a combination of an Arduino + Raspberry Pi (RPI) ecosystem. This is more complex, however, so a simpler approach based on an Operating System (OS) agnostic board was taken for this intermediate design.} costs half as much and provides us with the possibility of expanding to a 16-channel version at a later stage\footnote{With 16 channels we would be able to have a Third Order Ambisonic (3OA) system.}. The MEMS capsules themselves, in contrast to Fernando's original design, are far more modest, costing only \$1.50 per sensor. 
+
+% In order perform the A2B conversion required to derive suitable spherical harmonic components from the raw audio recordings we are studying the functions written by Fernando under the SpHEAR project which run on GNU Octave\footnote{https://www.gnu.org/software/octave/index}. These set of functions assume that the sphere
+
+\section{Literature Review}
+%write in detail about existing solutions to the problem
+
+
+
+
+\section{Methods}
+%how would you like to contribute? what could be better?
+
+\section{Results}
+%you wont have any results just yet.
+
+\section{Conclusion}
+%here is why this is important

@@ -1,0 +1,59 @@
+\chapter{Proposal TRE}
+%This is my proposal for the work I would like to pursue over the next few years with Tom's support. It relates to chapter one of this paper. 
+
+\section{Introduction}
+%topic/purpose, thesis statement
+
+Over the last century a number of composers have explored the use of space as a key parameter in musical composition. Recently, with the growth of Extended Reality (XR), even more artists have began exploring this medium as a way to push the musical domain to new extremes. XR environments, such as Virtual Reality (VR) or Augmented Reality (AR), make up a new medium rich with creative possibilities for music-making. In this proposal, we would like to suggest the development of systems that can be used to perform live spatial music with the intention of pushing the boundaries of the domain in some significant way. 
+
+In order to find gaps in the existing body of work, we offer in Section \ref{sec:p1lr} a substantive review of some of the artists that have shaped the state-of-art as well as delimit some of the well know problems with the scoring of this type of work. In order to give performers control of spatial parameters of sound, we will also discuss the taxonomy of spatial instruments, which can jointly be used for the creation of this material. 
+
+An additional dimension of our work constitutes framing projects within the Free and Open Source Software/Hardware (FOSS/FOSH) domain and considering socioeconomic accessibility as a critical dimension of the artistic process. An additional problem addressed by the FOSSH\footnote{Shorthand for FOSS/FOSH.} framework is the operability of the systems at a much later date - when the work seeks to be recreated by another composer. We believe the freedom of the FOSSH framework provides a legitimate longevity to computer music works that cannot be overlooked in this domain. 
+
+\section{History of Spatial Music} 
+While a number of composers in the 20th century contributed vastly to the development of the field with acoustic compositions, in this literature review we will focus solely on artists in the electro-acoustic domain. Artists in this sub-discipline are all characterised by their purposeful use of technology as a dominant theme of their work. At times, these artists' works were entirely "performed"\footnote{Here in quotations to highlight the nuance of the word in a context where human participation is entirely absent.} without the intervention of musicians. Other composers sought to intervene upon scored material using technologies to create a hybrid medium. 
+
+The term \textit{spatial music} can have three interpretations\footnote{One final interpretation could be music in which gestures are temporally separated. This definition however is unsatisfactory as it encompasses essentially all music.}:
+\begin{enumerate}
+    \item \textbf{Psycho-acoustic spatial music}: music in which our auditory system's ability to localize sound is exploited in order to enrich the musical material. 
+    \item \textbf{Architectural spatial music}: music which is created for a specific hall or building. Typically pieces of this variety seek to invoke the resonant frequencies of the space via electronic means\footnote{One could also use geo-caching to situate a performance in a particular space where no actual structure is present.}. 
+    \item \textbf{Distributed spatial music}: music where one or more musicians, or the audience, are distantly located. 
+\end{enumerate}
+
+\todo[inline]{Rename architectural spatial music to geographical spatial music.}
+
+In this proposal, when we refer to spatial music, we refer to psycho-acoustic spatial music. In music of this variety, a number of auditory mechanisms are exploited towards the goal of simulating sound propagation in the real-world. In the simplest examples, the separation of various static\footnote{Static here meaning \textit{not moving} as opposed to other works in which the physical systems themselves might move.} playback systems is all that is needed to exploit these mechanisms. Even something as simple as using a conventional stereo system could be considered relevant, however, since much of today's music already fall within this format, here we will focus on works which extend this format using either additional channels or perceptually relevant spatial audio algorithms. 
+
+Within this sub-domain, we can further taxonomically delimit these works into:
+\begin{enumerate}
+    \item \textbf{Concert music}: works presented in concert halls, often with live musicians. 
+    \item \textbf{Gallery works}: sound installations that run for several hours (at least) and usually do not involve live performing musicians. 
+    \item \textbf{Fixed-media XR experiences}: works in which the music is pre-recorded and the audience member passively enjoys the work. Examples include 360 videos and Computer-Generated Imagery (CGI) virtual environments with spatial sound. 
+    \item \textbf{Dynamic-media XR experiences}: works in which the user is granted agency via interactions in the environment which control in some capacity the sound material\footnote{In our taxonomy, control over orientation is not considered a relevant interaction. Works which only feature this control parameters are still deemed \textit{fixed-media XR experiences}. Moving \textit{between} soundfields however allows the user to dictate the material, so it can be considered dynamic. }.
+\end{enumerate}
+
+While there are undoubtedly other methods for dissemination of spatial music these four categories comprise the most common situations. In the chapter associated with this proposal, we are primarily concerned with computer music systems which can be used for \textit{live} performances. Therefore, we will focus this proposal on the development of tools and systems which can be used in real-time settings. In particular, we are concerned with concert music, and how FOSSH technology can be used to create new computer music works which feature special attention to diffusion.
+
+One of the key differences with computer-music systems to Digital Audio Workstations (DAW) is their flexibility in real-time settings. A conductors sense of rhythm is never perfect, this provides each performance subtle nuance and variation which can be considered valuable. A common problem which electronic music deals with is the rigid quantization of musical pitches and rhythms, which result in \textit{lifeless} works of art. In contrast, each musician in a live musical interpretation provides his or her own sensibilities to the written music, providing richness to the ultimate result. 
+
+This richness comes at a cost, the synchronization problem between human and machine in electro-acoustic composition. Score following methods have been designed by several authors that seek to remedy this problem. In the program environment Puredata (Pd), Scofo\textit{https://forum.ircam.fr/projects/detail/antescofo/} provides a proper solutions to this problem. Antescofo can be used with quantized MIDI files to extract note on/off events, which can then be used to trigger Pd events. In general we find there are three main techniques used by computer musicians for live electro-acoustic compositions featuring musicians:
+
+\begin{enumerate}
+    \item \textbf{Manual event triggering}: involves having a human read along the score during the performance and activate a trigger based on desired events.  
+    \item \textbf{Automatic event triggering}: involves having a computer listener like Scofo interpret musical events and trigger events this way. 
+    \item \textbf{Human computer performer}: involves having a performer rehearse and perform computer changes along with the musician. 
+\end{enumerate}
+
+
+\section{Literature Review} \label{sec:p1lr}
+%write in detail about existing solutions to the problem
+
+
+\section{Methods}
+%how would you like to contribute? what could be better?
+
+\section{Results}
+%you wont have any results just yet.
+
+\section{Conclusion}
+%here is why this is important
