@@ -1,4 +1,4 @@
-\chapter{Spatial Audio: Capture \& Reproduction}
+\chapter{Spatial Audio: Capture \& Reproduction} \label{ch:spat-aud}
 
 \todo[inline]{I am not sure but I think this chapter is too long. I might need to split it into capture for one chapter and reproduction for another chapter. I can also just put reproduction into chapter 2. It might be ok.}
 
@@ -10,7 +10,7 @@ In particular, this chapter will focus on the main technology this author is con
 
 In addition to listing and demystifying the different spatial audio technologies available today for playback, we will suggest engineering approaches for the capture of spatial sound both for real-time transmission and for asynchronous dissemination using open-source technologies. We will focus on spatial audio recording techniques and describe systems based on freely available software for mixing and mastering spatial audio which can later be used in immersive environments such as the ones described in Chapter \ref{ch:xr-mus}. In contrast to Chapter \ref{ch:spat-mus}, which outlines technologies which are better suited for real-time performances with musicians, in this chapter we will focus more on tools for creating \textit{fixed-media} works.
 
-\section{History of Spatial Audio Capture}
+\section{History of Spatial Audio Capture and Reproduction}
 
 In the previous section of this paper we presented a number of composers who made space an integral part of their practice as well as \textit{spatial instruments} used for the development of such works. This next section will describe the development of modern spatial audio systems from an historical and engineering perspective. 
 
@@ -37,7 +37,7 @@ The invention of the telephone, in 1876, by  Alexander Graham Bell \cite{grosven
 \caption{Théâtrophone \cite{theatrophone_pic}}
 \end{figure}
 
-A few years after the invention of recorded sound, Clement Ader, best known for his work in  aviation, would present the \textit{théâtrophone}, a "system of telephonic transmission where listeners received a separate channel for each ear, enabling stereophonic perception of actors on a set" during opera performances. Just a year before, Ader had presented his prototype at the Paris Exhibition for Electricity in 1881 \cite{malham19953}. Figure  \ref{fig:theatrophone} shows a picture of the device. We can see the two receivers which would be placed at the listeners ears for \textit{stereophonic} audition. The writing on the image also shows the cost for the audience member, which was 10 minutes for one franc, or 5 minutes, for 50 cents. 
+A few years after the invention of recorded sound, Clement Ader, best known for his work in  aviation, would present the \textit{théâtrophone}, a "system of telephonic transmission where listeners received a separate channel for each ear, enabling stereophonic perception of actors on a set" during opera performances. Just a year before, Ader had presented his prototype at the Paris Exhibition for Electricity in 1881 \cite{malham19953}. Figure  \ref{fig:theatrophone} shows a picture of the device. We can see the two receivers which would be placed at the listeners ears for \textit{stereophonic} audition. The writing on the image also shows the cost for the audience member, which was 10 minutes for one franc, or 5 minutes, for 50 cents. This device should not be confused with the additive synthesizer entitled \textit{Telharmonium} by Cahill, described in Chapter \ref{ch:spat-mus}. 
 
 Decades would pass before any new major developments in the field would occur, but eventually, in the 1920's, Harvey Fletcher, from Bell Telephone Laboratories\footnote{Bell labs has an important place in computer music history. It is where Max Mathews wrote the first computer music language, MUSIC-N.}, developed one of the first binaural recording systems. This system used the anatomy of the head to naturally embed spatial attributes of sound to recordings \cite{harvey1927binaural}. It would not be, however, until 1933, at the Chicago Century of Progress Exhibition, that binaural recordings would first be introduced to the public. 
 
@@ -96,6 +96,9 @@ x_{R}(n)=\sum_{p=1}^{P} x_{p}(n) * h_{R, \theta_{p}, \phi_{p}}(n)
 \subsection{Soundfield microphones}
 
 History of soundfield microphones.
+
+% \subsection{Surround Sound}
+% ITU standards, THX, MPEG-H, etc.
 
 \section{Contemporary Spatial Audio Capture Techniques} \label{sec:contemp_audio_capture}
 
@@ -159,7 +162,7 @@ In addition to the five depicted arrays:
 
 % Front arrays (Optimal Cardioid Triangle, Decca Tree, INA-3). Rear arrays (Hamasaki Square, IRT Cross)
 
-A secondary technique exists for multi-channel audio recordings which involves a combination of a proximal front array and a distant rear array. In this configuration it is up to the sound engineer to decide how distantly the rear array will be placed. The decision will be based generally on the size of the space as well as how diffuse the sound is at the set distance. Front arrays include: Optimal Cardioid Triangle, Decca Tree, and INA-3. Rear arrays include: Hamasaki Square, and IRT Cross. Figure \ref{fig:fnr-arrays} shows a coarse approximation the associated arrays.
+A secondary technique exists for multi-channel audio recordings which involves a combination of a proximal front array and a distant rear array. In this configuration it is up to the sound engineer to decide how distantly the rear array will be placed. The decision will be based generally on the size of the space as well as how diffuse the sound is at the set distance. Front arrays include: Optimal Cardioid Triangle, Decca Tree, and INA-3. Rear arrays include: Hamasaki Square, and IRT Cross. Figure \ref{fig:fnr-arrays} shows a coarse approximation the associated arrays. The front two receivers in the rear array are summed with the side receivers from the front array in this 5.1 set-up. 
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
@@ -190,15 +193,38 @@ A common technique implemented by recording engineers is combining multi-channel
 Of primary importance to our work is the development and optimization of coincident microphone arrays. Coincident microphone arrays come in various shape and sizes. The predominant characteristic of these devices is that proximity between sensors is minimized in order to improve localization estimations and the operating frequency \textit{virtual microphones} created by combinations of signals. There are three main types of coincident microphone arrays we were able to discern from the literature: spherical microphone arrays, studio microphone arrays, and planar microphone arrays. While most planar microphone arrays are not meant for high-quality studio recordings, we will nonetheless cover them here since many use similar operational conditions as the proposed HOA system being developed by the author. 
 \subsubsection{Planar Microphone Arrays}
 
-Planar microphone arrays are a subset of coincident microphone arrays which attempt to sample a soundfield using either a linear (one-dimensional arrays), or circular array (two-dimensional arrays). Most planar microphone arrays, although not all, fall under tha category of arrays for \textit{noise suppression}, as opposed to studio arrays for multi-channel recording. These devices tend to output a single audio channel that is the sum of various sensors delayed based on the desired direction of sound capture. 
+Planar microphone arrays are a subset of coincident microphone arrays which attempt to sample a soundfield using either a linear (one-dimensional arrays), or circular array (two-dimensional arrays). Most planar microphone arrays, although not all, fall under tha category of arrays for \textit{noise suppression}, as opposed to studio arrays for multi-channel recording. These devices tend to output a lower number of audio channel that is the sum of various sensors delayed based on the desired direction(s) of sound capture. 
 
-\cite{backman2006miniature} provides some insight into planar microphone arrays and their relationship to soundfield microphones. The author in that publication relies on Micro-Electrical Mechanical Systems (MEMS) capsules for his designs. Backman suggests using multiple transducers to improve signal-to-noise ratio (SNR) and improve polar pattern control over the entire audio bandwidth (20Hz-20kHz). In a second paper \cite{backman2006gradient} the author expanded upon the theoretical work proposing a 5.1 planar array based on MEMS. Unfortunately, little information was presented regarding a 3D audio capture system - the designs described were predominantly for 2D audio. 
+\cite{backman2006miniature} provides some insight into planar microphone arrays and their relationship to soundfield microphones. The author in that publication relies on Micro-Electrical Mechanical Systems (MEMS) capsules for his designs, much like in the authors own work. Backman suggests using multiple transducers to improve signal-to-noise ratio (SNR) and improve polar pattern control over the entire audio bandwidth (20Hz-20kHz). In a second paper \cite{backman2006gradient} the author expanded upon the theoretical work proposing a 5.1 planar array based on MEMS. Unfortunately, little information was presented regarding a 3D audio capture system - the designs described were predominantly for 2D audio. 
 
 \todo[inline]{I want to come back to these Backman papers and add more detail. There are some useful equations there. Unless they are covered more clearly in other papers.}
 
-\cite{chen2015theory} provides a more thorough review of planar arrays. Chen's paper describes a 2D planar array designed with first order microphones which can suitably sample vertical elements of the soundfield. The benefit of planar arrays is that for certain applications, spherical arrays simply might not be possible to construct, such as in cellphone or tablet designs. One noteworthy process implemented in this publication, as well as several others, is the use of simulated responses to validate designs prior to implementation. The main problem we found with this design was the limited bandwidth which had a maximum frequency of 850Hz. For high-quality audio purposes, we seek instead to operate on the audible frequency range. Secondly, in order to sample vertical harmonics, the number of transducers had to be increased from nine, the minimum number required for 2OA\footnote{Second order ambisonics.}, to 16, which increases the cost of the final design. 
+\cite{chen2015theory} provides a more thorough review of planar arrays. Chen's paper describes a 2D planar array designed with first order microphones which can suitably sample vertical elements of the soundfield. The benefit of planar arrays is that for certain applications, spherical arrays simply might not be possible to construct, such as in cellphone or tablet designs. One noteworthy process implemented in that publication, as well as several others, is the use of simulated responses to validate designs prior to implementation. The main problem we found with this design was the limited bandwidth which had a maximum frequency of 850Hz. For high-quality audio purposes, we seek instead to operate on the audible frequency range. Secondly, in order to sample vertical harmonics, the number of transducers had to be increased from nine, the minimum number required for 2OA\footnote{Second order ambisonics.}, to 16, which increases the cost of the final design. 
 
+Meyer and Elko of \textit{mh acoustics}, the company responsible for the em32 Eigenmike\footnote{https://mhacoustics.com/}, described a second order augmented circular microphone in a 2008 publication \cite{meyer2008spherical}. In their paper, Meyer et al. described using a single central sensor to provide vertical control of the desired \textit{beam-pattern}. The beam-patterns are controlled by adjusting the weights in the linear combination of spatial harmonic signals (also referred to as \textit{eigenbeams} or \textit{eigenmodes}). Their design has 7 capsules "flush mounted into the top surface of a puck-like housing". There are 6 capsules along the diameter of the puck, with a radius of 3cm, along with one central capsule. This design seems suitably promising for play-back over dome-like loudspeaker systems since very few sound systems around the world have below-listener speakers. However, the design might be unsatisfactory for applications which use binaural synthesis featuring HRTFs below the listeners' ear level, since that part of the soundfield would not be properly reconstructed. Two other details stand out about the design:
+\begin{enumerate}
+    \item The microphones are described as pointing upwards rather than outwards. Mounting them on the side of the puck would have likely improved the performance of the array. 
+    \item The author's never specify what capsules are used and there is little information regarding how to recreate the experiment.
+\end{enumerate}
 
+There are also two metrics mentioned by Meyer et al. we should discuss Directivity Index (DI) and White Noise Gain (WNG). The DI is the difference in \textit{decibels} between the sound pressure level (SPL) in a given direction and the average SPL from an omni-directional source \cite{LONG201439}:
+
+$$
+\mathrm{D}(\theta, \phi)=\mathrm{L}_{\mathrm{p}}(\theta, \phi)-\overline{\mathrm{L}}_{\mathrm{p}}
+$$
+where \\
+    $\mathrm{D}(\theta, \phi)=$ directivity index $($ gain $)$ for a given direction $(\mathrm{dB})$ \\
+    $\mathrm{L}_{\mathrm{p}}(\theta, \phi)=$ sound pressure level for a given direction $(\mathrm{dB})$ \\
+    $\overline{\mathrm{L}}_{\mathrm{p}}=$ sound pressure level averaged over all angels $(\mathrm{dB})$ \\
+    $(\theta, \phi)=$ some specified direction.
+
+\todo[inline]{Make sure you are consistent with phi and theta in your code.}
+
+WNG is a quality metric of beamforming algorithms. It is defined as the beaformer's ability to suppress spatialy uncorrelated noise. Note that self-noise and external white noise may be statistically indistinguishable, so WNG constraints should consider self-noise as well. Mismatch between sensor characteristics and position errors can also result in spatially white noise \cite{mabande2009design}.  
+
+\todo[inline]{middlicott 5 channel array, ambi, circular}
+
+% According to the authors, directional microphones, are less well-matched than omni-directional microphones. Matching capsules is important for good soundfield sampling. 
 
 % As the author suggests, most authors today are less interested in horizontal only audio capture, and even less so in systems which only sample the soundfield in 1D - likely because surround sound has encouraged the creation of material with 2D qualities. Extending WFS to a 2D representation yields a similar representation to that generated by VBAP \cite{smith2019spatial}. 
 
@@ -237,17 +263,6 @@ A number of authors have described the development of Free and Open Source Hardw
 
 A common problem with these designs for musicians seeking to enter the world of soundfield recording is the costly price-point of some of the Bills of Materials (BoMs) suggested by the engineers. In order to swap parts, the musician would need to know about electronics specifications and how to modify Computer Assisted Design (CAD) files in order to create his or her own systems.
 
-\section{History of spatial audio reproduction}
-
-\subsection{Stereophony}
-seminal research into stereo reproduction
-xtc (aka transaural)
-
-\subsection{Quadraphony}
-history of quad audio
-
-\subsection{Surround Sound}
-ITU standards, THX, MPEG-H, etc.
 
 \section{Contemporary Spatial Audio Reproduction Techniques} \label{sec:contemp_audio_reproduction}
 
@@ -290,8 +305,38 @@ One of the major limitations of ambisonics recordings captured with these microp
 \subsection{Binaural Synthesis}
 \label{subsec:bin-synth}
 
-% \subsection{Spherical Speaker Arrays}
+\cite{cuevas20193d} provides an extensive literature review on the subject of \textit{binaural spatialization}. In this particular text by Cuevas, one of the most comprehensive writings on binaural synthesis, the authors describe the steps undertaken for each part of the signal chain. Figure \ref{fig:3dti-chain} shows a diagram of the implementation. 
 
+For the \textit{free-field} modeling, an anechoic system based on BIRs/HRIRs is implemented, following:
+
+\todo[inline]{barycentric interpolation?}
+
+\begin{enumerate}
+    \item Distance-dependent attenuation (inverse square law or acoustic power law), this step also includes far-field distance simulation modeling air impedance (distance-dependent low-pass filtering).
+    \item HRIR obtained using \textit{barycentric interpolation} and are ITDs removed to dynamically adjust for different head sizes.
+    \item HRIR convolution.
+    \item ITD is computed and added to the signals.
+    \item ILD correction for \textit{near-field} sources.
+    \item Directional features for hearing aids added(if any).
+\end{enumerate}
+
+For the \textit{diffuse-field} modeling, a non-anechoic system based on BRIRs\footnote{Note that BRIRs are not taken in free-field, so these contain reflections.} is implemented as follows:
+
+\begin{enumerate}
+    \item Independent distance-dependent attenuation to control the \textit{direct-to-reverberant ratio} (DRR). 
+    \item Sources are encoded into 1st Order Ambisonic (FOA).
+    \item These channels are convolved with encoded versions of the BRIRs, which have been processed to remove any direct sound.
+\end{enumerate}
+
+\begin{figure}[ht!]%force figure here, top, strict
+\centering
+\includegraphics[width=1.0\textwidth]{img/3dti-chain.png} 
+%\captionsetup{justification=centering}
+\caption{3DTI Toolkit Binaural Structure \cite{cuevas20193d}}
+\label{fig:3dti-chain}
+\end{figure}
+
+% \subsection{Spherical Speaker Arrays}
 
 \section{Open Tools for Spatial Audio Reproduction}
 
