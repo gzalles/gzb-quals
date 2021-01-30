@@ -37,25 +37,22 @@ While there might undoubtedly exist other methods for dissemination of spatial m
 
 \subsection{Synchronicity}
 
-One of the key differences with computer-music systems to Digital Audio Workstations (DAW) is their flexibility in real-time settings. A conductors sense of rhythm is never perfect, this provides each performance subtle nuance and variation which can be considered valuable. A common problem which electronic music deals with is the rigid quantization of musical pitches and rhythms, which result in \textit{lifeless} works of art. In contrast, each musician in a live musical interpretation provides his or her own sensibilities to the written music, providing richness to the ultimate result. 
+One of the key differences with computer-music systems to Digital Audio Workstations (DAW) is their flexibility in real-time settings. A conductors sense of rhythm is never perfect, this provides each performance subtle nuance and variation which can be considered valuable. A common problem which electronic music deals with is the rigid quantization of musical pitches and rhythms, which result in \textit{lifeless} works of art. In contrast, each musician in a live musical interpretation provides his or her own sensibilities to the written music, providing richness to the ultimate result.
 
 This richness comes at a cost, the synchronization problem between human and machine in electro-acoustic composition. Score following methods have been designed by several authors that seek to remedy this problem. In the program environment Puredata (Pd), Antescofo\footnote{https://forum.ircam.fr/projects/detail/antescofo/} provides a proper solutions to this problem. Antescofo can be used with quantized MIDI files to extract note on/off events, which can then be used to trigger Pd events. In general we find there are three main techniques used by computer musicians for live electro-acoustic compositions featuring musicians:
 
 \begin{enumerate}
     \item \textbf{Manual event triggering}: involves having a human read along the score during the performance and activate a trigger at a particular moment in time.  
     \item \textbf{Automatic event triggering}: involves having a computer listener like Antescofo interpret musical events and trigger automation tasks this way. 
-    \item \textbf{Human computer performer}: involves having a performer rehearse and perform computer changes as the musician(s) are playing. 
+    \item \textbf{Human computer performer}: involves having a performer rehearse and perform computer changes as the musician(s) are playing using a MIDI controller, for example.
 \end{enumerate}
 
-All of these methods have their benefits and their drawbacks. The first method involves having a person who knows how read and follow along with scored music and is prone to human error. The second requires no human intervention but is prone to machine error. The final is also prone to human error but is perhaps more \textit{dynamic} than the manual event triggering. Also, in this last case, the person controlling the computer might only have a limited number of controls that they could perform simultaneously based on the interface. 
+All of these methods have their benefits and their drawbacks. The first method involves having a person who knows how read and follow along with scored music, and is prone to human error. The second requires no human intervention but is prone to machine error. The final is also prone to human error but is perhaps more \textit{dynamic} than the manual event triggering. Also, in this last case, the person controlling the computer might only have a limited number of controls that they could perform simultaneously based on the interface. The benefit of this last method is that the person(s) controlling the computer system can follow the conductor, which makes it so the pre-written events in cases 1 and 2, are not fixed in time and can instead dynamically adapt to the timing of the ensemble.
 
 \subsection{Scoring Live Electronic Music}
 
-% Scoring orchestral music has a longstanding tradition. Most acoustic scores require minimal notes in order to be able to perform the written works. In contrast, scoring electronic music for live performance contains its own set of challenges which might not be immediately apparent. One of the biggest challenges with this type of work is figuring out how to translate modulation changes in an electronic music system, to dynamic changes in a real-time composition
-
 \section{Literature Review} \label{sec:p1lr}
 %write in detail about existing solutions to the problem
-
 
 \section{Methods}
 %how would you like to contribute? what could be better?
