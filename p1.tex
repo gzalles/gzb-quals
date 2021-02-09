@@ -1,6 +1,27 @@
 \chapter{Proposal 1: Spatial Music and Instruments}
 %This is my proposal for the work I would like to pursue over the next few years with Tom's support. It relates to chapter one of this paper. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% abstract- short, intro - the question, method - process, results - suggested analysis, discussion - recapitulation. [one paragraph]
+
+% abstract:
+% intro:
+% methodology:
+% results: 
+% discussion:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Questions}
+\begin{enumerate}
+    \item How do composers generally create spatial music? 
+    \item What are the potential problems with these methods?
+    \item What instruments/interfaces do these composers generally use?
+    \item What are the problems with these interfaces?
+\end{enumerate}
+
+\section{Abstract}
+Over the last few years a wide number of composers have began investigating the use of spatial audio in their compositions. The commercial growth of XR is perhaps one of the main reasons why we are seeing a newfound interest in these technologies. This proposal will deal with systems used by composers for creating spatial music including hardware and software solution. We are interested in solving some of the longstanding issues involved in the creation of spatial music. Furthermore, we are concerned with "future-proofing" these musical compositions to the greatest extent possible. We will also propose the development of a spatial instrument which will be used in the creation of one or more musical works.
+
 \section{Introduction}
 %topic/purpose, thesis statement
 
@@ -11,7 +32,7 @@ In order to find gaps in the existing body of work, we offer in Chapter \ref{ch:
 An additional dimension of our work constitutes framing projects within the Free and Open Source Software/Hardware (FOSS/FOSH) domain and considering socioeconomic and accessibility as a critical dimension of the artistic process. An additional problem addressed by the FOSSH\footnote{Shorthand for FOSS/FOSH.} framework is the operability of the systems at a much later date - when the work seeks to be recreated or advanced by another composer. We believe the freedom of the FOSSH framework provides a legitimate longevity to computer music works that cannot be overlooked in this domain. 
 
 \subsection{Spatial Music} 
-While a number of composers in the 20th century contributed vastly to the development of the field with acoustic compositions, in this literature review we will focus solely on artists in the electro-acoustic domain. Artists in this sub-discipline are all characterised by their purposeful use of technology as a dominant theme of their work. At times, these artists' works were entirely "performed"\footnote{Here in quotations to highlight the nuance of the word in a context where human participation can sometimes be entirely absent.} without the intervention of musicians. 
+While a number of composers in the 20th century contributed vastly to the development of the field with acoustic compositions, in this proposal we will focus solely on artists in the electro-acoustic domain. Artists in this sub-discipline are all characterised by their purposeful use of technology as a dominant theme of their work. At times, these artists' works were entirely "performed"\footnote{Here in quotations to highlight the nuance of the word in a context where human participation can sometimes be entirely absent.} without the intervention of musicians. 
 
 Sometimes these compositions rely on real-time aleatory processes in order to create significant variations from performance to performance. Other times the works are entirely "fixed", in which case the raw sound material is all that is needed to recreate the work. Other composers sought to intervene upon scored material using technologies to create a hybrid medium. These formal definitions are nearly impossible to make, as ultimately all music relies on acoustical processes for audition, and even in \textit{acousmatic} works, the context will always be slightly different, making each "performance" unique.
 
@@ -30,26 +51,27 @@ Within this sub-domain, we can further taxonomically delimit these works into:
     \item \textbf{Concert music}: works presented in concert halls, often with live musicians. 
     \item \textbf{Gallery works}: sound installations that run for several hours, or days, and usually do not involve live performing musicians. 
     \item \textbf{Fixed-media XR experiences}: works in which the music is pre-recorded and the audience member passively enjoys the work. Examples include 360 videos and Computer-Generated Imagery (CGI) virtual environments with spatial sound. 
-    \item \textbf{Dynamic-media XR experiences}: works in which the user is granted agency via interactions in the environment which control in some capacity the sound material\footnote{In our taxonomy, control over orientation is not considered a relevant interaction. Works which only feature this control parameters are still deemed \textit{fixed-media XR experiences}. Moving \textit{between} soundfields however allows the user to dictate the material, so it could be considered dynamic.}.
+    \item \textbf{Dynamic-media XR experiences}: works in which the user is granted agency via interactions in the environment which control in some capacity the sound material\footnote{In our taxonomy, control over orientation is not considered a relevant interaction. Works which only feature this control parameters are still deemed \textit{fixed-media XR experiences}. Moving \textit{between} soundfields however allows the user to dictate the material, so it is considered dynamic.}.
 \end{enumerate}
 
-While there might undoubtedly exist other methods for dissemination of spatial music, these four categories comprise the most common situations. In the chapter associated with this proposal, we are primarily concerned with computer music systems which can be used for \textit{live} performances. Therefore, we will focus this proposal on the development of tools and systems which can be used in real-time settings. In particular, we are concerned with concert music, and how FOSSH technology can be used to create new computer music works which feature special attention to diffusion\footnote{Diffusion used to be associated with playback of stereo mixes over several loudspeakers. Today, to the best of our knowledge, composers consider the synonymous with spatialization.}.
+While there might undoubtedly exist other methods for dissemination of spatial music, these four categories comprise the most common situations. In the chapter associated with this proposal, we are primarily concerned with computer music systems which can be used for \textit{live} performances. Therefore, we will focus this proposal on the development of tools and systems which can be used in real-time settings. In particular, we are concerned with concert music, and how FOSSH technology can be used to create new computer music works which feature special attention to diffusion\footnote{Diffusion used to be associated with playback of stereo mixes over several loudspeakers. Today, to the best of our knowledge, composers use this term interchangeably with spatialization.}.
 
-\subsection{Synchronicity}
 
-One of the key differences with computer-music systems to Digital Audio Workstations (DAW) is their flexibility in real-time settings. A conductors sense of rhythm is never perfect, this provides each performance subtle nuance and variation which can be considered valuable. A common problem which electronic music deals with is the rigid quantization of musical pitches and rhythms, which result in \textit{lifeless} works of art. In contrast, each musician in a live musical interpretation provides his or her own sensibilities to the written music, providing richness to the ultimate result.
+% \subsection{Synchronicity}
 
-This richness comes at a cost, the synchronization problem between human and machine in electro-acoustic composition. Score following methods have been designed by several authors that seek to remedy this problem. In the program environment Puredata (Pd), Antescofo\footnote{https://forum.ircam.fr/projects/detail/antescofo/} provides a proper solutions to this problem. Antescofo can be used with quantized MIDI files to extract note on/off events, which can then be used to trigger Pd events. In general we find there are three main techniques used by computer musicians for live electro-acoustic compositions featuring musicians:
+% One of the key differences with computer-music systems to Digital Audio Workstations (DAW) is their flexibility in real-time settings. A conductors sense of rhythm is never perfect, this provides each performance subtle nuance and variation which can be considered valuable. A common problem which electronic music deals with is the rigid quantization of musical pitches and rhythms, which result in \textit{lifeless} works of art. In contrast, each musician in a live musical interpretation provides his or her own sensibilities to the written music, providing richness to the ultimate result.
 
-\begin{enumerate}
-    \item \textbf{Manual event triggering}: involves having a human read along the score during the performance and activate a trigger at a particular moment in time.  
-    \item \textbf{Automatic event triggering}: involves having a computer listener like Antescofo interpret musical events and trigger automation tasks this way. 
-    \item \textbf{Human computer performer}: involves having a performer rehearse and perform computer changes as the musician(s) are playing using a MIDI controller, for example.
-\end{enumerate}
+% This richness comes at a cost, the synchronization problem between human and machine in electro-acoustic composition. Score following methods have been designed by several authors that seek to remedy this problem. In the program environment Puredata (Pd), Antescofo\footnote{https://forum.ircam.fr/projects/detail/antescofo/} provides a proper solutions to this problem. Antescofo can be used with quantized MIDI files to extract note on/off events, which can then be used to trigger Pd events. In general we find there are three main techniques used by computer musicians for live electro-acoustic compositions featuring musicians:
 
-All of these methods have their benefits and their drawbacks. The first method involves having a person who knows how read and follow along with scored music, and is prone to human error. The second requires no human intervention but is prone to machine error. The final is also prone to human error but is perhaps more \textit{dynamic} than the manual event triggering. Also, in this last case, the person controlling the computer might only have a limited number of controls that they could perform simultaneously based on the interface. The benefit of this last method is that the person(s) controlling the computer system can follow the conductor, which makes it so the pre-written events in cases 1 and 2, are not fixed in time and can instead dynamically adapt to the timing of the ensemble.
+% \begin{enumerate}
+%     \item \textbf{Manual event triggering}: involves having a human read along the score during the performance and activate a trigger at a particular moment in time.  
+%     \item \textbf{Automatic event triggering}: involves having a computer listener like Antescofo interpret musical events and trigger automation tasks this way. 
+%     \item \textbf{Human computer performer}: involves having a performer rehearse and perform computer changes as the musician(s) are playing using a MIDI controller, for example.
+% \end{enumerate}
 
-\subsection{Scoring Live Electronic Music}
+% All of these methods have their benefits and their drawbacks. The first method involves having a person who knows how read and follow along with scored music, and is prone to human error. The second requires no human intervention but is prone to machine error. The final is also prone to human error but is perhaps more \textit{dynamic} than the manual event triggering. Also, in this last case, the person controlling the computer might only have a limited number of controls that they could perform simultaneously based on the interface. The benefit of this last method is that the person(s) controlling the computer system can follow the conductor, which makes it so the pre-written events in cases 1 and 2, are not fixed in time and can instead dynamically adapt to the timing of the ensemble.
+
+% \subsection{Scoring Live Electronic Music}
 
 \section{Literature Review} \label{sec:p1lr}
 %write in detail about existing solutions to the problem

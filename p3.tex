@@ -1,28 +1,66 @@
 \chapter{Proposal SDY} \label{ch:prop-sdy}
 %This is my proposal for the work I would like to pursue over the next few years with Shahrokh's support. It relates to chapter three of this paper. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% abstract- short, intro - the question, method - process, results - suggested analysis, discussion - recapitulation. [one paragraph]
+
+% abstract: 
+
+% Over the years composers working on spatial music have documented and published their works in a variety of different formats. The goal of this work is to recommend to standards using FOSS for the dissemination of spatial music. In addition to the use of FOSS, we suggest platforms which are low-cost and as a result may lead to greater dissemination of these works. Our goal is to develop a system for publishing spatial audio works that is simple to replicate, is completely free, can be used on any OS, and has the greatest potential for proliferation of this type of music. 
+
+% intro:
+
+% In this section we will talk about the ways different modern composers present their spatial music works. We will talk about the financial limitations and the political consequences that these burdens create for artists. We will suggest some alternate tools that could be used to present this music. We will finally discuss what are some of the potential problems these technologies might have (what is the computational cost?) [consider: movie theatres, 5.1 albums, Steam, mobileXR, other.]
+
+% methodology: 
+
+% In order to validate our approach we can represent a variety of spatial music works in multiple formats and conduct a survey to determine if there is any validity to our hypothesis: webXR is better for these representations than stereo. Basically there should N case studies that we can compare based on various formats. We should leave space for comments by subjects. The goal is to figure out the deficits of webXR for this type of documentation/publishing. 
+
+% results: 
+
+% Here we will discuss what the statistical approaches will be for our analysis. We should talk about what these difference statistics mean, but we don't need to explain how they work. Since we don't have results we can speculate what we expect to find. 
+
+% discussion:
+
+% Here we will talk about the results but we should also address the fact that these representations will require ultimately more HD space, which could be costly. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Questions}
+\begin{enumerate}
+    \item How do modern composers generally distribute their spatial music? 
+    \item What are the potential problems with these methods?
+    \item What tools/system might work better? (What are the deficits of these systems?)
+    \item Are there any improvements that could be made to these (for example making them easier to use for composers)? 
+\end{enumerate}
+    
+\section{Abstract}
+
+Over the last decade, a number of composers have focused on the possibilities that multi-channel representations of music afford them, and have created rich creative practices around the use of spatial audio in their compositions. Unfortunately, much of the music created by such artists gets disseminated in such a way that does not allow the general public to experience it's most salient attribute: the use of space. Outside of select audience members whom are privileged enough to experience these works in person, these works are seldom published in a manner that allows the majority of people to listen to them as intended. This proposal will suggest an open-source and future-proof framework for disseminating spatial music asynchronously, and argue for the importance of such a task in contemporary music practices. Our goal is to describe a process, relying on free software, which can be used by any composer to provide a richer representation of their music by leveraging WebXR advancements. 
+
 \section{Introduction}
 %topic/purpose, thesis statement
 
-Spatial music has been a subject of great interest in the electro-acoustic domain for many decades. Ever since Schaeffer, Stockhausen, and Cage began experimenting with tape players as a means of separating the musician from the sound source, composers have ardently explored the possibilities that new technological developments afford them. The last few years have seen an explosion in the field of Extended Reality (XR) with major technology companies rolling out increasingly affordable Head-Mounted Displays (HMD) and game engines like Unity becoming easier to prototype with. 
+Spatial music has been a subject of great interest in the electro-acoustic domain for many decades now. Ever since Schaeffer, Stockhausen, and Cage, began experimenting with tape players as a means of separating the musician from the sound source, composers have ardently explored the possibilities that new technological developments afford them in this domain. The last few years have seen an explosion in the field of Extended Reality\footnote{XR includes Virtual Reality, Augmented Reality and Mixed Reality. Often XR experiences rely on spatial audio to improve the quality of immersion.} (XR), and as a result spatial audio, with major tech companies rolling out increasingly affordable Head-Mounted Displays (HMD). Simultaneously, game engines like Unity and Unreal Engine have become increasingly: user friendly, and ubiquitous in educational settings. 
 
-Unfortunately, there are countless compositions being written today, that are seldom experienced with any spatial information. In our department of music, countless musical works which elegantly make use of octaphonic arrays commonly become down-mixed into stereo, destroying all the spatial information. While the ultimate stereo mix results in a high-quality standardized playback format, the option to document these works with additional spatial information warrants exploring. 
+Despite the technological advancements in the commercial sector, there are countless compositions being written today that are seldom experienced with any spatial information by the general public. In many departments of music, countless musical works which elegantly make use of octophonic arrays, for example, commonly get down-mixed to stereo during publishing, destroying all the spatial information. While the ultimate stereo mix results in a high-quality standardized playback format, the option to document these works with additional spatial information warrants exploring. 
 
 In this proposal, we wanted to explore some of the ways the existing infrastructure of our department, in addition to the vast number of options for presenting spatial audio online, could be leveraged in order to allow for modern representations of our works to be distributed, primarily in an asynchronous fashion. Traditionally, only a small number of individuals, who attend the live event, are privileged enough to listen to these musical works as intended. Our hope is to begin creating a culture of documenting and sharing our spatial works online, using free and open source software and hardware for the dissemination of these works. 
 
 The motivation behind using Free and Open Source Software and Hardware (FOSSH) is to prevent changes in operating system to interrupt the dissemination of these works and also to lessen the financial burden on students and the University. In addition to the economic implications, we appreciate the benefit of sharing these methods with our peers in other institutions whom might be interesting in adopting any of our models to distribute spatial works. The reproducibility of computer music works relies on consistent operating systems and associated hardware, this is part of the motivation for exploring FOSSH. Finally, we believe there is a political message behind this conscious choice - it is a way of diverging from the stronghold of tech giants, relying instead on the global community of computer and electrical engineers which make all this work possible. 
 
-\subsection{From 2D to 3D}
+% \subsection{From 2D to 3D}
 
-A common problem we encounter in multi-media arts which concern works featuring diffusion is the mismatch between video and audio formats. A common experience for an artist is that of creating a work for a with a 2D video and 3D sound, and finding it difficult, afterwards, to represent these works with 3D audio. Alternatively, we might have spatial audio pieces which do not feature video or any other media. In this case, if we wish to distribute the work using HMD technologies we must decide what, if any, visual representation will accompany our work. 
+% A common problem we encounter in multi-media arts which concern works featuring diffusion is the mismatch between video and audio formats. A common experience for an artist is that of creating a work for a with a 2D video and 3D sound, and finding it difficult, afterwards, to represent these works with 3D audio. Alternatively, we might have spatial audio pieces which do not feature video or any other media. In this case, if we wish to distribute the work using HMD technologies we must decide what, if any, visual representation will accompany our work. 
 
-A complete lack of sensory information might make it difficult to know if/when the piece has begun. A static picture/CGI \footnote{Computer generated imagery: virtual scenes created using frameworks such as \href{https://www.opengl.org/}{OpenGL}.} might be seen as uninspired or lacking in dynamism. All these choices will have artistic implications. 
+% A complete lack of sensory information might make it difficult to know if/when the piece has begun. A static picture/CGI \footnote{Computer generated imagery: virtual scenes created using frameworks such as \href{https://www.opengl.org/}{OpenGL}.} might be seen as uninspired or lacking in dynamism. All these choices will have artistic implications. 
 
-Generally speaking, there are two common modalities employed by multi-media artists in spatial audio: the movie theatre format, and the HMD format. Each of these can be presented either synchronously or asynchronously, and each have particular deficits and benefits depending on the context. 
+% Generally speaking, there are two common modalities employed by multi-media artists in spatial audio: the movie theatre format, and the HMD format. Each of these can be presented either synchronously or asynchronously, and each have particular deficits and benefits depending on the context. 
 
-The easiest artistic multi-media representation in a synchronous context - that is, when an audience can be present in a multi-channel venue - is the movie theatre format. In this context, a concert venue with a multi-channel sound system and a movie projector is used simultaneously to present an artistic work such as a film or musical experience. The limiting factor here is the number of people which can be present during the performance, while having a proper spatial image, and any geographical barriers. 
+% The easiest artistic multi-media representation in a synchronous context - that is, when an audience can be present in a multi-channel venue - is the movie theatre format. In this context, a concert venue with a multi-channel sound system and a movie projector is used simultaneously to present an artistic work such as a film or musical experience. The limiting factor here is the number of people which can be present during the performance, while having a proper spatial image, and any geographical barriers. 
 
-In previous concerts organized by the author this movie theatre format was employed to create a few different artistic works. A possible method to distribute these works in a spatial audio supported environment would be using a WebVR framework such as A-Frame to show the 2D video and add additional sources to present spatial audio elements. The micro-movements of the user during viewing should in theory contribute to the sense of immersion.  
+% In previous concerts organized by the author this movie theatre format was employed to create a few different artistic works. A possible method to distribute these works in a spatial audio supported environment would be using a WebVR framework such as A-Frame to show the 2D video and add additional sources to present spatial audio elements. The micro-movements of the user during viewing should in theory contribute to the sense of immersion.  
 
 \subsection{Interactivity}
 
