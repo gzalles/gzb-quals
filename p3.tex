@@ -1,8 +1,11 @@
-\chapter{Proposal SDY} \label{ch:prop-sdy}
+\chapter{Proposal 3: Immersive Environments} \label{ch:prop-sdy}
 %This is my proposal for the work I would like to pursue over the next few years with Shahrokh's support. It relates to chapter three of this paper. 
 
+%This project fits with everything else. 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% abstract- short, intro - the question, method - process, results - suggested analysis, discussion - recapitulation. [one paragraph]
+%DISTRIBUTION%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % abstract: 
 
@@ -10,45 +13,107 @@
 
 % intro:
 
-% In this section we will talk about the ways different modern composers present their spatial music works. We will talk about the financial limitations and the political consequences that these burdens create for artists. We will suggest some alternate tools that could be used to present this music. We will finally discuss what are some of the potential problems these technologies might have (what is the computational cost?) [consider: movie theatres, 5.1 albums, Steam, mobileXR, other.]
+% How do modern composers generally distribute their spatial music to the general public? What are the potential problems with these methods? What tools/system might work better? (What are the deficits of these systems?) Are there any improvements that could be made to these (for example making them easier to use for composers)? 
+
+% [consider: movie theatres, 5.1 albums, Steam, mobileXR, other.]
 
 % methodology: 
 
-% In order to validate our approach we can represent a variety of spatial music works in multiple formats and conduct a survey to determine if there is any validity to our hypothesis: webXR is better for these representations than stereo. Basically there should N case studies that we can compare based on various formats. We should leave space for comments by subjects. The goal is to figure out the deficits of webXR for this type of documentation/publishing. 
+% 1. Select N musical works which feature spatial audio and publish them online using: mono, stereo, spatial audio. 
+
+% 2. Consider using more than one JS 3D audio framework, allowing you to compare their reproduction capabilities (Omnitone, JSAmbisonics, WebAudio API, etc.). 
+
+% 3. 
 
 % results: 
 
-% Here we will discuss what the statistical approaches will be for our analysis. We should talk about what these difference statistics mean, but we don't need to explain how they work. Since we don't have results we can speculate what we expect to find. 
-
 % discussion:
-
-% Here we will talk about the results but we should also address the fact that these representations will require ultimately more HD space, which could be costly. 
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Questions}
-\begin{enumerate}
-    \item How do modern composers generally distribute their spatial music? 
-    \item What are the potential problems with these methods?
-    \item What tools/system might work better? (What are the deficits of these systems?)
-    \item Are there any improvements that could be made to these (for example making them easier to use for composers)? 
-\end{enumerate}
+%make use of: JS, openGL, FTP, FFmpeg, HTML. 
     
 \section{Abstract}
 
-Over the last decade, a number of composers have focused on the possibilities that multi-channel representations of music afford them, and have created rich creative practices around the use of spatial audio in their compositions. Unfortunately, much of the music created by such artists gets disseminated in such a way that does not allow the general public to experience it's most salient attribute: the use of space. Outside of select audience members whom are privileged enough to experience these works in person, these works are seldom published in a manner that allows the majority of people to listen to them as intended. This proposal will suggest an open-source and future-proof framework for disseminating spatial music asynchronously, and argue for the importance of such a task in contemporary music practices. Our goal is to describe a process, relying on free software, which can be used by any composer to provide a richer representation of their music by leveraging WebXR advancements. 
+Over the years composers working on spatial music have documented and published their works in a variety of different formats. The goal of this work is to recommend standards using FOSS for the dissemination of spatial music. In addition to the use of FOSS, we suggest platforms which are low-cost and as a result may lead to greater dissemination of these works. Our goal is to develop a system for publishing spatial audio works that is simple to replicate, is completely free, can be used on any OS, and has the greatest potential for proliferation of this type of music. In order to highlight the importance of such a task we will also discuss the history of spatial audio distribution in the commercial sector. 
 
 \section{Introduction}
 %topic/purpose, thesis statement
 
 Spatial music has been a subject of great interest in the electro-acoustic domain for many decades now. Ever since Schaeffer, Stockhausen, and Cage, began experimenting with tape players as a means of separating the musician from the sound source, composers have ardently explored the possibilities that new technological developments afford them in this domain. The last few years have seen an explosion in the field of Extended Reality\footnote{XR includes Virtual Reality, Augmented Reality and Mixed Reality. Often XR experiences rely on spatial audio to improve the quality of immersion.} (XR), and as a result spatial audio, with major tech companies rolling out increasingly affordable Head-Mounted Displays (HMD). Simultaneously, game engines like Unity and Unreal Engine have become increasingly: user friendly, and ubiquitous in educational settings. 
 
-Despite the technological advancements in the commercial sector, there are countless compositions being written today that are seldom experienced with any spatial information by the general public. In many departments of music, countless musical works which elegantly make use of octophonic arrays, for example, commonly get down-mixed to stereo during publishing, destroying all the spatial information. While the ultimate stereo mix results in a high-quality standardized playback format, the option to document these works with additional spatial information warrants exploring. 
+Despite the technological advancements in the commercial sector, there are countless compositions being written today that are seldom experienced with any spatial information by the general public. An substantial number of composer generate works yearly which elegantly make use of multi-channel arrays. Unfortunately, these generally, although not always, get down-mixed to stereo during publishing, which destroys most of the pertinent spatial information. While the final stereo mix generally results in a high-quality standardized playback format, the option to document these works with additional spatial information warrants exploring. This is especially true in cases where composer have a made a career exploring spatial sound as a compositional feature of their work.
 
-In this proposal, we wanted to explore some of the ways the existing infrastructure of our department, in addition to the vast number of options for presenting spatial audio online, could be leveraged in order to allow for modern representations of our works to be distributed, primarily in an asynchronous fashion. Traditionally, only a small number of individuals, who attend the live event, are privileged enough to listen to these musical works as intended. Our hope is to begin creating a culture of documenting and sharing our spatial works online, using free and open source software and hardware for the dissemination of these works. 
+In this project proposal, we wanted to suggest some ways that browser-based spatial audio solutions could be leveraged in order to allow for modern representations of musical works, primarily in an asynchronous fashion. Traditionally, only a small number of individuals, who attend the live event, are privileged enough to listen to these musical works as intended. Our hope is to begin creating a culture of documenting and sharing our spatial works online, using Free and Open Source Software and Hardware (FOSSH) for the dissemination of these works. 
 
-The motivation behind using Free and Open Source Software and Hardware (FOSSH) is to prevent changes in operating system to interrupt the dissemination of these works and also to lessen the financial burden on students and the University. In addition to the economic implications, we appreciate the benefit of sharing these methods with our peers in other institutions whom might be interesting in adopting any of our models to distribute spatial works. The reproducibility of computer music works relies on consistent operating systems and associated hardware, this is part of the motivation for exploring FOSSH. Finally, we believe there is a political message behind this conscious choice - it is a way of diverging from the stronghold of tech giants, relying instead on the global community of computer and electrical engineers which make all this work possible. 
+The motivation behind using Free and Open Source Software and Hardware (FOSSH) is to prevent changes in operating system which sometimes interrupt the dissemination of these works. An additional motivation involves lessening the financial burden on the composer/institution/engineer. In addition to the economic implications, we should highlight the benefit of being able to share these techniques with our colleagues in other institutions, who might be interested in adopting the same methods. Finally, we believe there is a political message behind this conscious choice - it is a way of diverging from the stronghold of tech giants, relying instead on the global community of computer and electrical engineers which make all this work possible. 
+
+\subsection{Framing the Problem}
+
+There are four basic questions we seek to answer with this project: 
+
+\begin{enumerate}
+    \item How do modern composers generally distribute their spatial music to the general public?
+    \item What are the potential problems with these methods?
+    \item What tools/system might work better? 
+    \item What are the problems with the proposed solution?
+\end{enumerate}
+    
+In the following sections we will attempt to methodically address these different questions. Before we can begin this process, however, we want to present a brief overview of the attempts that have already been made by the private and public sector in regards to this problem. This should provide us with a starting point to begin comparing and contrasting different technologies available today.
+
+\subsection{History of 3D Audio Distribution}
+
+In this section we want to address specifically efforts that have been made by the commercial sector to commercialize spatial audio recordings. In particular, we would like to focus on technologies for mass distribution. Furthermore, we are discussing specifically direct-to-consumer distribution systems that do not rely on intermediary parties. 
+
+In the commercial music world, the traditional formats that we have all come to know about are listed below. We purposefully left out radio as it is not an "on-demand" play-back system - the listener cannot control what will be played back.
+
+\begin{enumerate}
+    \item \textbf{Vinyl records:} 12-inch Long Play (LP) format disks being perhaps the most popular. These were common in the 1940s. 
+    \item \textbf{Cassette tapes:} magnetic tapes which were popular in the 70s and 80s with inventions such as \textit{The 8-track} and the \textit{Sony Walkman} reaching mass market in automobile audio and personal audio respectively.
+    \item \textbf{CDs:} optical media developed by Phillips and Sony in the 90's. The first digital medium for recording and reproducing audio. Their loss in popularity started in the 2000s, with the advent of MP3 players.
+    \item \textbf{mp3 files:} compressed digital files which were typically stored in mp3 players like the iPod. Began a contentious era of copyright infringement arguably still going on today. An mp3 player was capable of holding thousands of songs in a more portable medium than a CD player. 
+    \item \textbf{Streaming:} today streaming is the most popular playback method. With streaming, songs are only temporarily buffered into memory. After they are heard they are erased from the computer memory.
+\end{enumerate}
+
+The preceding list originated from the article by Sioni \cite{ABriefHi41online}. However, as we can see, it does not reveal much at all in the distribution of spatial audio. 
+
+We know that in the 70's, when quadraphonic audio was first being developed, there was a good effort to commercialize four channel speaker systems to the public with tape players capable of reproducing multiple channels at once \cite{postrel1990competing}. The major breakthrough for personalized spatial audio came in the 90's when commercial 5.1 surround audio system began being sold to the general public by Dolby and THX \cite{manolas2009enlarging}.
+
+Unfortunately, while many composers have created recordings for this format, few people are generally willing to invest the money for such sound systems. Naturally, a major number of spatial works can be experienced at movie theatres in major films, however, this also leaves musicians beholden to the interest of directors and unable to compose freely.
+
+\textit{Dynamic binaural rendering}\footnote{We differentiate here between static binaural rendering in which users' head-movements are not taken into account, and dynamic binaural rendering, in which head-movements modify the audio experience.} (DBR) in contrast provides a way for listeners to experience a virtual surround sound experience without anything other than headphones and some tracking system to determine the listeners' head orientation. There are many drawbacks of DBR in contrast to surround sound formats: 
+
+\begin{enumerate}
+    \item Latency between the head-tracking system and the audio reproduction system can lead to playback inaccuracies.
+    \item The frequency response of the playback system (ie. headphones or earbuds) may degrade the spatialization efforts. 
+    \item The lack of personalized HRTFs may result imperfect performance. 
+    \item The head-tracking system may be cumbersome or require a complicated set-up procedure.
+\end{enumerate}
+
+Despite all this potential problems, we are interested in a solution of this type for distribution of spatial music as we believe it is the most cost-effective. Smartphones have become fairly ubiquitous computer systems capable of performing DBR using internal IMU (inertial measurement units). Another approach is to use the camera sensors in computers and tablets for head-tracking. This is sometimes preferred to alternative head-tracking systems which use external IMUs, attached to headphones, for performing the HRTF interpolation. 
+
+\subsection{Current Approaches}
+
+In our research regarding spatial audio in the contemporary music domain we found there is a substantial number of artists working with spatial audio as a way to articulate their ideas. A short list of notable composers working in this domain include:
+
+\begin{enumerate}
+    \item \textbf{Natascha Barrett:} HOA granular synthesis.
+    \item \textbf{Fernando-Lopez Lezcano:} HOA virtual auralization using RIRs. HOA microphone designer.
+    \item \textbf{Eric Lyon:} creator of LyonPotpourri\footnote{http://disis.music.vt.edu/eric/LyonSoftware/Pd/LyonPotpourri/} library featuring a number of useful Pd externals for multi-channel music (ie. \texttt{splitspec~}: split an incoming sound into complementary spectra)
+    \item \textbf{Kerry Hagan:} real-time noise-like compositions featuring maximally uniform sequences.
+\end{enumerate}
+
+As one will notice when investigating these different composers, despite the fact that they have intensively worked on multi-channel sound in their creative practice. It is not possible at the present time (early 2021) to listen to their works without attending a live event or some rigorous preparation involving expensive equipment. 
+
+Many of these artist opt for \textit{static binaural rendering} as a way to present their works online. Alternatively, they record their works with a binaural microphone yielding a similar effect. Unfortunately, this means that much of the careful spatialization work is ultimately only experienced by a small number of attendees at HDLA concerts.
+
+Another approach might be to provide listeners with a HOA recording, or a patch that performs the music, such as in the case of Hagan. This again leaves us with the problem that a costly loudspeaker array is required of each individual to experience the work. The HOA recording can also be played back by the listener binaurally if they have experience with ambisonic playback, but for the general public this will simply be too burdensome. 
+
+Ideally, we want to create a way to catalogue and publish all these different artistic materials in such a way that they are readily available to the public, and that supports DBR. Secondly, it would be useful to have some visual representation of the sound if possible, as we know from literature that our brains use a multi-modal system, involving both sound and sight, to determine sound positions in space. 
+
+Luckily, a number of solutions of this variety have already been published online. In the next section we will focus on these technologies, particularly focusing on FOSSH-based solutions. We will also pay particular attention to low-cost options which can ultimately lead to mass consumption of 3D audio. 
+
+\subsection{FOSSH for Scalable 3D Audio}
 
 % \subsection{From 2D to 3D}
 
@@ -62,12 +127,8 @@ The motivation behind using Free and Open Source Software and Hardware (FOSSH) i
 
 % In previous concerts organized by the author this movie theatre format was employed to create a few different artistic works. A possible method to distribute these works in a spatial audio supported environment would be using a WebVR framework such as A-Frame to show the 2D video and add additional sources to present spatial audio elements. The micro-movements of the user during viewing should in theory contribute to the sense of immersion.  
 
-\subsection{Interactivity}
+% \subsection{Interactivity}
 
-
-
-\section{Literature Review}
-%write in detail about existing solutions to the problem
 
 \section{Methods}
 %how would you like to contribute? what could be better?

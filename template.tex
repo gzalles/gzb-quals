@@ -40,7 +40,8 @@
 % problem.
 \usepackage[paper=letterpaper]{geometry}
 
-\usepackage{todonotes}
+\usepackage{todonotes} %gzb
+\usepackage{subcaption} %gzb
 %\usepackage{titlesec}
 \setcounter{tocdepth}{3}% Include \subsubsection in ToC
 
@@ -226,16 +227,20 @@ Professor Smyth, Tamara\\
 
 %% DISSERTATION
 
-%intro
+% create -> record -> publish
+
+% create live spatial music. CH2
+% record the results in 3D audio. CH3
+% publish with spatial attributes. CH4
+
+%intro 
 \include{q0}
 
-%spatial music
+%spatial music  (live) [CREATION]
 \include{q1} 
-
-%spatial audio
+%spatial audio (fixed-media) [REC/REPRODUCTION]
 \include{q2}
-
-%xr 
+%xr (open-loop/closed-loop) [DISTRIBUTION]
 \include{q3}
 
 %conclusion
@@ -243,13 +248,14 @@ Professor Smyth, Tamara\\
 
 \appendix
 
-%\include{a0}%appendix for scores related to chapter 1
-\include{a1}%appendix for math things related to chapter 2
-%\include{a2}%appendix for cse listings related to chapter 3
 
-\include{p1}%proposal TRE
-\include{p2}%proposal TRS
-\include{p3}%proposal SDY
+\include{a1}%appendix for scores related to ch1
+\include{a2}%appendix for math things related to ch2
+\include{a3}%appendix for cse listings related to ch3
+
+%%% \include{p1}%proposal TRE - NIME
+%%% \include{p2}%proposal TRS - AES
+%%% \include{p3}%proposal SDY - ICMC
 
 %% END MATTER
  \printindex %% Uncomment to display the index

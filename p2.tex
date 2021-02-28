@@ -1,24 +1,32 @@
-\chapter{Proposal 2: Spatial Audio Capture and Reproduction} \label{ch:prop-trs}
-%This is my proposal for the work I would like to pursue over the next few years with Tamara's support. It relates to chapter two of this paper. 
+\chapter{Proposal 2: Spatial Audio} \label{ch:prop-trs}
+%This is my proposal for the work I would like to pursue over the next few years with Tamara's support. It relates to chapter three of this paper. 
+
+%This project fits with Justin Robers collab. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% abstract- short, intro - the question, method - process, results - suggested analysis, discussion - recapitulation. [one paragraph]
+%FIXED-MEDIA WORKS%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % abstract:
+
+% This proposal discusses how to capture spatial music and how to create fixed-media works featuring spatial music. In particular here we will discuss the MEMS HOA array. We will talk about the openSCAD, Octave, recording system which can be used to document spatial music.
+
 % intro:
+
+% How do composers generally record spatial music? What are the potential problems with these methods? What tools do these composers generally use to reproduce spatial music (fixed media)? What are the problems with these tools?
+
+%[consider: file players like VLC.]
+
 % methodology:
+
+%
+
 % results: 
 % discussion:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Questions}
-\begin{enumerate}
-    \item How do composers generally record spatial music? 
-    \item What are the potential problems with these methods?
-    \item What tools do these composers generally use to reproduce spatial music? (fixed media)
-    \item What are the problems with these tools?
-\end{enumerate}
+%make use of: octave, openSCAD, 3D printing, MEMS, Ardour.
 
 \section{Abstract}
 
@@ -46,9 +54,6 @@ Our latest efforts, not yet published, involved using recordings taken with thes
 Our goal is to switch to digital MEMS capsules once this process is completed and develop a robust HOA system that can be built at a substantially lower cost than originally presented. While it would be simple enough to swap ECMs in Fernando's designs as a way to lower the financial burden the cost of an 8-channel interface is already roughly \$250\footnote{For a new sound-card, with analog gain control, which is not ideal.}. In contrast, the selected interface by MiniDSP\footnote{Ideally we would like to swap over to a combination of an Arduino + Raspberry Pi (RPI) ecosystem. This is more complex, however, so a simpler approach based on an Operating System (OS) agnostic board was taken for this intermediate design.} costs half as much and provides us with the possibility of expanding to a 16-channel version at a later stage\footnote{With 16 channels we would be able to have a Third Order Ambisonic (3OA) system.}. The MEMS capsules themselves, in contrast to Fernando's original design, are far more modest, costing only \$1.50 per sensor. 
 
 In order perform the A2B conversion required to derive suitable spherical harmonic components from the raw audio recordings a number of different authors have open-sourced their libraries and published accompanying papers. The SpHEAR \cite{lopez2019sphear} project is one of the most comprehensive among these libraries and relies entirely on open-source software which makes it appealing for us. Unfortunately, the code is not very heavily commented and the papers provide little mathematical background. In the next section we will evaluate some other papers which might prove helpful in deciphering the methodology for encoding spherical array signals into spherical harmonics.
-
-\section{Literature Review}
-%write in detail about existing solutions to the problem
 
 \subsection{HOA Array Hardware}
 

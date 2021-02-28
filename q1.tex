@@ -1,9 +1,5 @@
 \chapter{Spatial Music: Past, Present and Future} \label{ch:spat-mus} 
 
-% this chapter is about computer music systems to make spatial music. we will talk about the composer perspective and try to keep the mathematics to a minimum. in later chapters we will focus more on the minutiae of optimizing different systems. here instead we would like to talk about some of the existing software packages in open source computer music languages that can be used to create spatial music. the main focus will be pure data but we can also talk about SuperCollider, Csound, and other tools that might be useful. 
-
-%iannix.org for example. Is an open source tool for graphic scores. Well suited for this chapter. JaroszewiczThesis 
-
 \section{Introduction}
 %This chapter will be developed with Professor Tom Erbe.
 
@@ -180,7 +176,7 @@ Smalley has created an extensive dictionary to describe the way he envisions and
     \item \textbf{Spectral spatiality:} impression of space and spaciousness evoked by occupancy and motion within the range of audible frequencies.
 \end{enumerate}
 
-This list forms only a small part of the language created by Smalley to describe his music. \textit{Pentes} (1974), \textit{Empty Vessels} (1997), \textit{Wind Chimes} (1987) and \textit{Valley Flow} (1991–92), are a few of Smalley's most notorious compositions in which he attempts to sonically articulate all these different concepts. \cite{o2011soundscape} provides a closer examination of these works. According to O'Callaghan, many of Smalley's works utilize mimetic properties. In other words, the sound design aims to simulate real world sounds using electro-acoustic means. 
+This list forms only a small part of the language created by Smalley to describe his music. \textit{Pentes} (1974), \textit{Empty Vessels} (1997), \textit{Wind Chimes} (1987) and \textit{Valley Flow} (1991–92), are a few of Smalley's most notorious compositions in which he attempts to sonically articulate all these different concepts. \cite{o2011soundscape} provides a closer examination of these works. According to O'Callaghan, many of Smalley's works utilize mimetic properties. In other words, the sound design aims to simulate real world sounds using electro-acoustic means. Much like work done by Barry Truax such as \textit{Riverrun} (1986) which utilizes granular synthesis to emulate the sound of a flowing river.
 
 This brings us to the conclusion look into the history of spatial music. As we can see, while many contemporary composers might attribute the development of spatial music to composers of the 20th century, the use of spatial elements in composition has a longstanding tradition that spans hundreds of years. 
 
@@ -276,7 +272,7 @@ As you can see the equation shows both AM and FM with noise as the modulating si
 
 \textit{Il Prete Rosso} (2013) Charles Nichols is a work for amplified violin, motion sensor and computer, written for Sarah Plum. The piece was inspired by Antonio Vivaldi, teacher and violin virtuoso, and translates to "The Red Priest" - nickname given to Vivaldi for his red hair and ordinance. In the piece the violin is looped live and played over while recorded elements are spatialized. The computer musician interjects with a wah filter, phaser and delay effects. The motion sensor, attached to the violin player is used to control the center frequency of the wah filter. The work was premiered at the Cube of the Moss Arts Center at Virgia Tech which yields an impressive 124.4 channel system.
 
-The fifth piece in this anthology \cite{hagan2017sound} titled \textit{He Slowly Fell, and Transformed into the Terrain} (2016) was composed by Natasha Barrett in sixth-order Ambisonics using IRCAM's Spat software. This piece is the longest from the collection lasting over 20 minutes. The composer applies HOA granular synthesis, a technique in which sounds are fragmented into thousands of smaller units for re-synthesis, applied to sound field recordings captured using a FOA commercial microphone. An interesting aspect of the work, not mentioned in the text, is the concept of privacy. Audio recordings taken in public are problematic as source material. Certain laws exist prohibiting artists to use these materials without permission. Through the use of granular synthesis, the material quality of voices is maintained, but the dialogue because unintelligible, making this a non-issue. \cite{barrett2016musical} also references the HOA granular synthesis unit developed at IRCAM. The system, titled \textit{Grandad} encodes each individual grain of sound in 9th-order ambisonic and can be heard in the second movement of \textit{Hidden Values} (2012), also by Barrett. 
+The fifth artist in the anthology \cite{hagan2017sound} is Natasha Barrett. Her piece \textit{He Slowly Fell, and Transformed into the Terrain} (2016) in sixth-order Ambisonics uses IRCAM's Spat software. This piece is the longest from the collection lasting over 20 minutes. The composer applies HOA granular synthesis, a technique in which sounds are fragmented into thousands of smaller units for re-synthesis, applied to sound field recordings captured using a FOA commercial microphone. An interesting aspect of the work, not mentioned in the text, is the concept of privacy. Audio recordings taken in public are problematic as source material. Certain laws exist prohibiting artists to use these materials without permission. Through the use of granular synthesis, the material quality of voices is maintained, but the dialogue because unintelligible, making this a non-issue. \cite{barrett2016musical} also references the HOA granular synthesis unit developed at IRCAM. The system, titled \textit{Grandad} encodes each individual grain of sound in 9th-order ambisonic and can be heard in the second movement of \textit{Hidden Values} (2012), also by Barrett. 
 
 \todo[inline]{Barrett has other papers that talk about her ambisonic pieces. We should add them to this paragraph.}
 
@@ -304,7 +300,8 @@ Ontologically, Sharma has framed his composition using the language of sculptors
 \subsubsection{Film}
 Multi-channel music is most popular in film and theatre settings. While XR devices remain relatively inaccessible for most of the world, it is common to see surround sound systems employed in movie theatres around the world. This has made formats like 5.1, and above, well-known to sound engineers, and patrons, around the world. 
 
-
+% see manolas-2009-cinematic-multichannel.pdf
+% see karagosian-1999-multichannel-film-sound.pdf 
 
 \subsubsection{Theatre}
 
@@ -332,12 +329,12 @@ Upthegrove \cite{upthegrove2019auragami} recently published a MFA thesis which d
     \item \textbf{Dante Virtual Soundcard}: a low-cost \textit{virtual} sound card which can be used in lieu of an audio interface in certain venues such as CPMC 122. \href{https://www.audinate.com/products/software/dante-virtual-soundcard?force=true}{Site.}
 \end{enumerate}
 
-Upthegrove also makes use of some other sound design tools worth highlighting presented here in a separate list since these are not spatial audio specific: 
+% Upthegrove also makes use of some other sound design tools worth highlighting presented here in a separate list since these are not spatial audio specific: 
 
-\begin{enumerate}
-    \item \textbf{SFZ Players}: is a file format to define how a collection of samples are arranged for performance. Most SFZ players are free and open Source. \href{https://sfzformat.com/}{Site.}
-    \item \textbf{SPEAR}: Sinusoidal Partial Editing Analysis and Re-synthesis software. Does not work on Linux unfortunately. Pd's \texttt{partialtracer} example serves a similar purpose. \href{http://www.klingbeil.com/spear/}{Site.}
-\end{enumerate}
+% \begin{enumerate}
+%     \item \textbf{SFZ Players}: is a file format to define how a collection of samples are arranged for performance. Most SFZ players are free and open Source. \href{https://sfzformat.com/}{Site.}
+%     \item \textbf{SPEAR}: Sinusoidal Partial Editing Analysis and Re-synthesis software. Does not work on Linux unfortunately. Pd's \texttt{partialtracer} example serves a similar purpose. \href{http://www.klingbeil.com/spear/}{Site.}
+% \end{enumerate}
 
 \subsection{Video games \& XR Experiences}
 %  http://www.visual-memory.co.uk/b_resources/Munday%202007%20Music%20In%20Video%20Games.pdf
@@ -394,7 +391,7 @@ Personalized HRTFs have been shown to improve localization, especially with rega
 \todo[inline]{Haven't talked about culling at all yet. see hacihabiboglu-2017-spat-audio-rec-sim-ren.pdf}
 
 
-\section{Open tools for spatial music}\label{sec:open_tools_spat_mus}
+\section{Open Tools for Spatial Music} \label{sec:open_tools_spat_mus}
 % This section will provide an overview of different existing tools for computer musicians which facilitate the creation of spatial music. We will focus on free and open source tools which work in conjunction with computer music languages such as Pd, SuperCollider, Csound, etc. 
 
 Composers interested in working with computers are well aware of the various different ecosystems existing for the creation of computer-music works. A short list of these systems include: Puredata (Pd), SuperCollider, csound, MAX/MSP, RTcmix, and ChucK. 
@@ -444,22 +441,171 @@ Institute for Electronic Music and Acoustics (IEM) in Graz, Austria, has develop
 
 Perhaps the most important of these benefits is the fact that ambisonic files can be uploaded and played back over the web in scenarios where asynchronous demonstrations of spatial music are needed. The second benefit, is that a rotation on a soundfield is a linear, non-destructive, transformation which allows us to easily binaurally audition our soundfield without the need for loudspeakers. Finally, there are
 
+\todo[inline]{According to pysiewicz-2016-spat-inst-chapter.pdf the label diffusion is specific to stereophonic sound projection and loudspeaker orchestras. However, in lynch-2017-engulfment.pdf it says "Sound diffusion refers to the practice of localizing and moving sound throughout a space using multiple loudspeakers." }
 
-\section{History of Spatial Instruments} \label{sec:spat_instruments}
-%older
-\section{Contemporary Spatial Instruments}
 
-This section will discuss the development of \textit{spatial instruments} in the 21st century. The term \textit{spatial instrument} refers to instruments which allow the user to manipulate spatial elements of sound. Spatial elements might include: direction, reverberance, width, etc. Traditional instruments generally allow the performer control over dynamics, pitch, and sometimes timbre. In contrast, \textit{spatial instrument} give the performer augmented control by allowing the user to modify the position of sound in space, whether that be for multi-channel sound reproduction or binaural synthesis\footnote{Virtual surround sound over headphones.}. 
-Many instruments of this nature have been developed over the last few decades due to the popularity of multi-channel reproduction in electro-acoustic music. The development of such instruments goes back to the 1950s in fact, with pioneering works by composers such as Pierre Schaeffer. In contrast to our common definition of instruments, many of the interfaces which will be described in this section do not produce sound at all. In fact, much of the development in Human Computer Interaction (HCI) related to this field has focused solely on the manipulation of sound in space as separate practice from mapping controls to sound synthesis methods.  
+\section{Spatial Instruments}
 
-\cite{pysiewicz2017instruments} presented a comprehensive ethnomusicological review of \textit{spatial instruments}. In that reference, the authors described a \textit{taxonomy} for the different types of spatial instruments. The three main categories from the 31 different spatialization interfaces found were: acoustic instruments extended to allow for spatial control, interfaces for the manipulation of spatial elements of sound only, and interfaces both for manipulation of spatial elements of sound as well as synthesis parameters. 
+This section will discuss the development of \textit{spatial instruments} in the 20th and 21st century. The term \textit{spatial instrument} refers to instruments which allow the user to manipulate spatial elements of sound. Spatial elements might include: direction, reverberance, width, etc. Traditional instruments generally allow the performer control over dynamics, pitch, and sometimes timbre. In contrast, \textit{spatial instrument} give the performer additional control, thus allowing the user to modify the position of sound in space whether that be for multi-channel sound reproduction or binaural synthesis\footnote{Virtual surround sound over headphones.}. 
 
-In the following sections we will describe some of the instruments created by pioneering composers from the early days of electro-acoustic music, as well as contemporary inventions which could lead to new compositional approaches. Our motivation is to understand the state-of-the-art and consider approaches which have not previously been undertaken. As we explore these different instruments we will expound upon their viability for an open-source approach to spatial music. 
+Many instruments of this nature have been developed over the last few decades due to the popularity of multi-channel reproduction in electro-acoustic music. The development of such instruments goes back to the 1950s, with pioneering works by composers such as Pierre Schaeffer. In contrast to our common definition of instruments, many of the interfaces which will be described in this section do not produce sound at all. In fact, much of the development in Human Computer Interaction (HCI) has focused solely on the manipulation of sounds in space as separate practice from mapping controls to sound synthesis methods.  
 
-\subsection{Controllers}
-\subsection{Augmented instruments}
-\subsection{Real-time spatial synthesis}
+\cite{pysiewicz2017instruments} presented a comprehensive ethnomusicological review of \textit{spatial instruments}. In that reference, the authors described a \textit{taxonomy} for the different types of spatial instruments. The five main categories from the 31 different spatialization interfaces found were: 
+
+\begin{enumerate}
+    \item \textbf{Instrument-like and augmented controllers:} simulating, inspired, or augmented with traditional/extended techniques. 
+    \item \textbf{Touch controllers:} haptic/tactile interfaces.
+    \item \textbf{Non-contact, extended range controllers:} free gestures in a limited sense range. 
+    \item \textbf{Wearable or immersive controllers:} gloves, suits, camera tracking; performer always in sensing range.
+    \item \textbf{Mixed controllers}
+\end{enumerate}
+
+Given the comprehensive work undertaken by Pysiewicz et al. we will adopt their taxonomy in our review. In addition, we will seek to integrate some examples that may be missing from the taxonomy based on research published since the aforementioned chapter was published. We strongly recommend Pysiewicz et al.'s chapter for anybody interested in spatial instrument design. In their paper, the authors further sub-divide instruments into three categories based on what spatial parameters they control. Given the ambiguity of these categorizations we have opted not to make such distinctions. One further classification however did seem useful: exclusive spatial control versus hybrid instruments featuring \textit{spatial-synthesis} \footnote{This categorization can be hard to demarcate. In general if one can entirely separate the composition process from the spatialization process, we could argue that the apparatus used for the diffusion of sound does not conform to our spatial-synthesis label.}. We will attempt to highlight spatial-synthesis instruments as we believe these constitute a more interesting family of instruments, rich with creative design possibilities for computer musicians.
+
+\subsection{Instrument-like and Augmented Controllers}
+
+This category refers to instruments which resemble typical musical instruments extended via the use of additional sensors. In this category Pysiewicz et al. only point out two instruments: 
+
+\begin{enumerate}
+    \item \textbf{DJ Spat:} by Marentakis et al. (2007) which extends the turntable by using motion-tracking sensors and haptic controls. The angular displacement of the performer's hand is mapped to the sound source position reproduced through a circular loudspeaker array. 
+    \item \textbf{Radiodrum:} by Ness et al. (2011), is an instrument used exclusively for spatialization inspired by the radiodrum developed at Bell Laboratories in the 80's. The radiodrum uses capacitive sensing to report the position of two batons in 3D space, as well as velocity when in percussion mode. It is also known as a \textit{radio baton.} Figure \ref{fig:baton} shows Max Matthews, one of the most important figures in computer music, holding a Radio Baton.
+\end{enumerate}
+
+\begin{figure}[ht!]%force figure here, top, strict
+\centering
+\includegraphics[width=0.5\textwidth]{img/mathews260.jpg} 
+%\captionsetup{justification=centering}
+\caption{Matthews waving Radio-Baton \cite{FileMath82online}}
+\label{fig:baton}
+%license: public domain
+\end{figure}
+
+Graham \cite{graham2014gesture} presented in 2014 an extended guitar with hexaphonic pick-ups\footnote{A special pick-up for electric guitar with discrete outputs for each string.} which uses a boids algorithm to spatialize sounds. The boids algorithm, developed by CW Reynolds, simulates the motion of flocks of birds. The discrete channels of the guitar output are also analyzed in Pd. Finally, the system includes the use of a Microsoft Xbox Kinect sensor, an infrared depth-sending device, which tracks the guitarists body.
+
+Werner \cite{wernerdevelopment} also published some literature on a similar project entitled GASP or Guitars with Ambisonics Spatial Performance in 2020. This project, from the University of Derby, supervised by Bruce Wiggins, does not use a kinect, but relies only on a MIDI footswitch controller and a hexaphonic pick-up (either the Ubertar hex passive pick-ups\footnote{http://www.ubertar.com/hexaphonic/} or the Cycfi Nu-Series\footnote{https://www.cycfi.com/projects/nu-series/}). One noteworthy element is the creation of a "Guitarpeggiator" which was implemented using gate switching. This allows the guitarist to play arpeggios on the guitar by simply strumming a chord. 
+
+Werner also notes that a cheaper version of this project, not relying on hexaphonic pickups, could be achieved using some frequency splitting\footnote{This might work in harmonic sections, but is unlikely to work in melodic phrasing. This is because the frequency range of individual each string might not cover the entire audible spectrum.}. The author's future work includes integrating the entire system into a single application. Currently it relies on mostly FOSS, with the except of the DAWs for ambisonic processing and MIDI event triggering (for the arpeggiation). 
+
+\subsection{Touch Controllers} %haptic/tactile
+
+This category refers to instruments which need to be physically interacted with, in a tactile fashion, for operation. This can include touch screen like those found in tablets or something simpler like a potentiometer or button. Same of the earliest examples of spatial instruments made use of tactile interfaces, thus, a number of historical examples will be present in this section. Below we provide a list of some of the most noteworthy examples from \cite{pysiewicz2017instruments}.
+
+\begin{enumerate}
+    \item \textbf{Sal Mar Construction:} designed in the early 1970s by composer Salvatore Martirano (USA), the instrument is a analog/digital composition machine which featured 24 spatialized audio channels. Figure \ref{fig:sal-mar} depicts the instrument (photo courtesy of the University of Illinois).
+    
+    \item \textbf{Hybrid IV:} developed by Edward Kobrin\footnote{Very little information could be found online about Kobrin. \cite{kobrin1968solution} suggests he was American, since this work was conducted at Northwestern University, Evanston, Illinois.} in 1975, the systems sound-making components are analog but the score is composed using digital means. The multi-channel matrix provides 16 outputs. 
+    
+    \item \textbf{SSSP Sound Distribution System:} developed by Guy Fedorkow et al. in the late 70s at the University of Toronto, Ontario, Canada. In contrast to the two previous examples the system was modular in nature: the polyphonic sounds are synthesized by one module and controlled spatially by another. It also featured a keyboard, tablet, and 16 outputs. 
+\end{enumerate}
+
+\begin{figure}[ht!]%force figure here, top, strict
+\centering
+\includegraphics[width=0.5\textwidth]{img/sal-mar.jpg} 
+%\captionsetup{justification=centering}
+\caption{Sal Mar Construction \cite{FileTheS26online}}
+\label{fig:sal-mar}
+%license: This file is licensed under the Creative Commons Attribution 2.0 Generic license.	
+\end{figure}
+
+All three of these examples fall under the spatial-synthesis category, wherein synthesis and spatial control are integrated into a single instrument. The following examples are of instruments used exclusively for the spatial control of sound.
+
+% \todo[inline]{Don't exclude anything, but you don't need details on all the systems.}
+
+\begin{enumerate}
+
+    \item \textbf{HaLaPhon:} invented in the late 1960s by Hans-Peter Haller and Peter Laszlo, the instrument counted with switches and automation for the control of sound diffusion in circular arrangements by employing amplitude panning. The device evolved from analog to digital versions, all maintaining the overall concept.
+    
+    \item \textbf{Loudspeaker Orchestras:} there are multiple Loudspeaker Orchestras such as the Gmebaphone (1973) (also known as the Cybernephone), the Acousmonium (1974), and the BEAST System (1986). These all share portability as a key feature and an associated fader board system for spatialization. These instruments were developed at Bourges\footnote{France.}, Paris, and Birmingham respectively. The speaker arrangements are very specific, in contrast to other systems.
+    
+    \todo[inline]{Detail missing here. Composers. Pieces. Loudspeaker Orchestras is huge topic. There is a bit of overlap w/ Ch2 section on electro-acoustic music, try to not repeat yourself, cross-reference instead.}
+    
+    %% Don't exclude anything, but you don't need details on all the systems. I will make a small list of the things I leave out intentionally.
+    
+    % \item \textbf{TRAILS:} the Tempo Reale Audio Interactive Location System was created by Bernardini in 1989. It does not define specific speaker layouts.
+    
+    \item \textbf{Rotation Mill (Tonmühle:} was conceptualized in the 60's at the Technical University of Berlin and later used by Karlheinz Stockhausen for use at the Osaka World Expo in 1970. At the expo the rotational resistance device was patched to 50 loudspeakers surrounding the audience.
+    
+    %\item \textbf{Circular Relay Switch:} Leitner in 1971 %is this same as bernard leitner from installation works?
+    
+    \item \textbf{Spherical Sound Controller:} was also designed for the 1970 World Expo, this time for use in the West German pavilion. It was also created by the Electronic Music Studio at the Technically University of Berlin and "consisted of 50 sensor buttons, each representing a loudspeaker group in the spherical concert hall" \cite{pysiewicz2017instruments}. The instrument allowed sources to be projected and moved in space.
+    
+    %\item \textbf{MusicSpace}
+    
+    \item \textbf{Expanded Instrument System:} or EIS, for short, was developed by Pauline Oliveiros starting in 1963. It constitutes a performance environment that "intends to give performer control over the acoustic space" \cite{pysiewicz2017instruments}. EIS features: amplitude panning, delays, and a reverb unit, connected to an interface consisting of several footswitches.
+    
+\end{enumerate}
+
+The above list constitutes some historical examples of tactile interfaces for sound spatialization. Below we will continue with the category focusing on technologies developed in the 21st century\footnote{For sake brevity a few instruments have been left out of our list such as the: \textbf{TRAILS} (Bernardini 1989), \textbf{Circular Relay Switch} (Leitner 1971), and \textbf{MusicSpace} (Pachet and Delerue in 1999).}.
+
+\begin{enumerate}
+
+    \item \textbf{M2:} was created by Mooney in 2004 and presented as a modular diffusion system featuring digital rendering engine and a specifically designed fader board. The system allows for grouping of sound sources which could be a useful feature in these systems. For example one might group all percussive elements together and use a single fader to control their volume.
+    
+    \item \textbf{Multi-Touch Soundscape Renderer:} \cite{bredies2008multi} was created by Bredies et al. in 2008 and comprises of a multi-touch tabletop used for manipulation of sound objects rendered using WFS via a circular array of speakers. One of the noteworthy elements of this project is the ability for multiple people to interact with the tabletop at once. This particular tabletop was based on the Frustrated Total Internal Reflection (FTIR) technique \cite{han2005low}. The tabletop was built as a testing environment for the Soundscape Renderer\footnote{http://spatialaudio.net/ssr/} (SSR).
+    
+    \todo[inline]{reactable, audiopad, LEMUR, ISS Cube, Audiocube, IOSONO all in bredies2008multi (bibtex) } 
+    
+    \todo[inline]{johnson-2014-diffusing-diffusion.pdf}
+    
+    \item \textbf{Tactile.space:} is another similar project by Johnson and Kapur (2013) which was later expanded into a tablet-based system making it more portable and personalized. The \textbf{tactile.motion} tablet application uses amplitude panning sent via OSC to a main computer for sound spatialization. 
+    
+    \item \textbf{Sound Surfing Network:} is another mobile spatialization application this time presented by Park et al. (2013). The system is comprised of two cell-phone apps, one for the performer and one for the audience. The audience app "turns each smartphone into an element of the loudspeaker array" \cite{pysiewicz2017instruments}. Unfortunately, cell-phone speakers do not have particularly good frequency response. However, if these small cell-phone speakers were supplemented with an additional pair of bigger speakers, capable of reproducing some of the missing "low-end", this might be a noteworthy experience.
+    
+    \item \textbf{Sound Flinger:} is a haptic controller for spatial-synthesis control of sound. It was created in 2011 by Carlson et al. This simple design uses just two buttons and four faders to control a physical model in a quadraphonic system. The physical models are accomplished via Edgar Berdahl’s haptic object library \cite{berdahl2010hsp} and runs on a Beagleboard\footnote{https://beagleboard.org/} using a PlanetCCRMA distro\cite{lopez2005surviving}. From an informal survey, users reported the need for the instrument to have a visual representation of sound sources, in order to facilitate playing sounds in space.
+    
+\end{enumerate}
+
+\subsection{Non-contact, Extended Range Controllers} %free gestures
+
+This section corresponds to instruments which require to physical touch for their operation. This includes systems using either light sensitive receivers or electromagnetic sensors (aka. inductive capacitance). 
+
+\begin{enumerate}
+    \item \textbf{Photocell Mixer:} was developed in the 1960s by Frederic Rzewski (1968) and David Behrman (1967). Each composer developed their photocell mixer independently but they both shared the same principles. Panels with photocells are integrated into the signal circuit. Using a penlight, the user can assign signals to loudspeakers by reducing the resistance between components separated by the photoresistors\footnote{A photoresistor is a passive component that decreases resistance with respect to receiving luminosity on the component's sensitive surface.}. 
+    
+    \item \textbf{Light-Emitting Pen Controller:} was developed by Brown et al. in 2005. In their approach light-emitting pens are captured and tracked in space using computer vision algorithms. Their particular implementation made use of the Jitter visual programming environment included with Cycling 74's MAX/MSP\footnote{https://cycling74.com/products/max/}. 
+    
+    \item \textbf{Grainstick:} was created by Leslie et al. at IRCAM in 2010 and shows a multi-modal approach to controller systems which employs both infrared motion tracking and accelerometer data. Each grainstick has a number of reflective balls which can be tracked by the infrared sensors in space. The data from both the infrared capture and the accelerometer (from the Wiimote) is used to drive a granular synthesis system using WFS. The synthesis is accomplished using the CataRT Library for MAX/MSP \footnote{http://ismm.ircam.fr/catart/}. There is also some gesture analysis applied to the accelerometer data via the Jamoma\footnote{http://www.jamoma.org/} framework. This instrument also fits within our spatial-synthesis category since each grainstick controls both spatialization and synthesis parameters.
+    
+    \item \textbf{Pupitre d'Espace:} is perhaps the oldest of all the instruments in our list. It was developed by Pierre Schaeffer in 1952 and operated on the basis of electromagnetic inductance. Four induction coils are mounted around the performer as receiver rings. One additional coil is held in the hand of the performer. The distance between the receiver rings and the moving coil in the performer's hand induces four currents which are used to control the amplitude of four speakers. 
+    
+    \item \textbf{NAISA:}
+    \item \textbf{Gesture Controller for a WFS System}:
+    
+    \item \textbf{Holistic Spatialisation System for Multiple Sound Sources:} (HSSMSS) is a controller presented by Diatkine et al. in 2015, which makes use of a "short-range infrared sensor" capable of tracking hand gestures and mapping these to musical parameters. The system relies on HOA for the spatialization of sound sources, a LeapMotion\footnote{https://developer.leapmotion.com/} controller, and MAX/MSP as the main environment. It also supports binaural synthesis with head-tracking for auditioning of sound-fields via the \texttt{Sarcoder\~} MAX/MSP external.
+\end{enumerate}
+
+\subsection{Wearables or Immersive Controllers} %always in sensing range
+
+
+\subsection{Mixed Controllers} %no definition
+
+
+\subsection{VRMIs}
+\todo[inline]{For now I am using a separate category. I have to go back and integrate.}
+
+Virtual Reality Musical Instruments (VRMI) (serafin-2016-vr-inst.pdf) constitute a new type of musical instrument that include simulated visual data shown using a HMD or CAVE system. Serafin et al. hypothesize two reasons why perhaps these instruments have been paid less attention:
+
+\begin{enumerate}
+    \item Musicians generally rely on sound and touch for performing on their instruments.
+    \item Devices providing visual feedback that are both low-cost and portable have only recently become available (ie. Oculus HMDs). 
+\end{enumerate}
+
+VRMIs, according to the authors, is limited to visual feedback via an immersive system. In other words, 2D projection of 3D environments is not considered sufficient for an instrument to be considered a VRMI. These multi-modal virtual musical instruments (VMI) are also interesting and often spatial, but not part of a true VR system.
+
+One of the challenging aspects of these instruments is that it is hard for the audience to witness the performance, since the musician is donning a HMD offering a personalized experience. It is possible to project a \textit{monoscopic} view of the performers action, however, the discourse between musician and audience will be lost, to some extent, as the performer will have no sense of his or her surroundings. 
+
+\begin{enumerate}
+    \item \textbf{CORDIS-ANIMA:} (Cadoz et al. 1993) this system has never been strictly used as a VRMI but it has all the elements necessary to create a sophisticated VRMI. Namely, it features physical models for both auditory and visual phenomena. 
+    
+    \item \textbf{}
+    
+\end{enumerate}
+
+In addition to providing a survey of some VRMIs, Serafin et al. (serafin-2016-vr-inst.pdf) also provide some guiding principles for VRMI design. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Open Tools for Spatial Instruments}
+
 \section{The Future of Spatial Music \& Instruments}
 
 \section{Conclusion}
