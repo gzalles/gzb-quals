@@ -215,9 +215,33 @@ In order to perform the binaural synthesis required for immersive VAE recreation
 
 There are several implementations of binaural spatial audio online. Among them, the most popular open-source solution is Resonance. In \cite{gorzel2019efficient}, Gorzel describes some techniques to optimize HOA playback. Firstly, the author describes the implementation of a Look Up Table (LUT) instead of using $cos$ or $sin$ functions inside ones code. This way the spherical harmonic coefficients are pre-computed and can be retrieved based on the current angles of the sound source. In order to provide smooth transitions between coefficients well known interpolation schemes can be used. More importantly, however, this paper points out the possibility of exploiting spherical harmonic symmetries in order to reduce the memory requirements of the system. Gorzel points out that spherical harmonics have well-known symmetries making it possible to derive all coefficient from a single quadrant determined by the azimuth and elevation angle of the sound source. By simply calculating the front-left-top quadrant of the sphere, all the other values can be known by simply applying sign changes. 
 
+Another optimization undertaken by the authors involves reducing the number of convolutions required for binaural synthesis by assuming left/right hemispherical symmetry. Consider a sound source at 45\textdegree to the left of the subject with an elevation of 0\textdegree. If we were to simply swap the left and right channels then in essence it would be like presenting the sound source at 45\textdegree to the right of the subject. Of course, this assumes that the head is exactly symmetrical, which is not true. Further studies are required to see if these optimizations degrade the sound quality of the renderer in a substantive fashion. Another small optimization is the use of a single HRIR for sources with azimuth 0. Since the left and right channel are assumed to be symmetric, a single convolution is needed to process these sources. 
+
+
+
 \paragraph{JSAmbisonics}
 
 \paragraph{Web Audio API}
+
+\paragraph{HOAST}
+
+Deppisch et al. \cite{deppisch2020hoast} in 2020 published a paper describing the development of a Higher Order Ambisonic STreaming platform (HOAST). This collaboration between IEM, Aalto, Hofer Web Solutions and Zylia resulted in an open source\footnote{GNU GPLv3 licencese.} web player for 360\textdegree video and HOA. As the authors noted, most video players for this type of media only allow up to 2OA; most, in fact, only support FOA. The goal of this project was to create a video player capable of outputting up to 4OA with an associated VR video. 
+
+HOAST is built upon the already existing Web Audio API, which is compatible with most modern browsers. One of the problems with these systems is that despite their superior flexibility, there are still only certain browsers, in certain configurations, that support this type of media. Luckily, all the browsers are free to install and use. In the case of HOAST, Firefox and Chromium-based browsers are recommended. An additional issue is that, due to the infancy of this technology, there are still programming changes happening routinely, which means maintenance and support is required to maintain these applications operational. Deppisch et al., for example, describe the deprecation of \textit{ScriptProcessorNodes} for \textit{AudioWorklets}, which despite their superiority can cause glitches on some devices. 
+
+Another issue with HOAST, or any 360\textdegree video player with HOA for that matter, is the need of a large amount of data and processing power for a proper experience. This means that HOAST, as other players, might work well in some mobile devices but not all. They might also work relatively well on a laptop device but these do not provide as immersive an experience as HMDs. HOAST does however work on native VR HMDs such as on an Oculus Rift or an HTC Vive. 
+
+The Web Audio API\footnote{Application Programming Interface.} also has limits on the number of audio channels that it supports for audio nodes. According to the authors of HOAST: "all Web Audio API implementations establish a 32-channel limit". This in turn limits the Ambisonic audio to 4OA, which requires 25 channels. 
+
+\subparagraph{CODECs, Containers, and Signal Flow}
+
+In order to provide reasonable small file sizes a number of different compression algorithms were evaluated by Deppisch et al. The OPUS CODEC is one of the preferred compression systems for ambisonic audio on the web, given it's large channel count and open-source nature. Some other popular file types which allow for multi-channel audio files include: WAV, FLAC, AAC, and VORBIS. All major browsers support the OPUS codec, with the exclusion of Apple's Safari Browser (version 13.1). 
+
+After an audio CODEC is selected, the next step was to determine which streaming platform would be adopted. The authors in this case used MPEG-DASH player was selected due to it being codec-agnostic. MPEG-DASH is an \textit{adaptive streaming technology} which automatically adjusts media quality based on the uses available bandwidth to ensure smooth playback. The VP9 video codec\footnote{https://en.wikipedia.org/wiki/VP9} was also selected and the WebM container\footnote{https://en.wikipedia.org/wiki/WebM} for combining both audio and video. The actual ambisonic manipulation in JavaScript is accomplished using the JSAmbisonics implementation by Politis et al. 
+
+
+
+
 
 % https://immersive-web.github.io/webxr-samples/explainer.html
 
