@@ -347,20 +347,40 @@ Mobile AR also comes in these two styles: native and web-based. Since web-based 
 
 \paragraph{ARCore}
 
-ARCore is a Google product allowing one to create AR apps for Android or iOS. It can also integrate with Unity or Unreal. Its main features include motion tracking, environmental understanding and light estimation. One can also use the SDK for developping WebXR applications. There is also an Android \textit{Native Development Kit} (NDK) written in C. The following list describes in some more detail the features of this development library.
+ARCore is an open-source Google project allowing one to create AR apps for Android or iOS. It can also integrate with Unity or Unreal. Its main features include motion tracking, environmental understanding and light estimation. One can also use the SDK for developping WebXR applications. There is also an Android \textit{Native Development Kit} (NDK) written in C. The following list describes in some more detail the features of this development library.
 
 \begin{enumerate}
     \item \textbf{Motion tracking}: ARCore uses \textit{Simultaneous Localization And Mapping} (SLAM) to "understand where the phone is relative to the world around it" \cite{Fundamen38online}. The camera detects \textit{feature points} and combines the information with IMU data to estimate the position and orientation\footnote{In the API the combination of position and orientation is called \textit{pose}.}
     \item \textbf{Environmental understanding}: the library is also able to detect certain features such as planes from the cluster of data. It uses this information to place objects on flat surfaces. 
     \item \textbf{Depth understanding}: the system can create depth maps using RGB\footnote{Red, Green, Blue.} data from the main camera. 
-    \item \textit{Light estimation}: ARCore also detects and understand shadows, and attempts to shade virtual objects using natural shadows. This is done to improve the sense of realism. 
+    \item \textbf{Light estimation}: ARCore also detects and understand shadows, and attempts to shade virtual objects using natural shadows. This is done to improve the sense of realism. 
 \end{enumerate}
 
-In addition to this, the system allows for\textit{ user interaction}, \textit{oriented points}, \textit{anchors} and \textit{trackables}. In order to provide interactions \textit{hit testing} is provided. This casts a ray using the \textit{pose} of the mobile device and reports what objects, if any, have collided with the ray. The oriented points feature is used to place objects on angled surfaces. Anchors are positions where virtual objects are anchored, as the name suggests, while trackables are real world objects the system tracks over time. Finally, the library is also to augment 2D images and contains methods for \textit{cloud anchoring} which allows multiple "users have the same AR experience simultaneously".  
+\todo[inline]{More info on SLAM? Importing point-clouds to Unity?}
+
+In addition to this, the system allows for\textit{ user interaction}, \textit{oriented points}, \textit{anchors} and \textit{trackables}. In order to provide interactions \textit{hit testing} is provided. This casts a ray using the \textit{pose} of the mobile device and reports what objects, if any, have collided with the ray. The oriented points feature is used to place objects on angled surfaces. Anchors are positions where virtual objects are anchored, as the name suggests, while trackables are real world objects the system tracks over time. Finally, the library is also capable of \textit{augmenting 2D images} and contains methods for \textit{cloud anchoring} which allows multiple "users have the same AR experience simultaneously" \cite{Fundamen38online}.  
+
+\paragraph{ARKit}
+
+While not open-source, this SDK by Apple provides some insight into state-of-the-art systems that are already widely available and might inform the next generation of spatial instruments and systems. Many of the functionalities of ARCore can be found in ARKit. One of the big developments in the new line of iOS devices is the introduction of a \textit{LiDAR} scanner, which allows for more accurate spatial mapping. LiDAR, or "Light Detection And Ranging", is a method for determining distances by pointing lasers at one or more points, and measuring the time it takes for the reflected ray to return. According to Choi \cite{choi2017range}, the Kinect sensor mentioned earlier is a \textit{structured light} sensor, making subtly different than LiDAR\footnote{In fact, Kinect versions I and II use different mechanisms for 3D scanning. Kinect II uses a \textit{Time of Flight} (TOF) mechanism.}. Choi describes the principle behind LiDAR:
+
+\begin{quote}
+    "LiDAR systems use a single laser beam, which enables the sensing to measure the distances of far objects up to few kilometers because of the focused laser beam. To provide multiple 3D points of a scene, the laser beam can be scanned by a rotating mirror."
+\end{quote}
+
+Much like ARCore, anchors can be placed inside the scene to fix virtual objects. These anchors can be integrated with maps so objects can be placed around the world. The library also has facial tracking support for multiple people simultaneously and the ability to deploy collaborative sessions. One of the big limitations Apple however is the high cost of these devices and the proprietary nature of the code, which does not allow as much freedom to developers. Also, unlike ARCore, ARKit can only target iOS devices. 
 
 \subsection{The OS}
 
-How does the OS enable limit production of games?
+Before we move on to WebXR, which is OS-agnostic, we should talk about how different computer operating systems affect the ability to create and deploy XR experiences\footnote{Here we are referring to the OS of personal work computers not mobile devices.}. Many people who own and operate OSx know that the development of XR applications is currently limited in this OS. Most of the state-of-the-art GPUs needed to play or develop XR experiences unfortunately do not work with OSx. 
+
+Windows is the preferred OS for people working with XR and is the most supported out of the big three - Linux and its various flavors being the third major OS. Part of the reason for this is the cost of hardware and lack of customization for OSx. Apple has focused more of its attention on AR experiences for mobile devices and tablets. Linux at this point has very little support for XR experiences. The main problems with Linux are the drivers for the GPUs and proprietary software for XR which cannot be fixed by FOSS developers. 
+
+This perhaps is another great argument for prioritizing development in WebXR, rather than OS-specific software. However, it should be noted, the main issue with WebXR is the way programs are loaded. Instead of downloading executable files, WebXR requires temporary downloads which live in \textit{Random Access Memory} (RAM). This means that devices with less RAM will have trouble running these experiences smoothly. 
+
+% How does the OS enable limit production of games? Why can't we seem to develop VR in OSx? How about with Linux? 
+
+\todo[inline]{Middleware like FMOD and Wwise? What is SteamVR, is it also middleware?}
 
 \subsection{WebXR}
 
