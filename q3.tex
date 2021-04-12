@@ -266,11 +266,15 @@ Sensors refer to inputs the computer-system will receive in order to accurately 
 The number of controllers, or sensing systems, available today is exceedingly large. It would be impossible to list them all here. Instead we provide a short list of some additional popular sensors: 
 
 \begin{enumerate}
-    \item \textbf{The Leap Motion Controller}: is an infrared camera system used to detect and track human hands, including independent joint movements and fingers. It can be used in lieu of VR controllers. 
+    \item \textbf{The Leap Motion Controller}: is an infrared camera system used to detect and track human hands, including independent joint movements and fingers. It can be used in lieu of VR controllers.
+    
     \item \textbf{Microsoft Kinect}: is a camera and \textit{infrared} sensor system capable to performing depth mapping, and track entire bodies. It can be used to track body orientation and movement of large appendages. This is accomplished by projecting infrared light unto surfaces and capturing the reflection. 
+    
     \item \textbf{Game Controllers:} many people familiar with game controllers, such as those from Sony or Microsoft, prefer playing in VR using these standard controllers - over \textit{VR controllers} - even though some only provide 3DoF. An example of a game controller is the Sony DualSense Controller.
+    
     \item \textbf{MOCAP}: a MOtion CAPture systems, is similar to a Kinect, but capable of tracking bodies in a larger area, and uses multiple camera angles. This means that subjects do not need to face any particular direction. In order to track limbs, special suits which reflective balls are worn by subjects. These are specialized systems, and tend to be more costly than mass produced video game devices. 
-    \item \textit{VR Controllers}: in addition to the Sony Move Controller there are various designs by Oculus\footnote{A Facebook subsidiary.} and \href{https://www.htc.com/us/}{HTC}. Some other HMDs, especially those for MR, use cameras to track fingers, much like a leap motion would. 
+    \item \textbf{VR Controllers}: in addition to the Sony Move Controller there are various designs by Oculus\footnote{A Facebook subsidiary.} and \href{https://www.htc.com/us/}{HTC}. Some other HMDs, especially those for MR, use cameras to track fingers, much like a leap motion would. 
+    
     \item \textbf{Facial Tracking}: this type of input is more common in AR applications. The technology allows detection of faces and analyzes facial expressions. Digital masks or filters can follow the movements of the face. 
 \end{enumerate}
 
@@ -278,7 +282,7 @@ In addition to all these devices some people also opt to use a standard keyboard
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
-\includegraphics[width=0.5\textwidth]{img/mocap.jpg} 
+\includegraphics[width=0.75\textwidth]{img/mocap.jpg} 
 %\captionsetup{justification=centering}
 \caption{MOCAP System \cite{FileMoti99online}}
 %public domain
@@ -293,22 +297,40 @@ Certain successful designs exploit \textit{proprioception}, which is our sense o
 
 Once all the inputs and outputs are known, it is the task of the computer to analyze incoming data and present stimuli to the user via various displays. The capabilities of the computer will determine how much data it can analyze and how much data it can return. As we have noted, some cellphones are able to generate virtual worlds, however, because these have less powerful computing hardware, the graphic scenes generally need to be simpler. 
 
-Within the computing hardware, there are various sub-systems which work together to provide a smooth experience. The \textit{Graphical Processing Unit} (GPU), is responsible to \textit{rendering}\footnote{Calculating vertex, edge, and face positions, and subsequently displaying them. They also perform lighting and shadowing.} the graphical content. The \textit{Central Processing Unit} (CPU) is similar to the GPU, however, is not designed for graphics - instead it handles all the other calculations, commands and processed necessary. In some designs, a Micro-Controller Unit (MCU) is also used to handle inputs and relay the information to the CPU, which may be tethered to or inside the HMD.
+Within the computing hardware, there are various sub-systems which work together to provide a smooth experience. The \textit{Graphical Processing Unit} (GPU), is responsible to \textit{rendering}\footnote{Calculating vertex, edge, and face positions, and subsequently displaying them. They also perform lighting and shadowing.} the graphical content. The \textit{Central Processing Unit} (CPU) is similar to the GPU, however, is not designed for graphics - instead it handles all the other calculations, commands and processed necessary. In some designs, a \textit{Micro-Controller Unit} (MCU) is also used to handle inputs and relay the information to the CPU, which may be tethered to or inside the HMD.
 
 Some of the important factors to consider here are portability and also the ease of prototyping. When developers are creating these experiences, they need a way to quickly create environments and test them out. Wireless devices might prove more difficult to work with in this regard.  
 
+\todo[inline]{display interface chips?}
+
 \section{Software}
 
-% what am I doing?
-
-% Synthetic virtual world versus real virtual world. 
-% Simulataneous Localization and Mapping (SLAM)
-
-% matched zone = safe zone
-% locomotion
+Generally speaking, today, there are three main platforms that are \textit{targeted} by game developers. For each of these different targets, there are associated software libraries that allow us to create content. \textit{Game engines} are the most powerful of these three platforms. These software environments are designed to facilitate the creation and customization of video games and XR experiences. Secondly, there are mobile apps, for which there exist various different \textit{Software Development Kits} (SDKs) with different flavors depending on the operating system of the mobile device. Finally, there is \textit{WebXR}. This corresponds to applications that run on the browser, be it via a mobile phone, HMD, or a traditional computer - with a mouse, keyboard and monitor. Tredinnick et al. \cite{unicave2017} propose a plug-in for the game engine Unity, which allows one to use the software with "distributed immersive tiled or projection-based VR display systems", such as a CAVE.
 
 \subsection{Game Engines}
-Unity, Unreal, Godot, etc.
+% Unity, Unreal, Godot, etc.
+
+Game engines are software-development environments used to create video games or XR experiences. The core functionalities of these engines include:
+
+\begin{enumerate}
+    \item \textbf{3D graphics}: determines how objects are displayed on screen. It should, for example, consider vanishing point, occlusion and parallax. 
+    \item \textbf{Physics engine}: determines how light scatters, objects move, and other attempts to simulate real world physical behaviors. 
+    \item \textbf{Collision detection}: responsible for detecting contact between objects. 
+    \item \textbf{Sound}: this might include spatial audio systems, which simulate 360\textdegree \ sound using \textit{binaural} filters.
+    \item \textbf{Scripting}: the ability to customize behaviors based on developer needs. 
+    \item \textbf{Animation}: importing objects with built in movement behaviors. For example, a model of a bird with its wings flapping.
+\end{enumerate}
+
+Today, the most popular game engine is likely \href{https://unity.com/}{Unity} which is cross-platform\footnote{Works with multiple operating systems, including Linux.} and allows \textit{building}, or targeting, a multitude of platforms, including: Mac, Windows, WebGL, iOS, and WebGL - to name a few. Unfortunately, the license is proprietary - however it does offer exclusive support for educational purposes, making it a useful tool for pedagogical purposes. Another game engine that is gaining popularity, due to its open source nature, is \href{https://godotengine.org/}{Godot}. However, it is not as well-featured as Unity, given that it is much younger. Another popular game engine is \href{https://www.unrealengine.com/en-US/}{Unreal} which is commercial software but whose source is available online. 
+
+\subsection{Mobile XR}
+
+Mobile XR SDKs are used to develop apps and experiences which can be downloaded and run on cellphones. 
+
+\subsubsection{VR}
+
+\subsubsection{AR}
+
 
 \subsection{WebXR}
 
@@ -558,8 +580,8 @@ On the backend side the HOAST web application allows basic CRUD (Create, Read, U
 
 % However, most frameworks will also hide away the details of interacting with the WebXR API. That's generally great for users, but not terribly useful when the entire point of your code is to demonstrate how to use the API! At the same time, we don't want the WebXR logic to be obscured by hundreds of lines of WebGL calls. As a result, these samples make use of their own minimalistic rendering library that is specifically designed to highlight use of the WebXR API and de-emphasize the WebGL rendering logic. It is not recommended that you use this library in your own projects, as you will almost certainly be better served by one of the more popular, better established frameworks.
 
+\todo[inline]{Simultaneous Localization and Mapping (SLAM), 360 cameras, matched zone, locomotion}
 
-\subsection{Mobile XR}
 
 \section{Open XR Tools}
 
