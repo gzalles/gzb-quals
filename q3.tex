@@ -325,12 +325,19 @@ Today, the most popular game engine is likely \href{https://unity.com/}{Unity} w
 
 \subsection{Mobile XR}
 
-Mobile XR SDKs are used to develop apps and experiences which can be downloaded and run on cellphones. 
+Mobile XR SDKs are used to develop apps and experiences which can be downloaded and run on cellphones. Sometimes these experiences come in the form of 360\textdegree \ videos, other times the applications are graphical renderings of scenes composed in game engines. Various large technology companies, such as Google and Samsung, have created mobile XR development software. In the next few sections, we will explore some of these projects. It should be noted that, with the proliferation of standalone HMDs, mobile VR SDKs are beginning to lose support from these companies. We believe it is only a matter of time before most of these development platforms are entirely irrelevant in the VR ecosystem. Mobile AR SDKs are still being supported, and are finding new applications every day.
 
-\subsubsection{VR}
+\subsubsection{Mobile VR}
 
-\subsubsection{AR}
+Mobile VR SDKs are development kits used to create VR applications targeting mobile devices. The three most popular platform in this area are the: Google \textit{Cardboard}, Google \textit{Daydream}, and Samsung's \textit{Gear VR}. Each of these different platforms has different SDKs which allows users to create VR experiences for them. As we can see, all of these different platforms are proprietary and as a result there are limits to what developers can do with them. 
 
+Unfortunately for consumers, over the last few years mobile VR SDKs have lost a lot of support\footnote{Time of writing 2021.}. This is due to the fact that both Google and Oculus\footnote{Gear VR was a collaboration between Samsung and Oculus.} have transitioned into selling standalone HMDs. Fortunately, Google still supports the Cardboard environment to create VR experiences. Since the Daydream project and Gear VR project are now both considered \textit{legacy}\footnote{Outdated systems, in computer science parlance.} systems, we will discuss a bit here only about the Cardboard environment. 
+
+\paragraph{Cardboard SDK}
+
+The recent releases of the Cardboard SDK by Google allow developers to target iOS and Android devices. One can also use the SDK inside Unity if desired. The SDK is licensed under \href{https://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}. Given the simple nature of the Cardboard HMD, the \textit{Application Programming Interface} (API) only allows for monitoring the input of a single button. Naturally, the system internally perform motion tracking and stereoscopic rendering. Because of the interactive limitations of the system, most of the apps for this system are exploration or content viewing apps. One example of these is the \textit{Within VR} which features political, kids, and science 360\textdegree \ videos.
+
+\subsubsection{Mobile AR}
 
 \subsection{WebXR}
 
