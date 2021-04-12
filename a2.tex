@@ -1,11 +1,70 @@
-\chapter{Mathematics}
+\chapter{Mathematics} \label{ch:appendix-math}
 %a2 - featured in chapter 3
 
 \section{Coordinate System}
+
+The selected coordinate system in this text, specially with regards to discussions regarding ambisonics has the x-axis pointing to the front, the y-axis to the left, and the z-axis to the top. The azimuth angle is denoted with the letter $\phi$ and the elevation angle is denoted with the letter $\theta$. 
+
+$\phi$ increases counter-clockwise, contrary to our intuition. This is consistent with most ambisonic literature. The elevation $\theta$ increases upwards to +90\textdegree, which corresponds to the north pole, and decreases negatively to -90\textdegree, which corresponds to the south pole. 
+
+A triplet, describing the direction of an ambisonic sound source, in Cartesian coordinates, is calculated in Equation \ref{eq:cartesian-triplet}. In order to convert this Cartesian representation to a polar representation we may use Equation \ref{eq:car2pol-ambi}
+
+\begin{equation}
+\boldsymbol{\theta}=\left(\begin{array}{l}
+\theta_{x} \\
+\theta_{y} \\
+\theta_{z}
+\end{array}\right)=\left(\begin{array}{c}
+\cos \varphi \cos \vartheta \\
+\sin \varphi \cos \vartheta \\
+\sin \vartheta
+\end{array}\right)
+\label{eq:cartesian-triplet}
+\end{equation}
+
+\begin{equation}
+\varphi=\arctan \frac{\theta_{y}}{\theta_{x}}, \quad \vartheta=\arctan \frac{\theta_{z}}{\sqrt{\theta_{x}^{2}+\theta_{y}^{2}}}
+\label{eq:car2pol-ambi}
+\end{equation}
+
 \section{Spherical Bessel Functions of the First Kind}
+
 \section{Spherical Harmonics}
+
 \section{Associate Legendre Functions}
+
 \section{Spatial Soundfield Decomposition}
+
+\section{T-design}
+
+\section{Ambisonic Zoom} \label{sec:ambi-zoom}
+
+According to Deppisch \cite{deppisch2020hoast} ambisonic zoom is a combination of \textit{spatial windowing} and \textit{warping}. In the HOAST implementation, it is used to modify the soundfield in direct relation to video zooming. Namely, the ambisonic zoom and video are designed to work in conjunction seamlessly. 
+
+In order to achieve this spatial transform the scene is decoded to a dense set of points. The points are weighted and changed in angle before re-encoding to ambisonics \cite{kronlachner2014plug}. More generally, in order to achieve the desired zoom, the ambisonic points need to be spread out if we wish to zoom in, and pushed closer together if we wish to zoom out. 
+
+In HOAST \cite{deppisch2020hoast}, the transform matrices are computed in increments of 0.1 units for $\alpha$ ranging from 
+$[1,2.5]$ where $\alpha = 1$ corresponds to a $ \pm 60^{\circ} $ FOV. Unfortunately, the authors do not specify which warping equation is used. The spatial windowing is also not specified by the authors. 
+
+According to the author: "decoding the scene to the grid of t-design points with coordinates $\Theta_{P}$ spatial windowing using the diagonal matrix $G$ and re-encoding to the new points $\hat{\Theta}_{P}$ can be expressed as Equation \ref{eq:hoast-zoom}". 
+
+\begin{equation}
+\boldsymbol{T}(\alpha)=\boldsymbol{Y}\left(\hat{\boldsymbol{\Theta}}_{P}(\alpha)\right) \boldsymbol{G}(\alpha) \boldsymbol{Y}\left(\boldsymbol{\Theta}_{P}\right)^{\mathrm{T}}
+\label{eq:hoast-zoom}
+\end{equation}
+
+
+
+Kronlachner (kronlachner-spat-transf-ambi.pdf) paper uses formula (27) which warps sound sources towards and away from the equator. Given abbreviations:
+
+\begin{equation}
+\begin{array}{ll}
+\mu=\sin (\vartheta) & \text { original } \\
+\tilde{\mu}=\sin (\tilde{\vartheta}) & \text { warped}
+\end{array}
+\end{equation}
+
+\todo[inline]{Warping is complicated. I believe the way the HOAST paper does it is also different from other implementations.}
 
 % A soundfield within a source free region of space at a point $(r, \theta, \phi)$ with respect to an origin $O$ of the spherical coordinate system can be written as:
 

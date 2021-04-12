@@ -40,7 +40,7 @@
 % problem.
 \usepackage[paper=letterpaper]{geometry}
 
-\usepackage{todonotes} %gzb
+\usepackage[colorinlistoftodos]{todonotes} %gzb
 \usepackage{subcaption} %gzb
 %\usepackage{titlesec}
 \setcounter{tocdepth}{3}% Include \subsubsection in ToC
@@ -84,8 +84,8 @@
 % Note: This may not work correctly with all DVI viewers (i.e. Yap breaks).
 
 %hyperlinks package
-\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=black, citecolor=black, urlcolor=black,plainpages=false,pdfpagelabels]{hyperref}
-
+\usepackage[colorlinks=true, pdfstartview=FitV, linkcolor=blue, citecolor=blue, urlcolor=blue, plainpages=false, pdfpagelabels]{hyperref}
+     
 %metadata
 \hypersetup{ pdfauthor = {Gabriel Zalles Ballivian}, pdftitle = {quals}, pdfkeywords = {music, audio, spatial}, pdfcreator = {pdfLaTeX with hyperref package}, pdfproducer = {pdfLaTeX}}
 
@@ -189,7 +189,7 @@ Professor Smyth, Tamara\\
 \begin{vita}
   \item[2016] B.A. in Music, UC San Diego
   \item[2018] M.A. in Music, New York University
-  \item[2023] Ph.D. in Music, UC San Diego (hopefully)
+  \item[2023] Ph.D. in Music, UC San Diego (expected)
 \end{vita}
 
 \begin{publications}
@@ -233,9 +233,11 @@ Professor Smyth, Tamara\\
 % record the results in 3D audio. CH3
 % publish with spatial attributes. CH4
 
+\listoftodos %list of todos 
 
 %intro 
-\include{q0}
+%\include{q0}
+
 %spatial music  (live) [CREATION]
 \include{q1} 
 %spatial audio (fixed-media) [REC/REPRODUCTION]
@@ -243,7 +245,7 @@ Professor Smyth, Tamara\\
 %xr (open-loop/closed-loop) [DISTRIBUTION]
 \include{q3}
 %conclusion
-\include{q4}
+%\include{q4}
 
 \appendix
 
@@ -251,9 +253,9 @@ Professor Smyth, Tamara\\
 \include{a2}%appendix for math (equations) related to ch2
 \include{a3}%appendix for cse (code) related to ch3
 
-\include{p1}%proposal TRE - NIME
-\include{p2}%proposal TRS - AES
-\include{p3}%proposal SDY - ICMC
+% \include{p1}%proposal TRE - NIME
+% \include{p2}%proposal TRS - AES
+% \include{p3}%proposal SDY - ICMC
 
 %% END MATTER
  \printindex %% Uncomment to display the index

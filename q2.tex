@@ -7,7 +7,7 @@ In this chapter, we will shift the focus from spatial music to spatial audio. We
 
 In particular, this chapter will focus on the main technology this author is concerned with: ambisonics. One of the major benefits of ambisonics is the \textit{isotropic}\footnote{Identical in all directions; invariant concerning direction. In an ambisonic context, this means the sound field can be reproduced in whatever sound system is available.} nature of the design, which makes it more flexible than surround sound standards such as 5.1. Ambisonics has a long-established tradition in the spatial audio community and as such, a myriad of open source tools have already been developed for its usage. These tools make it more accessible in many ways that \textit{object-based audio} (OBA) ecosystems, most of which are proprietary and closed-source. With the proliferation of systems for binaural rendering, ambisonics has resurfaced as a reliable method for spatial audio reproduction, especially in XR environments.
 
-In addition to listing and demystifying the different spatial audio technologies available today for playback, we will suggest engineering approaches for the capture of spatial sound towards asynchronous dissemination using open-source technologies. We will focus on spatial audio recording techniques and describe systems based on freely available software for mixing spatial audio which can later be used in immersive environments such as the ones described in Chapter \ref{ch:xr-mus}. In contrast to Chapter \ref{ch:spat-mus}, which outlines technologies which are better suited for real-time performances with musicians, in this chapter we will focus more on tools for creating \textit{fixed-media} works.
+In addition to listing and demystifying the different spatial audio technologies available today for playback, we will suggest engineering approaches for the capture of spatial sound, which can be leveraged towards asynchronous or synchronous dissemination. In particular we will focus on FOSS as in the rest of this text. These spatial audio recordings can later be used in immersive environments such as the ones described in Chapter \ref{ch:xr-mus}. In contrast to Chapter \ref{ch:spat-mus}, which outlines technologies which are better suited for real-time performances with musicians, in this chapter we will highlight tools for creating \textit{fixed-media} works, such as videos or movies.
 
 \section{History of Spatial Audio Capture \& Reproduction}
 
@@ -23,15 +23,15 @@ The invention of the telephone, in 1876, by Alexander Graham Bell\footnote{Scott
 \label{fig:theatrophone}
 \end{figure}
 
-A few years after the invention of recorded sound, Clément Ader\footnote{Ader (2 April 1841 – 3 May 1925) was a French inventor and engineer from Toulouse.}, best known for his work in aviation systems, would present the \textit{théâtrophone}, a "system of telephonic transmission where listeners received a separate channel for each ear, enabling \textit{stereophonic} perception of actors on a set" during opera performances - Ader presented his prototype at the Paris Exhibition for Electricity in 1881 \cite{malham19953}. Figure \ref{fig:theatrophone} shows a picture of the device; in the image, can see the two receivers which would be placed at the listeners ears for stereophonic, two-channel, playback. The writing on the image also shows the cost for the audience member, which was 10 minutes for one franc, or 5 minutes, for 50 cents. This device should not be confused with the additive synthesizer entitled \textit{Telharmonium} (1896) by Cahill, described in Chapter \ref{ch:spat-mus}. While both devices were used for long-distance music transmission, the théâtrophone was based on transmission of microphone signals, as opposed to synthesis of musical tones via electric means. 
+A few years after the invention of the phonograph, Clément Ader\footnote{Ader (2 April 1841 – 3 May 1925) was a French inventor and engineer from Toulouse.}, best known for his work in aviation systems, would present the \textit{théâtrophone}: a "system of telephonic transmission where listeners received a separate channel for each ear, enabling \textit{stereophonic} perception of actors on a set". Ader presented his prototype at the Paris Exhibition for Electricity in 1881 \cite{malham19953}. Figure \ref{fig:theatrophone} shows a picture of the device; in the image, one can see the two receivers which would be placed at the listeners ears for stereophonic playback. The writing on the image also shows the cost for the audience member, which was 10 minutes for one franc, or 5 minutes, for 50 cents. This device should not be confused with the additive synthesizer entitled \textit{Telharmonium} (1896) by Cahill, described in Chapter \ref{ch:spat-mus}. While both devices were used for long-distance music transmission, the théâtrophone was based on transmission of microphone signals, as opposed to synthesis of musical tones via electric means. 
 
 Decades would pass before any new major developments in the field would occur, but eventually, in the 1920's, Harvey Fletcher\footnote{Fletcher (September 11, 1884 – July 23, 1981) was an American physicist. He is known as the "father of stereophonic sound".}, from Bell Telephone Laboratories\footnote{Bell labs has an important place in computer music history. It is where Max Mathews wrote the first computer music language, MUSIC-N.}, developed one of the first binaural recording systems. This system used the anatomy of the head to naturally embed spatial attributes of sound to recordings \cite{harvey1927binaural}. It would not be, however, until 1933, at the Chicago Century of Progress Exhibition, that binaural recordings would first be introduced to the public. 
 
-Fletcher is believed to also be responsible for the first public demonstration of stereophonic sound, which took place in 1934 in New York City. Bell Telephone Laboratories, along with Fletcher, is also accredited for, in the 20's, being the first American institutions to research what is known today as wave-field synthesis (WFS): a system which captures a "wall of sound", using an array of microphones, and then consequently plays it back, using an array of speakers. In other words, engineers would mount a curtain of microphones and then reproduce the recorded signals using a curtain of speakers of similar proportions\cite{fletcher1942hearing}\footnote{While Fletcher would be one of the first to describe the idea of WFS in 1942, it would not be until 1988 that Berkhout would propose the mathematics involved in WFS to transform a single sound source into a wall of sound using a synthesis approach.}.
+Fletcher is believed to also be responsible for the first public demonstration of stereophonic sound, which took place in 1934 in New York City. Bell Telephone Laboratories, along with Fletcher, is also accredited for, in the 20's, being the first American institutions to research what is known today as \textit{Wave Field Synthesis} (WFS): a system which captures a "wall of sound", using an array of microphones, and then consequently plays it back - using an array of speakers \cite{fletcher1942hearing}\footnote{While Fletcher would be one of the first to describe the idea of WFS in 1942, it would not be until 1988 that Berkhout would propose the mathematics involved in WFS to transform a single sound source into a wall of sound using a synthesis approach.}.
 
-Later, in 1933, Fletcher also demonstrated the possibilities of long-distance multi-channel sound transmission\footnote{We shall consider channel counts above 2 as multi-channel.}. In a collaboration with English conductor Leopold Stokowski\footnote{Leopold (18 April 1882 – 13 September 1977) was a British conductor of mixed Polish and Irish descent.}, considered one of the first stereo control-board operators\cite{mcginn1983stokowski}, Harvey and other Bell Lab engineers put together a system which transmitted the sound of an orchestra in Philadelphia via three microphones placed on stage to three corresponding loudspeakers in Washington DC's Constitution Hall. Bell Labs and Stokowski would go on to collaborate on numerous events in the 40's. Around the same time Alan Blumlein, an American engineer, was working on a much simpler yet powerful spatial audio technique: high-fidelity stereophony. 
+Later, in 1933, Fletcher also demonstrated the possibilities of long-distance multi-channel sound transmission. In a collaboration with English conductor Leopold Stokowski\footnote{Leopold (18 April 1882 – 13 September 1977) was a British conductor of mixed Polish and Irish descent.}, considered one of the first stereo control-board operators\cite{mcginn1983stokowski}, Harvey and other Bell Lab engineers put together a system which transmitted the sound of an orchestra in Philadelphia via three microphones placed on stage to three corresponding loudspeakers in Washington DC's Constitution Hall. Bell Labs and Stokowski would go on to collaborate on numerous events in the 40's. 
 
-Blumlein's most important contribution to the field of spatial audio is perhaps his mid-side (MS) encoding technique, patented in 1931 \cite{billingsley1987simulated}. This technique allowed audio engineers to mix stereo and mono information, towards spread control, by adding and subtracting signals with equal or inverted phases. The technique was later expanded by Michael Gerzon\footnote{British mathematician and sound engineer.} to develop the first First Order Ambisonic\footnote{Also known as a tetrahedral or sound-field microphone.} (FOA) microphone. Blumlein's idea consisted of taking the output of a \textit{figure-8} microphone and summing it with an \textit{omni-directional} microphone. A second copy of the figure-8 microphone would be phase inverted. The result were two cardioid like patterns with the same orientation as the stereo-speaker arrangement. Figure \ref{fig:ms_stereo} shows the general set-up for the MS stereo recording technique, note the panning on the two copies of the figure-8 microphone. 
+Around the same time Alan Blumlein, an American engineer, was working on a much simpler yet powerful spatial audio technique: high-fidelity stereophony. Blumlein's most important contribution to the field of spatial audio is perhaps his \textit{Mid/Side} (MS) encoding technique, which he patented in 1931 \cite{billingsley1987simulated}. This technique provided audio engineers with stereo width control by mixing microphone signals with different patterns, polarities, and gains. Blumlein's design consisted of taking the output of a \textit{figure-8} microphone and summing it with an \textit{omni-directional} microphone. A second copy of the figure-8 microphone would be phase inverted. The result were two cardioid like patterns with the same orientation as the stereo-speaker arrangement. Figure \ref{fig:ms_stereo} shows the general set-up for the MS stereo recording technique\footnote{Note the panning on the two copies of the figure-8 microphone.}. The technique was later expanded by Michael Gerzon\footnote{British mathematician and sound engineer.}, in the 1970's, to develop the first \textit{First Order Ambisonic}\footnote{Also known as a tetrahedral or sound-field microphone.} (FOA) microphone, which constitutes one of the first multi-channel recording systems.  
 
 \begin{figure}[h!]%force figure here, top, strict
 \centering
@@ -41,35 +41,37 @@ Blumlein's most important contribution to the field of spatial audio is perhaps 
 \caption{Mid-Side Stereo \cite{ms_stereo_pic}}
 \end{figure}
 
-Later, in 1940, Leopold Stokowski, RCA, and Disney, would release the film \textit{Fantasia}, which featured a system called \textit{Fantasound}. The control system they designed allowed audio tracks to be panned to any of 10 loudspeakers \cite{klapholz1991fantasia}. This lead to an era of development in professional film systems with standards such a 5.1 surround sound (eventually) becoming widely popular. Moderate improvements to sound quality and storage capacity were achieved from 1940 to 1970.
+In 1940, a few years after Blumlein's patent, Leopold Stokowski, RCA, and Disney, released the film \textit{Fantasia}, which featured a system called \textit{Fantasound}. The control system they designed allowed audio tracks to be panned to any of 10 loudspeakers \cite{klapholz1991fantasia}. Moderate improvements to sound quality and storage capacity were achieved from 1940 to 1970. 
 
-In the 1970's, a different and significantly more obscure technology was being developed: \textit{quadraphonic sound}. Quadraphonic research is believed to have begun at the Acoustic Research Corporation by Robert Berkovitz \cite{davis2003history}. The idea was to use two rear channels commercially to produce the ambience of the recording, and two front channels for direct sound - the most important being dialogue. Unfortunately, due to a number of: financial, engineering, and marketing issues, the system never gained much popularity. This technology did however inspire other breakthroughs.
+In the 1970's, a different and significantly more obscure technology was being developed: \textit{quadraphonic sound}. Quadraphonic research is believed to have begun at the \textit{Acoustic Research Corporation} by Robert Berkovitz \cite{davis2003history}. The idea was to use two rear channels to produce the ambience of the recording, and two front channels for direct sound - the most important being dialogue. Unfortunately, due to a number of: financial, engineering, and marketing issues, the system never gained much popularity. This technology did however inspire other breakthroughs.
 
-The development of encoding and decoding schemes for quadraphonic sound would eventually pique the interest of British mathematician Michael Gerzon\footnote{Gerzon (4 December 1945 – 6 May 1996) is probably best known for his work on Ambisonics and for his work on digital audio. He was also interested in free improvisation of music.}. Michael would, in 1969, present to the public a new audio capture method inspired by Alan Blumlein, and the rise in interest in quadraphonics. Gerzon proposed, provocatively, the use of a tetrahedral array for audio capture in which the four signals could be encoded into three coincident\footnote{Coincident here meaning placed close together.} figure-8 microphones. This system, Gerzon believed, could optimize the use of the four speakers by providing listeners with not only horizontal information, but also vertical sound. Unfortunately, the system suffered from a considerably small ideal listening area or \textit{sweet spot}\footnote{Higher Order Ambisonics (HOA), developed much later, in the 90's, has been shown to increase the size of the sweet spot.}, a fact which detracted many sound system engineers who were primarily concerned with audio for film theatres, which harbored large audiences.
+The development of encoding and decoding schemes for quadraphonic sound would eventually pique the interest of British mathematician Michael Gerzon\footnote{Gerzon (4 December 1945 – 6 May 1996) is probably best known for his work on Ambisonics and audio systems. He was also interested in free improvisation in music.}. Michael would, in 1969, present to the public a new audio capture method inspired by Alan Blumlein, and the rise in interest in quadraphonics. Gerzon proposed, provocatively, the use of a tetrahedral array for audio capture in which the four signals could be encoded into three coincident\footnote{Coincident meaning placed close together.} figure-8 microphones. This system, Gerzon believed, could optimize the use of the four speakers by providing listeners with not only horizontal information, but also vertical sound. Unfortunately, the system suffered from a considerably small ideal listening area or \textit{sweet spot}\footnote{Higher Order Ambisonics (HOA), developed much later, in the 90's, has been shown to increase the size of the sweet spot.}, a fact which detracted many sound system engineers who were primarily concerned with immersive audio for large film theatres.
 
 Around the same time that Gerzon was presenting his FOA microphone to the world, Tom Horall, of what today is known as Acentech\footnote{\href{https://www.acentech.com/}{Acentech website link.} (Accessed: Mar 5, 2021)} decided to attempt to recreate the acoustics of the famous Boston Symphony Hall using an acoustical model. The system used tape delay techniques to achieve believable spatial sound. Using a dozen loudspeakers Horall was able to convince the listeners that they were actually being transported to the iconic hall. The system would later be commercialized in 1988 and become known as the Pioneer DSP-3000 \cite{davis2003history}. 
 
-Many other developments followed suit from the 80's to today. Perhaps the most popular of these being the aforementioned 5.1 surround sound system. Today, there is an ongoing battle regarding the future of spatial audio. Will headphones completely replace sound systems?  Companies are consistently looking for scalable and reliable solutions to improve sound quality for patrons. Unfortunately, many of these systems have suffered from their distinctly complicated set-up process or high costs. The quest for: simple, high-fidelity, three-dimensional sound; is one that will, likely, not end soon. 
+Many other developments followed suit from the 80's to today. Perhaps the most popular of these being the 5.1 surround sound system. Today, there is an ongoing battle regarding the future of spatial audio. Companies are consistently looking for scalable and reliable solutions to improve sound quality for patrons. Unfortunately, many of these systems have suffered from their distinctly complicated set-up process or high costs. The quest for: simple, high-fidelity, three-dimensional sound, continues. 
 
 %\subsection{Stereo Techniques}
 \subsection{Binaural Microphones}
 
 \textit{Binaural audio} and \textit{multi-channel stereophony} are the two most common spatial audio technologies. \textit{Binaural audio} has become increasingly popular for \textit{virtual reality} (VR) while \textit{multi-channel stereophony} can be found in home entertainment systems as well as automotive sound systems. Stereo, however, is still the prevailing reproduction format, which is why binaural microphones have gotten some interest as a means of "static" spatial audio reproduction. Others have written about \textit{transaural} sound systems, which reproduce \textit{binaural audio} over stereo sound systems. \textit{Transaural} reproduction is a niche system that has been gaining more interest in the community. The underlying technology, however, seems to remain limited to audiophiles and a number of select engineers working on it.
 
-In contrast to other spatial audio recording methods which rely on large arrays of microphones binaural recordings only use two microphones to encode spatial information into a stereo recording. Binaural recordings are either captured using a \textit{dummy-head}, a mannequin head with microphones inside its ears, or with \textit{in-ear} microphones placed inside a person's ear canals, to capture what they would normally listen to. By playing back these binaural recordings using headphones, ear-buds, or with stereo speakers using \textit{cross-talk cancellation} (XTC) filters\footnote{XTC is also referred to as \textit{transaural reproduction} in the literature.}, a person can sense a sonic space around them as it originally occurred. 
+In contrast to other spatial audio recording methods, which rely on large arrays of microphones, binaural recordings only use two microphones to encode spatial information into a stereo recording. Binaural recordings are either captured using a \textit{dummy-head}, a mannequin head with microphones inside its ears, or with \textit{in-ear} microphones placed inside a person's ear canals, to capture what they would normally listen to. They can also be synthesized using \textit{virtual surround sound} software applications, a subject we will cover in more detail later. By playing back these binaural recordings using headphones, ear-buds, or with stereo speakers - using \textit{cross-talk cancellation} (XTC) filters\footnote{XTC is also referred to as \textit{transaural reproduction} in the literature.} - a person can sense a sonic space around them as it originally occurred. 
 
-Unfortunately, some issues arise from this method. Firstly, people's heads and ears differ in size and shape, a fact which distorts the recordings ever so slightly breaking the illusion that one has been transported from their current location to the new auditory scene. Secondly, when the listener hears back the recording, they will be striped of rotational control. In other words, when they turn their heads, the sound will remain fixed in the same perspective as the original recording, and the illusion of immersion will be lost. This lack of \textit{auditory parallax} creates localization errors and \textit{internalization} of sound sources. Figure \ref{fig:dummy-head} shows a "dummy head" - a binaural microphone with two capsules placed inside the modeled pinnae, mimicking the behavior of the human cochlea\footnote{The biological structure in our inner ear where frequency analysis is performed.}. The \textit{pinnae} in these systems tends to be manufactured using a soft plastic such as silicone to mimic the absorption of human cartilage on sound.
+Unfortunately, some issues arise from this method. Firstly, people's heads and ears differ in size and shape, a fact which distorts the recordings ever so slightly breaking the illusion that one has been transported from their current location to the new auditory scene. Secondly, when the listener hears back the recording, they will be striped of \textit{rotational} control. In other words, when they turn their heads, the sound will remain fixed in the same perspective as the original recording.
+
+As a result, the illusion of immersion will be lost. The lack of \textit{auditory parallax}\footnote{Parallax is the effect whereby the position or direction of an object appears to differ when viewed from different positions.} creates localization errors and \textit{internalization} of sound sources. Internalization refers to the perception that sound sources originate from inside our heads, rather from external sources: this is the only logical conclusion since moving our heads does not change the sound-field. Figure \ref{fig:dummy-head} shows a "dummy head": a binaural microphone with two capsules placed inside the modeled \textit{pinnae}, mimicking the behavior of the human cochlea\footnote{The biological structure in our inner ear where frequency analysis is performed.}. The pinnae in these systems tends to be manufactured using a soft plastic such as silicone to mimic the absorption of human cartilage on sound.
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
 \includegraphics[width=0.7\textwidth]{img/dummy-head.jpg} 
 %\captionsetup{justification=centering}
-\label{fig:dummy-head}
 \caption{Dummy Head \cite{FileGeor45online}}
 % This file is licensed under the Creative Commons Attribution-Share Alike 2.0 Generic license.
+\label{fig:dummy-head}
 \end{figure}
 
-\textit{Binaural recordings} are not a particularly good representation of the desired sound-field resulting from a \textit{spatial music} work, however, they are crucial for the development of binaural synthesis systems, which ultimately can convey a more realistic representation of the musical work. Often, it becomes impractical to use a real human for HRTF sampling since the process can take quite a long time and human movements during acoustic sampling can lead to errors in the dataset. In this context, an anthropomorphic average of a human is better suited for the sampling task. Alternatively, the binaural impulse responses can be synthesized using acoustic models. \cite{algazi2002use}, for example, describes a head-and-torse model, or "snowman" model, to efficiently implement HRTF approximations towards real-time spatialization. 
+\textit{Binaural recordings} are not a particularly good representation of the desired sound-field resulting from a \textit{spatial music} work, however, they are crucial for the development of binaural synthesis systems, which ultimately can convey a more realistic representation of the musical work. Often, it becomes impractical to use a real human for \textit{Head Related Transfer Function} (HRTF)\footnote{Filters which simulate the effect of the human head on sound.} sampling, since the process can take a long time, and, human movements during acoustic sampling can lead to errors in the data-set. In this context, an anthropomorphic average of a human head, is better suited for the sampling task. Alternatively, the binaural impulse responses can be synthesized using acoustic models. Algazi et al. \cite{algazi2002use}, for example, describes a head-and-torso model, or "snowman" model, to efficiently implement HRTF approximations towards real-time spatialization. 
 
 \begin{equation} \label{eq:conv-hrir}
 \begin{array}{l}
@@ -78,15 +80,15 @@ x_{R}(n)=\sum_{p=1}^{P} x_{p}(n) * h_{R, \theta_{p}, \phi_{p}}(n)
 \end{array}
 \end{equation}
 
-\cite{hacihabiboglu2017perceptual} provides a simple equation for the \textit{auralization} of a virtual signal via convolution with two HRIRs. This is equivalent to the process of filtering the source $x_p$ with a filter whose frequency response would be identical to the Fast Fourier Transform (FFT) of $h_{R, \theta_{p}, \phi_{p}}$ and $h_{L, \theta_{p}, \phi_{p}}$ respectively. The topic of \textit{binaural synthesis} will be further discussed in later sections, as it is a primary area of interest.
+Hacihabiboglu et al. \cite{hacihabiboglu2017perceptual} provide a simple equation for the \textit{auralization} of a virtual signal via convolution with two HRIRs\footnote{Head Related Inpulse Responses, or HRTFs taken in diffuse-field conditions.}. This is equivalent to the process of filtering the source $x_p$ with a filter whose frequency response would be identical to the Fast Fourier Transform (FFT) of $h_{R, \theta_{p}, \phi_{p}}$ and $h_{L, \theta_{p}, \phi_{p}}$ respectively. The topic of \textit{binaural synthesis} will be discussed further in later sections, as it is a primary area of interest in modern 3D audio research.
 
-Binaural microphones are still very much in production today, and several moderate improvements have been made to them over the years. However, for the most part, these devices remain the same as they were 30 years ago. One interesting project, ellucidated by Johansson's \cite{johansson2019vr} idea of "dynamic HRTF" would be the development of a motorized Head and Torso Simulator (HATS) which allowed various neck angles to be simulated. To our knowledge, all the HATS have a fixed neck angle, but in the real world, sometimes we move our heads independently of our bodies to localize sound. Johansson suggests that future HRTF sets should include separate shoulder and head acoustic information.
+Binaural microphones are still very much in production today, and several moderate improvements have been made to them over the years. However, for the most part, these devices remain the same as they were 30 years ago. One interesting project, elucidated by Johansson's \cite{johansson2019vr} paper, is the idea of "dynamic HRTFs" data-sets, which would require the development of a motorized \textit{Head and Torso Simulator} (HATS). This would allow various neck angles to be simulated. To our knowledge, all the HATS have a fixed neck angle, but in the real world, sometimes we move our heads independently of our bodies to localize sound. Johansson suggests that future HRTF sets should include separate shoulder and head acoustic information.
 
-\subsection{Sound-field microphones}
+\subsection{Sound-field Microphones}
 
-First Order Ambisonic (FOA) microphones were developed initially in the 70's by Michael Gerzon, from Oxford's department of Mathematics, and Peter Fellgett, from the University of Reading \cite{elen1991whatever}, under the supervision of the National Research Development Corporation (NRDC) in England. Gerzon and Fellgett were indubitably inspired by Alan Blumlein's work in the field of stereophony. Blumlein was the pioneer of various audio technologies, chief among them a sum-and-difference matrix system which was capable of creating high quality stereo recordings. The \textit{Mid-Side} recording technique simply derives two cardioid patterns from the combination of one omni-directional microphone, closely positioned with a figure-8 microphone. Gerzon and Felgett had the notion that a 3D sound system could be created by adding 2 additional figure-8 microphones, each representing a different 3D axis (X, Y, Z). 
+\textit{First Order Ambisonic} (FOA) microphones were developed initially in the 70's by Michael Gerzon, from Oxford's department of Mathematics, and Peter Fellgett, from the University of Reading \cite{elen1991whatever}, under the supervision of the National Research Development Corporation (NRDC) in England. Gerzon and Fellgett were indubitably inspired by Alan Blumlein's work in the field of stereophony. Blumlein was the pioneer of various audio technologies, chief among them a sum-and-difference matrix system which was capable of creating high quality stereo recordings. The \textit{Mid-Side} recording technique simply derives two cardioid patterns from the combination of one omni-directional microphone, closely positioned with a figure-8 microphone. Gerzon and Felgett had the notion that a 3D sound system could be created by adding 2 additional figure-8 microphones, each representing a different 3D axis (X, Y, Z). 
 
-However, instead of using 3 figure-8 microphones, Gerzon and Fellgett went in the opposite direction: they figured out a way to derive these three microphones from four cardioid microphones, mounted on the faces of a tetrahedron. Consider Figure \ref{fig:foa-patt-n-mic}, on the left we can see the polar pattern of the FOA mic from a top view. On the right, we see a drawing of the actual microphone\footnote{Created by Yigal Kamel from "The Cooper Union for the Advancement of Science and Art".}. As we can see from this top view, three orthogonal figure-8 microphones can be derived from the sum and difference of these different microphones. For example, to derive the front-back microphone we sum the front capsules and subtract the back capsules. The sides will cancel out and we will be left with a figure-8 response. 
+However, instead of using 3 figure-8 microphones, Gerzon and Fellgett went in the opposite direction: they figured out a way to derive these three microphones from four cardioid microphones, mounted on the faces of a tetrahedron. Consider Figure \ref{fig:foa-patt-n-mic}: on the left, we can see the polar pattern of the FOA mic from a birds-eye view. On the right, we see a drawing of the actual microphone\footnote{Created by Yigal Kamel from "The Cooper Union for the Advancement of Science and Art".}. As we can see from this top view, three orthogonal figure-8 microphones can be derived from the sum and difference of these different microphones. For example, to derive the front-back microphone we sum the front capsules and subtract the back capsules. The sides will cancel out and we will be left with a figure-8 response. 
 
 \begin{figure}
 \centering
@@ -111,14 +113,18 @@ In addition to the three orthogonal figure-8 microphone signals, an additional o
 One of the main problems with ambisonics, or any surround sound reproduction system for that matter, is correct speaker placement. As Elen \cite{elen1991whatever} points out:
 
 \begin{quote}
-    Most readers, I am sure, have visited numerous friends who keep their stereo loudspeakers in some very odd places -- one channel behind the sofa and the other on top of the bookcase, for example. It’s hard enough to get people to put two speakers in sensible places for stereo -- what about four for surround sound?
+    "Most readers, I am sure, have visited numerous friends who keep their stereo loudspeakers in some very odd places -- one channel behind the sofa and the other on top of the bookcase, for example. It’s hard enough to get people to put two speakers in sensible places for stereo -- what about four for surround sound?"
 \end{quote}
 
-One could argue that a big part of the problem, in addition the the cost of these systems, is the fact that set-up can be far too complex for most consumers. Another problem, from the engineering perspective, can be the confusing naming and labeling of capsules, which is crucial to proper encoding. Furthermore, there needs to be harmony between the signal order in the encoder and decoder, otherwise the decoding will not work properly since, for example, an X channel can be confused with a Y channel. In this case, the source localization will be completely off, and the listener will likely not be satisfied. This problem is only exacerbated in HOA systems, which can contain dozens of ambisonic harmonics. 
+\subsubsection{Ordering and Normalization}
 
-One final consideration is the \textit{normalization} system used in the encoding of the signals. Normalization refers to the practice of weighting the different ambisonic channels such that the vectors will not only be orthogonal but also ortho-normal. That is, each component of the sound-field will represent the same the same amount of energy. The normalization should be matched between encoder and decoder, otherwise an excess of a particular signal might be introduced into each of the channels, distorting the balance between direct sound and diffuse sound. 
+Another problem, from the engineering perspective, can be the confusing naming and labeling of capsules, which is crucial to proper encoding. Furthermore, there needs to be harmony between the signal order in the encoder and decoder, otherwise the decoding will not work properly. For example, if an X channel is switched with a Y channel, the source localization will be completely off, and the listener will likely not be satisfied. This problem is only exacerbated in HOA systems, which can contain dozens of ambisonic harmonics. 
 
-Luckily, today we can rely on certain standards for \textit{ordering} or ambisonic channels and their normalization. Chief among these are the Furse-Malhalm (FuMa) ordering scheme and the ACN (Ambisonic Channel Number) scheme. For converting between these different "conventions" (including normalization and ordering) Kronlachner \cite{kronlachner2014plug} provides a free DAW-based plug-in. Table \ref{tab:ambi-ordering} shows a table with these two ordering schemes. 
+An additional consideration is the \textit{normalization} system used in the encoding of the signals. Normalization refers to the practice of weighting the different ambisonic channels such that the vectors will not only be \textit{orthogonal} but also \textit{ortho-normal}. That is, each component of the sound-field will represent the same amount of energy. The normalization should be matched between encoder and decoder, otherwise an excess of a particular signal might be introduced into each of the channels, distorting the balance between direct sound and diffuse sound. 
+
+\todo[inline]{define orthogonal and orthonormal?}
+
+Luckily, today we can rely on certain standards for \textit{ordering} of ambisonic channels and their normalization. Chief among these are the \textit{Furse-Malhalm} (FuMa) ordering scheme and the \textit{ACN} (Ambisonic Channel Number) scheme. For converting between these different "conventions" (including normalization and ordering) Kronlachner \cite{kronlachner2014plug} provides a free DAW-based plug-in. These are useful for example if one's publishing platform\footnote{Ie. Youtube, Vimeo, Facebook.} only supports one ordering style. Table \ref{tab:ambi-ordering} shows these two ordering schemes. 
 
 \todo[inline]{add citation for fuma and acn ordering?}
 
@@ -148,17 +154,27 @@ Luckily, today we can rely on certain standards for \textit{ordering} or ambison
     \label{tab:ambi-ordering}
 \end{center}
 
-At this point, FuMa and the maxN normalization scheme it used seem to be unsupported. Developers are instead focusing on the Ambix format which consists of the ACN ordering scheme and Schmidt semi-normalized harmonics (SN3D normalization). We included the FuMa ordering for completeness but we hope in a few years the ordering scheme will be entirely defunct because these discrepancies in ordering are part of what detracts more developers from working with ambisonics. The following equation shows the SN3D normalization, according to Gorzel's 2019 (citation) paper on the implementation of Resonance\footnote{Resonance is an open-source Google product for ambisonic manipulation.}. 
+At this point, FuMa, and the \textit{maxN} normalization scheme it used, seem to be mostly unsupported. Developers are instead focusing on the Ambix format which consists of the ACN ordering scheme and \textit{Schmidt semi-normalized} harmonics format (SN3D). We included the FuMa ordering for completeness, but we hope in a few years the ordering scheme will be entirely defunct. These discrepancies in ordering are part of what detracts more developers from working with ambisonics. The following equation shows the SN3D normalization, according to Gorzel's 2019 \cite{gorzel2019efficient} paper on the implementation of Resonance\footnote{Resonance is an open-source Google product for ambisonic manipulation.}. 
 
 \begin{equation}
 N_{n}^{|m|}=\sqrt{\left(2-\delta_{m}\right) \frac{(n-|m|) !}{(n+|m|) !}}
 \end{equation}
 
-Where $\delta_m = 1$ for $m$ = 0, and 0 otherwise. In the Ambix specification paper, one should note there is a $1/4\pi$ term that is ignored in our formula. Ultimately, if we treat this term as a scalar, since it is independent of \textit{ambisonic order} ($n$), or \textit{ambisonic degree} ($m$), we can see that it can justifiably be omitted. 
+Another normalization standard is the N3D normalization scheme. The N3D normalization standard is defined by the following equation \cite{politis2016jsambisonics}:
 
-In mathematics and physics, the order ($m$) and degree ($l$) of spherical harmonics is the opposite of the ambisonic order ($n$) and ambisonic degree ($m$). In other words, the Ambisonic order is the mathematical degree of the spherical harmonic, and the Ambisonic \textit{degree} is the mathematical \textit{order} of the spherical harmonic. 
+\begin{equation}
+N_{n}^{|m|}= \sqrt{(2 n+1) \frac{(n-|m|) !}{(n+|m|) !}}
+\end{equation}
 
-% Or: $m$ = mathematical order = ambisonic degree = $m$, and $l$ = mathematical degree = ambisonic order = $n$.
+Where $\delta_m = 1$ for $m$ = 0, and 0 otherwise. In the Ambix specification paper \cite{nachbar2011ambix}, one should note there is a $1/4\pi$ term that is ignored in our formula. Ultimately, if we treat this term as a scalar, since it is independent of \textit{ambisonic order} ($n$), or \textit{ambisonic degree} ($m$), we can see that it can justifiably be omitted.
+
+\subsubsection{Ambisonic Degree and Order}
+
+In mathematics and physics, the order ($m$) and degree ($l$) of spherical harmonics is the opposite of the ambisonic order ($n$) and ambisonic degree ($m$). In other words, the Ambisonic order is the mathematical degree of the spherical harmonic, and the Ambisonic degree is the mathematical order of the spherical harmonic. 
+
+% $m$ = mathematical order = ambisonic degree = $m$, 
+% and
+% $l$ = mathematical degree = ambisonic order = $n$.
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
@@ -170,9 +186,9 @@ In mathematics and physics, the order ($m$) and degree ($l$) of spherical harmon
 
 Figure \ref{fig:sph-harm} shows a classic representation of spherical harmonics of increasing \textit{degree} ($l$), where the top harmonic has a degree of 0 and the bottom harmonic has a degree of $L$. The \textit{order} ($m$), in the mathematical sense, spans from negative to positive values and includes 0. 
 
-In order to avoid confusion when we refer to ambisonic order, we will always use the term ambisonic order (which would be mathematical degree). For example, in Figure \ref{fig:sph-harm}, the ambisonic order ($n$) increases from 0 to $N$, where the top harmonic has an ambisonic order of 0 and the bottom harmonic has an ambisonic order of $N$. The ambisonic degree ($m$) spans from negative to positive values and includes 0. 
+In order to avoid confusion when we refer to ambisonic order, we will always use the term \textit{ambisonic order}. For example, in Figure \ref{fig:sph-harm}, the ambisonic order ($n$) increases from 0 to $N$, where the top harmonic has an ambisonic order of 0 and the bottom harmonic has an ambisonic order of $N$. The ambisonic degree ($m$) spans from negative to positive values and includes 0. 
 
-Another confusing matter is that the 3D coordinate system used is not always the same across all these technologies, especially when we switch over to different spatial audio methods such as VBAP or OBA. For example, in SpatDIF, the azimuth angle increases clockwise and the X and Y axes are switched relative to the Ambix convention. 
+Another confusing matter is that the 3D coordinate system used is not always the same across all these technologies, especially when we switch over to different spatial audio methods such as VBAP or OBA. For example, in SpatDIF, the azimuth angle increases clockwise and the X, and Y, axes are switched relative to the Ambix convention. 
 
 In this text, when talking about ambisonics, we will use $\phi$ to denote the azimuth angle, increasing in the anti-clockwise direction, and $\theta$ to denote the elevation angle, increasing upwards to 90\textdegree. The x, y, and z axes point front, left and up respectively. The conversion between spherical and Cartesian coordinates is defined as: 
 
@@ -184,6 +200,8 @@ z=\|\vec{r}\| \sin (\theta)
 \end{array}
 \end{equation}
 
+\todo[inline]{define r.}
+
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
 \includegraphics[width=0.5\textwidth]{img/sph-coord.png}
@@ -192,17 +210,19 @@ z=\|\vec{r}\| \sin (\theta)
 \label{fig:sph-coord}
 \end{figure}
 
-Finally, as an introduction to the topic of ambisonics which will be elaborated upon in later sections, we also present equation \ref{eq:sph-harm} which is used to calculate real-valued \textit{spherical harmonics}.
+Finally, as an introduction to the topic of ambisonics which will be elaborated upon in later sections, we also present equation \ref{eq:r-sph-harm} which is used to calculate real-valued \textit{spherical harmonics}.
 
 \begin{equation}
 Y_{n}^{m}(\phi, \theta)=N_{n}^{|m|} P_{n}^{|m|}(\sin (\theta))\left\{\begin{array}{ll}
 \cos (|m| \phi) & \text { if } m \geq 0 \\
 \sin (|m| \phi) & \text { if } m<0
 \end{array}\right.
-\label{eq:sph-harm}
+\label{eq:r-sph-harm}
 \end{equation}
 
 where $P_{n}^{|m|}$ are the \textit{associated Legendre functions}. The associate Legendre functions are solutions to differential equations. Most authors use numerical libraries that have been pre-computed to calculate these, however, if we wanted to calculate these ourselves we could use the recurrence relation, and a first few given terms, to manually calculate these for any $l$ and $m$ we desire. Equation \ref{eq:legend-recur} shows the recurrence equation including the \textit{Condon-Shortley} phase term.
+
+\todo[inline]{say more about ass Leg Func}
 
 \begin{equation}
 (l-m) P_{l}^{m}(x)=x(2 l-1) P_{l-1}^{m}(x)-(l+m-1) P_{l-2}^{m}(x)
@@ -219,15 +239,24 @@ P_{1}^{1}(\sin \theta)=-\cos \theta
 \end{array}
 \end{equation}
 
-\cite{Associat51online} show these three initial conditions for $x = cos(\theta)$. We can use the general equations for $P_{n}^{|m|}(x)$ to find the first three values for $sin(\theta)$. The Pythagorean identity $\sin ^{2}(\theta)+\cos ^{2}(\theta)=1$ shows that $P_{1}^{1}(\sin \theta)=-\cos \theta$.
+\cite{Associat51online} show these three initial conditions for $x = cos(\theta)$. We can use the general equations for $P_{n}^{|m|}(x)$ to find the first three solutions to $P_{n}^{|m|}(\sin (\theta))$. The Pythagorean identity $\sin ^{2}(\theta)+\cos ^{2}(\theta)=1$ shows that $P_{1}^{1}(\sin \theta)=-\cos \theta$. Equation \ref{eq:general-legendre} shows the general formula for associated Legendre polynomials \cite{Associat51online}.
+
+\begin{equation}
+\begin{array}{l}
+P_{0}^{0}(x)=1 \\
+P_{1}^{0}(x)=x \\
+P_{1}^{1}(x)=-\left(1-x^{2}\right)^{1 / 2}
+\end{array}
+\label{eq:general-legendre}
+\end{equation}
 
 One unfortunate, final confusion, arises from the polarity of the spherical harmonics which are determined by the \textit{Condon-Shortley} phase term of $(-1)^m$. Equation \ref{eq:legend-recur} and initial conditions we showed both include this Condon-Shortley phase term. \cite{nachbar2011ambix} suggests removing the Condon-Shortley term in ambisonic software development, as it only really simplifies matters in the field of mechanics.
 
-Note that our third initial condition still satisfies the Pythagorean theorem if the Condon-Shortley phase gets removed. To prove this set $P_{1}^{1}(x)=+\left(1-x^{2}\right)^{1 / 2}$ equal to $-cos(theta)$. The sign of the term on the right is irrelevant as squaring both sides will make both sides positive. 
+Note that our third initial condition still satisfies the Pythagorean theorem if the Condon-Shortley phase gets removed. To prove this set $P_{1}^{1}(x)=+\left(1-x^{2}\right)^{1 / 2}$ equal to $-cos(\theta)$, where $x = sin(\theta)$. The sign of $P_{1}^{1}(x)=+\left(1-x^{2}\right)^{1 / 2}$ is irrelevant, since squaring both sides will force both sides of the equation to be positive. 
 
 In our numerical computing library, whichever we chose, we will have to make sure to compensate for this $(-1)^m$ term if it is included in the Legendre calculation. Alternatively, we can choose to write our own function that excludes the term. In order to compensate for the extra $(-1)^m$, we simply add another $(-1)^m$ to our recurrence equation. This will make all our harmonics of the same polarity, regardless of the value of $m$. 
 
-\subsection{Surround Sound}
+\subsection{Surround-Sound}
 % ITU standards, THX, MPEG-H, etc.
 
 \section{Contemporary Spatial Audio Capture Techniques} \label{sec:contemp_audio_capture}
@@ -275,8 +304,9 @@ The mid-side (MS) technique previously discussed is just one of several stereo t
 \centering
 \includegraphics[width=1.0\textwidth]{img/complete-spaced-arrays.jpeg} 
 %\captionsetup{justification=centering}
-\label{fig:c-spaced-arrays}
 \caption{Complete Spaced Arrays}
+\label{fig:c-spaced-arrays}
+
 \end{figure}
 
 \todo[inline]{The symbols I used for these drawings are not standard. Not sure if that is ok. The next list could use some detail and references.}
@@ -298,22 +328,26 @@ A secondary technique exists for multi-channel audio recordings which involves a
 \centering
 \includegraphics[width=1.0\textwidth]{img/front-n-rear-arrays.pdf} 
 %\captionsetup{justification=centering}
-\label{fig:fnr-arrays}
+
 \caption{Front and Rear Arrays}
+\label{fig:fnr-arrays}
 \end{figure}
 
 \subsection{Encoding Monophonic Sources}
 
 % The recording array from the grid mics are numbers 15+17, 18+20, and 27+30. Those mics are mixed in with the hanging ORTF pair, which moves from time to time. So that’s 6 available right now. 
 
-The same principle of ambisonic panning, formerly introduced as a technique for creating spatial representations in music, can be extended as a recording technique for 3D audio scene construction. In this approach, rather than specifying the positions of the desired sound source trajectories, we define for the encoder the positions of the statically placed microphones used for the recording. For example, within our experimental concert hall at CPMC, it is possible to define a template with the location of our fixed microphone locations, used routinely for concert recording. By placing the appropriate channels in the location tracks with the corresponding panners, we can render the recordings in a multi-channel format for playback over headphones or multi-channel speaker systems. Figure \ref{fig:cpmc122-mic-grid} shows the positions of 6 microphones typically used by our house engineers for multi-track recording. An additional ORTF pair located at the center of the grid is also included in the multi-track recordings, however, the position of this pair is not perpetually fixed\footnote{According to our house engineer.}. 
+The same principle of ambisonic panning, formerly introduced as a technique for creating spatial representations in music, can be extended as a recording technique for 3D audio scene construction. In this approach, rather than specifying the positions of the desired sound source trajectories, we define for the encoder the positions of the statically placed microphones used for the recording. 
+
+For example, within our experimental concert hall at CPMC, it is possible to define a template with the location of our fixed microphone locations, used routinely for concert recording. By placing the appropriate channels in the location tracks with the corresponding panners, we can render the recordings in a multi-channel format for playback over headphones or multi-channel speaker systems. Figure \ref{fig:cpmc122-mic-grid} shows the positions of 6 microphones typically used by our house engineers for multi-track recording. An additional ORTF pair located at the center of the grid is also included in the multi-track recordings, however, the position of this pair is not perpetually fixed\footnote{According to our house engineer.}. 
 
 \begin{figure}[h!]%force figure here, top, strict
 \centering
 \includegraphics[width=0.5\textwidth]{img/cpmc122-mics.jpg} 
 %\captionsetup{justification=centering}
-\label{fig:cpmc122-mic-grid}
 \caption{CPMC122 Microphone Grid - UCSD Dept. Music}
+\label{fig:cpmc122-mic-grid}
+
 \end{figure}
 
 A common technique implemented by recording engineers is combining multi-channel microphone arrays with fixed microphones. In the aforementioned case the 6 microphones are distant from our musicians and as a result they pick up sounds from all instruments on stage. In order to isolate sources, giving us more control in post-production, \textit{spot microphones} can be placed closer to the musicians. Ideally, the distances of all these fixed receivers are calculated in relation to the ideal listening position, both in terms of azimuth and elevation. 
@@ -323,9 +357,9 @@ A common technique implemented by recording engineers is combining multi-channel
 Of primary importance to our work is the development and optimization of coincident microphone arrays. Coincident microphone arrays come in various shape and sizes. The predominant characteristic of these devices is that proximity between sensors is minimized in order to improve localization estimations and the operating frequency \textit{virtual microphones} created by combinations of signals. There are three main types of coincident microphone arrays we were able to discern from the literature: spherical microphone arrays, studio microphone arrays, and planar microphone arrays. While most planar microphone arrays are not meant for high-quality studio recordings, we will nonetheless cover them here since many use similar operational conditions as the proposed HOA system being developed by the author. 
 \subsubsection{Planar Microphone Arrays}
 
-Planar microphone arrays are a subset of coincident microphone arrays which attempt to sample a sound-field using either a linear (one-dimensional arrays), or circular array (two-dimensional arrays). Most planar microphone arrays, although not all, fall under tha category of arrays for \textit{noise suppression}, as opposed to studio arrays for multi-channel recording. These devices tend to output a lower number of audio channel that is the sum of various sensors delayed based on the desired direction(s) of sound capture. 
+Planar microphone arrays are a subset of coincident microphone arrays which attempt to sample a sound-field using either a linear (one-dimensional arrays), or circular array (two-dimensional arrays). Most planar microphone arrays, although not all, fall under tha category of arrays for \textit{noise suppression}. In other words, they are not designed for multi-channel recording. Instead these devices tend to output a single audio channel that is the sum of various sensors delayed and amplified based on the desired direction(s) of sound capture. This is a technique called \textit{beamforming}, and is also applied to spherical microphone arrays.
 
-\cite{backman2006miniature} provides some insight into planar microphone arrays and their relationship to sound-field microphones. The author in that publication relies on Micro-Electrical Mechanical Systems (MEMS) capsules for his designs, much like in the authors own work. Backman suggests using multiple transducers to improve signal-to-noise ratio (SNR) and improve polar pattern control over the entire audio bandwidth (20Hz-20kHz). In a second paper \cite{backman2006gradient} the author expanded upon the theoretical work proposing a 5.1 planar array based on MEMS. Unfortunately, little information was presented regarding a 3D audio capture system - the designs described were predominantly for 2D audio. 
+\cite{backman2006miniature} provides some insight into planar microphone arrays and their relationship to sound-field microphones. The author in that publication relies on Micro-Electrical Mechanical Systems (MEMS) capsules for his designs, much like in our own work. Backman suggests using multiple transducers to improve signal-to-noise ratio (SNR) and improve polar pattern control over the entire audio bandwidth (20Hz-20kHz). In a second paper \cite{backman2006gradient} the author expanded upon the theoretical work proposing a 5.1 planar array based on MEMS. Unfortunately, little information was presented regarding a 3D audio capture system - the designs described were predominantly for 2D audio. 
 
 \todo[inline]{I want to come back to these Backman papers and add more detail. There are some useful equations there. Unless they are covered more clearly in other papers.}
 
@@ -349,7 +383,7 @@ where \\
     $\overline{\mathrm{L}}_{\mathrm{p}}=$ sound pressure level averaged over all angels $(\mathrm{dB})$ \\
     $(\theta, \phi)=$ some specified direction.
 
-\todo[inline]{Make sure you are consistent with phi and theta in your code.}
+\todo[inline]{Make sure you are consistent with phi and theta in your code. phi should be azi. and theta should be elev. Also, the formatting here is inconsistent. Consider using d}
 
 % \begin{equation}
 % \begin{array}{l}
@@ -360,7 +394,7 @@ where \\
 % \end{array}
 % \end{equation}
 
-WNG is a quality metric of beamforming algorithms. It is defined as the beaformer's ability to suppress spatialy uncorrelated noise. Note that self-noise and external white noise may be statistically indistinguishable, so WNG constraints should consider self-noise as well. Mismatch between sensor characteristics and position errors can also result in spatially white noise \cite{mabande2009design}.  
+WNG is a quality metric of beamforming algorithms. It is defined as the beaformer's ability to suppress spatialy uncorrelated noise. Note that self-noise and external white noise may be statistically indistinguishable, so WNG constraints should consider self-noise as well. Mismatch between sensor characteristics and position errors can also result in spatially white noise \cite{mabande2009design}. 
 
 \todo[inline]{middlicott 5 channel array, ambi, circular}
 
@@ -401,8 +435,13 @@ TH Köln\footnote{University of Applied Sciences is an institute of higher educa
 
 Simiarly to Gonzáles et al. this microphone system has an inner sphere to which various tubes are attached, however, in the case of the design by Moschner et al. the 64 channels are all comprised of ECM capsules instead of MEMS microphones. This microphone design uses the same capsules as the commercial FOA microphone by Sennheiser: Ambeo VR Mic. The CAD modeling is done in Blender and the analysis is done using the SOFiA toolbox\footnote{\href{https://github.com/AudioGroupCologne/hosma}{Link to HOSMA repository} (accessed: Feb 26, 2021)}. 
 
+%% sampling grids
 
+% fliege grid
+% http://www.personal.soton.ac.uk/jf1w07/nodes/nodes.html
 
+% fliege grid and t-designs
+% http://research.spa.aalto.fi/projects/sht-lib/sht.html
 
 \subsubsection{Studio Microphone Arrays}
 %This section describes some studio coincident microphone arrays. 
@@ -442,7 +481,11 @@ In the previous section we talked extensively about the artists and engineers wh
 
 \todo[inline]{VBAP, DBAP, other panners, octo, quad, etc. kapralos-2008-virtual-aud-sys-mit.pdf see 4.2.2 amplitude panning. Zirkonium. }
 
-Out of the various iterations of vector based systems the most prominent and well-regarded is called Vector Based Amplitude Panning (VBAP). In his 2001 paper (citation) Pulkii describes how trigonometric operations can be used to position a sound in any position in 3D space. The idea behind VBAP is to create \textit{phantom images} between sources giving listeners the illusion that sounds emanate from any arbitrary position between 2 or more speakers. Pulkii, the inventor of VBAP, from Helsinki, Finland, writes in regards to the difference between this method and ambisonic panning\footnote{Ambisonic panning does not use spherical microphones but encodes arbitrary audio sources for ambisonic reproduction.}: "the gain factor calculation in the VBAP method equals that of the Ambisonics in an orthogonal\footnote{Regular loudspeaker layouts.} loudspeaker placement". The key difference is that VBAP generalizes the calculation for all situations making it extremely flexible. While these two systems might seem remarkably similar, experiments have suggested that there exist statistically significant perceptual differences for both reproduction methods (Marentakis 2014). VBAP has gained much popularity among composers due to it's simplicity and elegance. A MAX/MSP collection of externals were developed by Pulkii in 2000 to allow electronic musicians to experiment with the system making it fairly accessible. It should be noted that as with many other spatialization methods it relies heavily on a great number of speakers for successful immersion. 
+Out of the various iterations of "x-based systems"\footnote{Such as VBAP, DBAP, etc.} the most prominent and well-regarded is called \textit{Vector Based Amplitude Panning} (VBAP). In his 1997 paper \cite{pulkki1997virtual} Pulkii describes how trigonometric operations can be used to position a sound in any position in 3D space. The idea behind VBAP is to create \textit{phantom images} between sources giving listeners the illusion that sounds emanate from any arbitrary position between 2 or more speakers. Pulkii, the inventor of VBAP, from Helsinki, Finland, writes in regards to the difference between this method and ambisonic panning\footnote{Ambisonic panning does not use spherical microphones but encodes arbitrary audio sources for ambisonic reproduction.}: "the gain factor calculation in the VBAP method equals that of the Ambisonics in an orthogonal\footnote{Regular loudspeaker layouts.} loudspeaker placement". 
+
+The key difference between VBAP and ambisonic panning, is that VBAP generalizes calculates the gains for any irregular layout, making it more flexible in some regards. Ambisonics, however, can be encoded without knowing anything about the reproduction system, while in VBAP we need speaker positions in order to calculate the signal gains. 
+
+While these two systems might seem remarkably similar, experiments have suggested that there exist statistically significant perceptual differences for both reproduction methods (Marentakis 2014). VBAP has gained much popularity among composers due to it's simplicity and elegance. A MAX/MSP collection of externals were developed by Pulkii in 2000 to allow electronic musicians to experiment with the system making it fairly accessible. It should be noted that as with many other spatialization methods it relies heavily on a great number of speakers for successful immersion. 
 
 % \subsection{Modeling}
 % \subsubsection{Wave-Based Modeling}
@@ -454,17 +497,21 @@ Out of the various iterations of vector based systems the most prominent and wel
 
 Object Based Audio (OBA) is a format agnostic method, much like ambisonics, in which audio objects carry metadata which are used by the \textit{renderer} to successfully reproduce each sound source \cite{coleman2018audio}. Some of the parameters included in the metadata of each audio object include: level, position, radius, and spread\cite{fug2014design}. In contrast to ambisonics, in which the sound-field might be pre-rendered, OBA requires real-time rendering of objects within a scene. The benefit of this method is that the listener gains control of the "mix". Using OBA the listener can, for example, adjust the balance between dialog and background sounds - a feature which highly desirable since a preponderance of background sounds can sometimes reduce speech intelligibility beyond comprehension. There are several software platforms which support OBA, here we will only cover a few and focus particularly on systems related to computer-music.
 
-Among the various technologies used to create OBA, the MPEG-H\footnote{The Moving Picture Experts Group (MPEG) is an alliance of working groups of ISO (International Organization for Standardization) and IEC (International Electrotechnical Commission) that sets standards for media coding, including compression coding of audio, video, graphics and genomic data, and transmission and file formats for various applications.} CODEC (COder/DECoder) has become the most popular in commercial settings. Herre describes OBA in \cite{herre2015mpeg}:
+\paragraph{MPEG-H}
+
+Among the various technologies used to create OBA, the MPEG-H\footnote{The Moving Picture Experts Group (MPEG) is an alliance of working groups of ISO (International Organization for Standardization) and IEC (International Electrotechnical Commission) that sets standards for media coding, including compression coding of audio, video, graphics and genomic data, and transmission and file formats for various applications.} COder/DECoder (CODEC) has become the most popular in commercial settings. Herre describes OBA in \cite{herre2015mpeg}:
 
 \begin{quote}
     More recently, the merits of object-based representation of a sound scene have been embraced by sound producers, e.g. to convey sound effects like the fly-over of a plane or space ship. Audio objects are signals that are to be reproduced as to originate from a specific target location that is specified by associated side information. In contrast to channel signals, the actual placement of audio objects can vary over time and is not necessarily pre-defined during the sound production process but by rendering it to the target loudspeaker setup at the time of reproduction. This may also include user interactivity.
 \end{quote}
 
-VBAP and OBA are closely related as reproduction methods. In fact, OBA typically uses VBAP in order to render the sound objects. In addition, the MPEG-H framework also includes the possibility of streaming HOA and discrete channels data (typically used in surround sound formats) in order to synthesize a hybrid format. In addition to this, the standard counts with a consistent perceptually motivated compression system used to lower the amount of data required for accurate spatial reproduction. One can sign-up to receive some authoring software for MPEG-H via the  \href{https://www.iis.fraunhofer.de/en/ff/amm/dl/software/mas.html}{Fraunhofer website}. Some other projects have embraced the Opus CODEC for compression in streaming solutions requiring spatial audio\footnote{One such project is \href{Earshot}{https://github.com/EnvelopSound/Earshot} by Envelop.}.
+VBAP and OBA are closely related as reproduction methods. In fact, OBA typically uses VBAP in order to render the sound objects. In addition, the MPEG-H framework also includes the possibility of streaming HOA and discrete channels data (typically used in surround sound formats) in order to synthesize a hybrid format. Furthermore, the standard counts with a consistent perceptually motivated compression system used to lower the amount of data required for accurate spatial reproduction. One can sign-up to receive some authoring software for MPEG-H via the  \href{https://www.iis.fraunhofer.de/en/ff/amm/dl/software/mas.html}{Fraunhofer website}. Some other projects have embraced the Opus CODEC for compression in streaming solutions requiring spatial audio\footnote{One such project is \href{Earshot}{https://github.com/EnvelopSound/Earshot} by Envelop.}.
 
-Recently the Groupe de Recherche en Immersion Spatiale (GRIS) at Université de Montréal published a self-proclaimed OBA authoring system called \textit{SpatGRIS/ServerGRIS}. Previously, SpatGRIS was used in conjunction with the Zirkonium software\footnote{https://zkm.de/en/about-the-zkm/organization/hertz-lab/software/zirkonium} from ZKM. Today, ServerGRIS serves as a standalone spatialization system which can be used in conjunction with ServerGRIS to spatialize sounds in dome-like environments via VBAP. SpatGRIS has two modes, one in which it performs the spatialization itself, and one in which it sends OSC data to ServerGRIS. SpatGRIS also works with DAWs which route audio via JackRouter to ServerGRIS to perform the gain adjustments. In this sense, one can consider the GRIS system as an OBA format, since each audio channel has an associated data track defining its spatial properties.
+\paragraph{SpatGRIS}
 
-The software's user interface makes used of \href{https://en.wikipedia.org/wiki/Cocoa_(API)}{Cocoa} which makes it compatible only with OSx\footnote{NOT COMPATIBLE WITH CATALINA (10.15) - Jan 29, 2021}. The benefit of SpatGRIS/ServerGRIS over VBAP inside Pd is that the software provides a binaural renderer which allows the user to audition their multi-channel work preemptively. Unfortunately, there does not seem to be a way to dynamically rotate the sound-field as with HOA, so the binaural rendering will be static. The software is also more dynamic than the Pd VBAP system with regards to re-routing of audio signals in different environments, and, automating trajectories in a DAW is far more comfortable than doing so in Pd, which requires the user specifying coordinates using a text editor. 
+Recently, the Groupe de Recherche en Immersion Spatiale (GRIS) at Université de Montréal published a self-proclaimed OBA authoring system called \textit{SpatGRIS/ServerGRIS}. Previously, SpatGRIS was used in conjunction with the Zirkonium software\footnote{https://zkm.de/en/about-the-zkm/organization/hertz-lab/software/zirkonium} from ZKM. Today, ServerGRIS serves as a standalone spatialization system which can be used in conjunction with ServerGRIS to spatialize sounds in dome-like environments via VBAP. SpatGRIS has two modes, one in which it performs the spatialization itself, and one in which it sends OSC data to ServerGRIS. SpatGRIS also works with DAWs which route audio via JackRouter to ServerGRIS to perform the gain adjustments. In this sense, one can consider the GRIS system as an OBA format, since each audio channel has an associated data track defining its spatial properties.
+
+The software's user interface makes use of \href{https://en.wikipedia.org/wiki/Cocoa_(API)}{Cocoa} which makes it solely compatible with macOS\footnote{Not compatible with Catalina (10.15) as of Jan 29, 2021.}. One of the benefits of SpatGRIS/ServerGRIS over the VBAP external for Pd, for example, is that the software provides a binaural renderer which allows the user to audition their multi-channel work over headphones. Unfortunately, there does not seem to be a way to dynamically rotate the sound-field as with HOA, so the binaural rendering will be static. The software is also more dynamic than the Pd VBAP system with regards to re-routing of audio signals in different environments, and, automating trajectories in a DAW is far more comfortable than doing so in Pd, which requires the user specifying coordinates using a text editor. 
 
 Ledoux, one of the authors of the GRIS software, describes the benefits of OBA:
 
@@ -472,9 +519,13 @@ Ledoux, one of the authors of the GRIS software, describes the benefits of OBA:
     This object-based audio approach has the advantage of dissociating sound source’s localisation from the loudspeakers position and allows pre-spatialized music to be portable from one dome to another, regardless of the amount of loudspeakers and their relative position. \cite{ledoux2018immersive}
 \end{quote}
 
-In addition to the MPEG-H standard, there is also Dolby Atmos and DTS:X. Both companies have a long tradition of driving the market and have proposed standards for multi-channel film production over the years. Mac and Pc version of the Dolby software can be found \href{https://developer.dolby.com/tools-media/production-tools/dolby-atmos-mastering-suite-updates/downloads/#!}{here}. The DTS-X creator suite can be purchased \href{https://dts.com/production-tools/#creator-suite}{here}. DTS-X also counts with a video player which can playback ambisonics, the reader is referred to \href{https://www.videolan.org/vlc/releases/3.0.0.html}{VLC} for a FOSS solution. 
+\paragraph{Commerical Solutions}
 
-One final project that might interesting to the reader is SpatDIF which is short for Spatial Sound Description Interchange Format \cite{peters2012spatdif}. The project as it stands is mostly defunct now but the Pd externals can still be \href{https://www.zhdk.ch/en/research/icst}{found online} at the ICST website from ZHDK\footnote{Zürcher Hochschule der Künste or "Zurich University of the Arts". Zurich is the largest city in Switzerland.}. The SpatDIF project is now integrated into the ZKM\footnote{ZKM Center for Art and Media Karlsruhe is in Germany.} \href{https://zkm.de/en/about-the-zkm/organization/hertz-lab/software/zirkonium}{Zirkonium} software. 
+In addition to the MPEG-H system, Dolby Atmos and DTS:X also offer OBA solutions. Both companies have a long tradition of driving the market and have proposed standards for multi-channel film production over the years. Mac and PC version of the Dolby software can be found \href{https://developer.dolby.com/tools-media/production-tools/dolby-atmos-mastering-suite-updates/downloads/#!}{here}. The DTS-X creator suite can be purchased \href{https://dts.com/production-tools/#creator-suite}{here}. DTS-X also counts with a video player which can playback ambisonics. The reader is referred to \href{https://www.videolan.org/vlc/releases/3.0.0.html}{VLC} for a FOSS video player, which can reproduce ambisonics and even has binaural support. 
+
+\paragraph{SpatDIF}
+
+One final project that might interesting to the reader is SpatDIF which is short for \textit{Spatial Sound Description Interchange Format} \cite{peters2012spatdif}. The project as it stands is mostly defunct now but the Pd externals can still be \href{https://www.zhdk.ch/en/research/icst}{found online} at the ICST website from ZHDK\footnote{Zürcher Hochschule der Künste or "Zurich University of the Arts". Zurich is the largest city in Switzerland.}. The SpatDIF project is now integrated into the ZKM\footnote{ZKM Center for Art and Media Karlsruhe is in Germany.} \href{https://zkm.de/en/about-the-zkm/organization/hertz-lab/software/zirkonium}{Zirkonium} software. 
 
 The Zirkonium software is actually built with Pd but the GUI is only OSx compatible. SpatDIF aimed to store the trajectories of sound objects as XML files that could be read by Pd in real-time. The user could use VBAP or Ambisonics to render the sound objects in their scene. It should be noted that SpatDIF never explicitly calls itself an OBA system, but we believe it could still be categorized as such because each sound has an associated scene description which is used by a renderer at a later stage for reproduction in an arbitrary loudspeaker layout. 
 
@@ -494,22 +545,90 @@ One of the main drawbacks we should point out with OBA is that the number of sou
 
 %https://github.com/GameOfLife/WFSCollider
 
-Whilst less commonly seen or talked about, wave field synthesis (WFS) is another area of interest for acousticians and composers. WFS attempts to capture a wavefront and reproduce it at a later stage. A good case scenario for this is the simulation of a live concert. A wall of microphones is placed ten meters from the band and, at a later point, a wall of speakers is used to play back the recorded audio. A new audience could in theory listen to this reproduction and be transported to the event. The audience members could even walk around the "dance floor" and experience the rich spatial detail as if they were really there. WFS is a powerful spatial technique but entirely context dependent. It is often not desirable for situations in which sound arriving from all directions need to be captured. WFS also costly, as proper capture and reproduction takes dozens of microphones and speakers, making it inaccessible for most consumers.
+Whilst less commonly seen or talked about, \textit{Wave Field Synthesis} (WFS) is another area of interest for acousticians and composers. WFS attempts to capture a wavefront and reproduce it at a later stage. A good case scenario for this is the simulation of a live concert. A wall of microphones is placed ten meters from the band and, at a later point, a wall of speakers is used to play back the recorded audio. A new audience could in theory listen to this reproduction and be transported to the event. The audience members could even walk around the "dance floor" and experience the rich spatial detail as if they were really there. WFS is a powerful spatial technique but entirely context dependent. It is often not desirable for situations in which sound arriving from all directions need to be captured. WFS also costly, as proper capture and reproduction takes dozens of microphones and speakers, making it inaccessible for most consumers.
 
 \subsection{Higher Order Ambisonics}
 \label{subsec:ambi}
 
-Ambisonics is a full-sphere capture and reproduction method popular among spatial audio enthusiasts. A resurgence in interest, as with any of the aforementioned methods, can be attributed to the growth of mixed reality\footnote{MR: augmented reality in which digital objects can be interacted with}, augmented reality (AR) and virtual reality (VR) systems. Ambisonic has become of the de facto spatial audio reproduction methods in simple VR experiences, especially 360 video. 
+Ambisonics is a full-sphere capture and reproduction method popular among spatial audio enthusiasts. A resurgence in interest, as with any of the aforementioned methods, can be attributed to the growth of mixed reality\footnote{MR is a term used for augmented reality experiences in which digital objects can be interacted with.}, augmented reality (AR) and virtual reality (VR) systems. Ambisonics has become one of the de facto spatial audio reproduction methods for simple VR experiences, especially 360\textdegree \ video. Large tech companies have adopted it as a standard in immersive video content.  
 
-Ambisonic signals can be created by panning traditional monophonic recordings or by capturing them via an ambisonic microphone. A tetrahedral microphone, the simplest ambisonic microphone, captures First Order Ambisonic (FOA) A-format\footnote{A-format audio is ambisonic audio prior to encoding.} signals which can be used to reproduce 360 degrees of spatial audio with tolerable quality. 
+Ambisonic signals can be created by panning traditional monophonic recordings or by capturing them via an ambisonic microphone. A tetrahedral microphone, the simplest ambisonic microphone, captures First Order Ambisonic (FOA) A-format\footnote{A-format audio is ambisonic audio from a mic prior to encoding.} signals which can be used to reproduce 360 degrees of spatial audio with tolerable quality. 
 
-The theory and application of ambisonic heavily relies of the assumption that the playback system is composed of a spherical array of speakers which situates the listener at the origin. The tetrahedron shape is the lowest geometric approximation of a sphere, its shape is thus chosen for first order ambisonic capture. Higher approximations result in a higher number of channels and better spatial quality at the cost of more data to be handled and stored. The assembly and calibration of Higher Order Ambisonic (HOA) microphones remains a laborious and often HOA panning is used instead.
+The theory and application of ambisonic heavily relies of the assumption that the playback system is composed of a spherical array of speakers which situates the listener at the origin. The tetrahedron shape, or three-sided pyramid, is the lowest geometric approximation of a sphere. This shape is thus chosen for FOA capture. Higher approximations result in a higher number of channels and better spatial quality at the cost of more data to be handled and stored. The assembly and calibration of Higher Order Ambisonic (HOA) microphones remains a laborious. As a result, HOA panning of mono signals is used more commonly.
 
-One of the major limitations of ambisonics recordings captured with these microphones, over other techniques - such as OBA - is the fact that the listener is confined to the geometric position in which the recording was taken in or synthesized for. In VR, AR and MR, users generally are not satisfied with being stationary - even if they can turn and tilt their head. These recordings work suitably well for viewers experiencing 360 videos, but if users want to traverse a digital playground, they will not be able to do so convincingly. It could therefore be said that whilst ambisonic can provide a good ambience layer for these experiences, it relies heavily on other strategies for full immersive experiences. Recent research efforts have focused on the interpolation \textit{between} sound-fields, such that users can move around freely between various ambisonic recordings taken in proximity to each other. 
+One of the major limitations of ambisonics recordings captured with HOA microphones over other techniques, such as OBA, is the fact that the listener is confined to the geometric position in which the recording was taken in (or synthesized for). In VR, AR and MR, users generally are not satisfied with being stationary - even if they can turn and tilt their heads. These recordings work suitably well for viewers experiencing 360\textdegree \ videos, but if users want to traverse a digital playground, they will not be able to do so convincingly. It could therefore be said that whilst ambisonic can provide a good ambience layer for these experiences, it relies heavily on other strategies for full immersive experiences. Recent research efforts have focused on the interpolation between sound-fields, such that users can move around freely between various ambisonic recordings taken in proximity to each other. 
+
+\todo[inline]{Need to add citation to that last sentence. Also a bit repetitive.}
 
 \subsubsection{Mathematical Formulation}
 
 \subsubsection{Decoding Strategies}
+
+Decoding of ambisonic signals refers to the process of taking B-format spherical harmonics and linearly combining these to produce speaker signals. As we have mentioned before, ambisonics is best suited for regular loudspeaker layouts. Regular speaker layouts in the spherical domain include those modeled after the five \textit{platonic solids}. These include the tetrahedon (4 faces), cube (6 faces), octahedron (8 faces), dodecahedron (12 faces), and icosahedron (20 faces). Each of the faces of these \textit{convex regular polyhedra} is represented by a speaker in our layout. 
+
+Unfortunately, placing listeners at the center of such geometries, which would correspond to the ideal listening location, is often difficult - since this requires speakers below and above the listener. In very sophisticated listening environments, an acoustically transparent grid is often employed which allows speakers to be placed below the listener. An additional layer of complexity arises from determining the ideal circumference of the listening area. We ideally need to find a balance between the size of the reproduction area, and the proximity to any individual speaker. 
+
+A lot of research has been undertaken in the domain of ambisonic decoding for irregular layouts \cite{heller2008my}. The general process used to decode ambisonic signals, involves computing the real-valued spherical harmonics for the speaker positions ($\mathbf{L}$) and subsequently calculating the decoding matrix by finding the inverse of this matrix ($\mathbf{D}$). The resultant matrix $D$ is multiplied with the matrix of ambisonic signals $\mathbf{B}$ yielding the speaker feeds ($\mathbf{G}$). The size of the decoding matrix becomes $L$ x $(N + 1)^2$, where $L$ is the number of loudspeakers and $N$, as always, is the \textit{ambisonic order}. 
+
+Heller \cite{heller2008my} provides a magnificent introduction to decoder design. One of the points that Heller raises is that some poor decoding designs, such as ones where all frequencies are decoded exactly the same, produce \textit{comb-filtering}\footnote{Phase errors caused by two complex signals being played simultaneously with a small delay between them.}. Instead, notable improvements can be made if the user performs \textit{velocity decoding} at low frequencies, and \textit{energy decoding} at high frequencies. \textit{Near-Field Compensation} (NFC) can also be applied for sources that one wishes be perceived as being inside the listening area. 
+
+Three additional factors Heller mentions which may affect decoder quality include: 
+
+\begin{enumerate}
+    \item Room acoustics.
+    \item Accuracy of speaker positioning and matching\footnote{The frequency and phase response measured at the center of the array should be identical.}.
+    \item Timing errors in multi-channel \textit{Digital to Analog Converters} (DACs).
+\end{enumerate}
+
+While these criteria were developed for multi-channel decoders, the same principles can be applied to binaural decoders \cite{gorzel2019efficient}. When dealing with binaural reproduction, however, we must consider headphone equalization if we wish to achieve perfectly transparent playback. The term used for headphone equalization filters is generally \textit{Headphone Related Transfer Functions} (HpRTF). These filters are designed to compensate for the frequency and phase response of headphones, ideally modifying them so they are completely flat and linear.
+
+\paragraph{Defining the Problem: Decoding Ambisonic Signals}
+
+According to Heller \cite{heller2008my}, a decoder must meet three criteria for proper reproduction: 
+
+\begin{enumerate}
+    \item Velocity and energy vector directions are the same at least up to 4kHz, and substantially unchanged with frequency. 
+    \item At low frequencies, the magnitude of the velocity vector is near unity for all reproduced azimuths. 
+    \item At mid/high frequencies the energy vector magnitude is substantially maximized across as large a part of the sound-stage as possible.  
+\end{enumerate}
+
+In the next few paragraphs we will cover how each of these criteria can be satisfied. Certain formulae will be introduced in order to frame the problem and help understand what is meant by velocity and energy vectors.
+
+\begin{equation}
+P=\sum_{i=1}^{n} G_{i}
+\end{equation}
+
+$P$ is used to designate the pressure, and $G_{i}$ is used to designate the possibly complex gains from the source to the $i$-th loudspeaker. 
+
+\begin{equation}
+E=\sum_{i=1}^{n}\left(G_{i} G_{i}^{*}\right)
+\end{equation}
+
+$E$ is used to denote the total energy gain. $G_{i}^{*}$ is the complex conjugate of $G_{i}$. This means the real part of the complex number returned by the FFT will be the same, but the imaginary part will have opposite sign\footnote{For example $a + bi$ becomes $a - bi$ where $i$ is the imaginary number and $a$ and $b$ are real numbers.}
+
+The \textit{velocity localization vector} and \textit{energy localization vectors} $\mathbf{r_{V}}$ and $\mathbf{r_{E}}$ can be decomposed into their component parts. The magnitude and the direction of the velocity vector is subsequently given by:
+
+\begin{equation}
+r_{V} \hat{\mathbf{r}_{\mathbf{V}}}=\frac{1}{P} \operatorname{Re} \sum_{i=1}^{n} G_{i} \hat{\mathbf{u}}_{\mathbf{i}}
+\end{equation}
+
+In this case $r_{V}$ corresponds to the magnitude and $\hat{\mathbf{r}_{\mathbf{V}}}$ corresponds to the direction of the velocity vector. These equations assume the measurements are done at the center of the array with $n$ loudspeakers. $\hat{\mathbf{u}}_{\mathbf{i}}$ corresponds to the unit length vector in the direction of the loudspeaker.
+
+
+
+\paragraph{Computing the Low-Frequency Decoding Matrix} 
+
+
+
+\paragraph{Computing the High-Frequency Decoding Matrix} 
+
+
+
+\paragraph{Merging the LF and HF Matrices} 
+
+
+
+% Gorzel paper, Politis AmbiJS paper, todo.
 
 \todo[inline]{beam forming, constellation system for adaptive room acoustics (reverb)?}
 
