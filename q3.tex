@@ -215,8 +215,6 @@ An important problem to note here is poor updating of images in VR within user-f
 
 \todo[inline]{Closed-loop vs. Open-loop}
 
-\todo[color=green, inline]{I added this label and added much more to the displays and sensors sections. I need to do the computers section and then connect the two halves I got.}
-
 \subsubsection{Dissecting XR Systems}
 
 With the increasing pace of technological development, it can sometimes be difficult to categorize different systems and understand their relationship to the XR ecosystem. It is useful, in this context, to be able to dissect XR into its component part. Every XR systems can be divided into three primary parts \cite{lavalle2016virtual}:
@@ -246,7 +244,8 @@ Mobile HMDs, refer to HMDs which are based on mobile devices (ie. cellphones). M
 \label{img:cardboard}
 \end{figure}
 
-An example of a mobile HMD is Google's \textit{Cardboard}, seen in Figure \ref{img:cardboard}. This simple HMD made out of cardboard can be used together with a smartphone to experience VR content with acceptable quality. It became popular in 2015, when the New York Times distributed the unfolded device to subscribers along with an app for VR journalism, focusing on the Syrian refugee crisis\footnote{The name of the aforementioned video is: "Displaced", by authors Ben C. Solomon and Imraan Ismail \cite{TheDispl63online}.}.  
+An example of a mobile HMD is Google's \textit{Cardboard}, seen in Figure \ref{img:cardboard}. This simple HMD made out of cardboard can be used together with a smartphone to experience VR content with acceptable quality. It became popular in 2015, when the New York Times distributed the unfolded device to subscribers along with an app for VR journalism, focusing on the Syrian refugee crisis\footnote{The name of the aforementioned video is: "Displaced", by authors Ben C. Solomon and Imraan Ismail \cite{TheDispl63online}.}. Much like with other HMDs, two small magnifying lenses, usually \textit{Fresnel lenses}, are situated in front of the eyes. 
+
 XR displays can also be found in the aural domain. These include surround-sound systems, headphones, or \textit{bone-conduction headphones}. Bone-conduction headphones send vibrations directly to the skull which is connected to our auditory system. There are also some XR HMDs which use small speakers near the ears to provide an auditory AR experience. Additionally, there are displays for our other senses. The most commonly encountered display for \textit{haptic} feedback is vibration systems, which are used in controllers. 
 
 AR HMDs offer another form of optical display. Rather than placing screens in front of the subjects eyes, these place transparent surfaces upon which light is emitted. This allows the user to see both the real world and additional objects the experience provides. Figure \ref{img:ar-glasses} shows a man wearing a pair of AR Glasses. 
@@ -264,15 +263,18 @@ AR HMDs offer another form of optical display. Rather than placing screens in fr
 
 Sensors refer to inputs the computer-system will receive in order to accurately render the scene for the user. The most salient information needed for XR applications employing HMDs is gyroscopic data. Gyroscope are embedded in most of today's cellphones, and all dedicated HMDs. These report the orientation of the user's head back to the rendering software. Gyroscopes are also sometimes found inside controllers, such as inside the Sony Move Controller we showed earlier. 
 
-Other popular sensors include: 
+The number of controllers, or sensing systems, available today is exceedingly large. It would be impossible to list them all here. Instead we provide a short list of some additional popular sensors: 
 
 \begin{enumerate}
-    \item \textbf{The Leap Motion Controller}: this is an infrared camera system used to detect and track human hands, including independent joint movements and fingers. It can be used in lieu of VR controllers. 
-    \item \textbf{Microsoft Kinect}: this camera and infrared sensor is capable to performing depth mapping and track whole bodies. It can be used to track orientation and movement of joints, as well as arms and legs. These are designed for 2D movement capture, which means subjects must be facing the camera.
-    \item \textbf{Game Controllers:} many people familiar with game controllers such as those from Sony or Microsoft prefer playing in VR using these standard controllers, even though they only provide 3DoF. An example of a game controller is the Sony DualSense Controller.
-    \item \textbf{MOCAP}: or MOtion CAPture systems, are similar to Kinect, but capable of tracking bodies in 3D space. This means that subjects do not need to face any particular direction. In order to track limbs, special suits which reflective balls are worn by subjects. The data can then be used for graphic representations of human subjects within VR. 
+    \item \textbf{The Leap Motion Controller}: is an infrared camera system used to detect and track human hands, including independent joint movements and fingers. It can be used in lieu of VR controllers. 
+    \item \textbf{Microsoft Kinect}: is a camera and \textit{infrared} sensor system capable to performing depth mapping, and track entire bodies. It can be used to track body orientation and movement of large appendages. This is accomplished by projecting infrared light unto surfaces and capturing the reflection. 
+    \item \textbf{Game Controllers:} many people familiar with game controllers, such as those from Sony or Microsoft, prefer playing in VR using these standard controllers - over \textit{VR controllers} - even though some only provide 3DoF. An example of a game controller is the Sony DualSense Controller.
+    \item \textbf{MOCAP}: a MOtion CAPture systems, is similar to a Kinect, but capable of tracking bodies in a larger area, and uses multiple camera angles. This means that subjects do not need to face any particular direction. In order to track limbs, special suits which reflective balls are worn by subjects. These are specialized systems, and tend to be more costly than mass produced video game devices. 
+    \item \textit{VR Controllers}: in addition to the Sony Move Controller there are various designs by Oculus\footnote{A Facebook subsidiary.} and \href{https://www.htc.com/us/}{HTC}. Some other HMDs, especially those for MR, use cameras to track fingers, much like a leap motion would. 
     \item \textbf{Facial Tracking}: this type of input is more common in AR applications. The technology allows detection of faces and analyzes facial expressions. Digital masks or filters can follow the movements of the face. 
 \end{enumerate}
+
+In addition to all these devices some people also opt to use a standard keyboard and mouse system for interacting in XR. There are also custom-made sensing devices out there created from prototyping parts which can communicate to the software via wireless protocols. Finally, there are various specialized controllers designed for specific tasks, such as controllers resembling plastic rifles, used in war games, for example.
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
@@ -283,15 +285,21 @@ Other popular sensors include:
 \label{img:mocap}
 \end{figure}
 
-One of the complications that can sometimes arise in sensor or controller design is the problem of \textit{registration} in VR. If the objects are not registered, because they are not tracked by the system, then the person has no way of locating the object in the real world. Some companies provide locators which allow users to register different objects in VR by attaching any 3D model they want to the object. For example, one can specify a real guitar is being used and attach the model of a guitar to the hands of the user. This is one of the advantages of AR over VR: there is no complete \textit{occlusion}; as a result, subjects can easily locate the items they wish to interact with.
+One of the complications that can sometimes arise in sensor or controller design is the problem of \textit{registration} in VR. If the objects are not registered, because they are not tracked by the system, then the person has no way of locating the object in the real world. Some companies provide locators which allow users to register different objects in VR by attaching any 3D model they want to the object. For example, one can specify a real guitar is being used and attach the model of a guitar to the hands of the user - allowing them to find their guitar once inside VR. This is one of the advantages of AR over VR: there is only partial \textit{occlusion}; as a result, subjects can easily locate the items they wish to interact with in the real world.
 
 Certain successful designs exploit \textit{proprioception}, which is our sense of where our extremities are without having to see them. For example, with the aforementioned Kinect, we don't necessarily need to see a representation of our body in VR to know where our appendages are. We can easily perform any movements the system requires without directly needing to see them happen. In most cases, however, registration of sensors is preferable, as they give users direct feedback to confirm the actions they are undertaking. 
 
 \paragraph{Computers}
 
-\todo[inline]{Libero blanditiis ratione ipsum. Corrupti sint consequatur aut qui suscipit. Qui rerum ratione omnis iusto velit. Qui voluptatem nemo et ut. Ex voluptas corporis in et reprehenderit accusantium molestiae omnis. Fuga et eveniet eum eos distinctio nesciunt tempora ea.}
+Once all the inputs and outputs are known, it is the task of the computer to analyze incoming data and present stimuli to the user via various displays. The capabilities of the computer will determine how much data it can analyze and how much data it can return. As we have noted, some cellphones are able to generate virtual worlds, however, because these have less powerful computing hardware, the graphic scenes generally need to be simpler. 
+
+Within the computing hardware, there are various sub-systems which work together to provide a smooth experience. The \textit{Graphical Processing Unit} (GPU), is responsible to \textit{rendering}\footnote{Calculating vertex, edge, and face positions, and subsequently displaying them. They also perform lighting and shadowing.} the graphical content. The \textit{Central Processing Unit} (CPU) is similar to the GPU, however, is not designed for graphics - instead it handles all the other calculations, commands and processed necessary. In some designs, a Micro-Controller Unit (MCU) is also used to handle inputs and relay the information to the CPU, which may be tethered to or inside the HMD.
+
+Some of the important factors to consider here are portability and also the ease of prototyping. When developers are creating these experiences, they need a way to quickly create environments and test them out. Wireless devices might prove more difficult to work with in this regard.  
 
 \section{Software}
+
+% what am I doing?
 
 % Synthetic virtual world versus real virtual world. 
 % Simulataneous Localization and Mapping (SLAM)
