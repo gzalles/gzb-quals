@@ -305,7 +305,7 @@ Some of the important factors to consider here are portability and also the ease
 
 \section{Software}
 
-Generally speaking, today, there are three main platforms that are \textit{targeted} by game developers. For each of these different targets, there are associated software libraries that allow us to create content. \textit{Game engines} are the most powerful of these three platforms. These software environments are designed to facilitate the creation and customization of video games and XR experiences. Secondly, there are mobile apps, for which there exist various different \textit{Software Development Kits} (SDKs) with different flavors depending on the operating system of the mobile device. Finally, there is \textit{WebXR}. This corresponds to applications that run on the browser, be it via a mobile phone, HMD, or a traditional computer - with a mouse, keyboard and monitor. Tredinnick et al. \cite{unicave2017} propose a plug-in for the game engine Unity, which allows one to use the software with "distributed immersive tiled or projection-based VR display systems", such as a CAVE.
+Generally speaking, today, there are three main platforms that are \textit{targeted} by game developers. For each of these different targets, there are associated software libraries that allow us to create content. \textit{Game engines} are the most powerful of these three platforms. These software environments are designed to facilitate the creation and customization of video games and XR experiences. Secondly, there are mobile apps, for which there exist various different \textit{Software Development Kits} (SDKs) with different flavors depending on the operating system of the mobile device. Finally, there is \textit{WebXR}. This corresponds to applications that run on the browser, be it via a mobile phone, HMD, or a traditional computer - with a mouse, keyboard and monitor. 
 
 \subsection{Game Engines}
 % Unity, Unreal, Godot, etc.
@@ -321,7 +321,9 @@ Game engines are software-development environments used to create video games or
     \item \textbf{Animation}: importing objects with built in movement behaviors. For example, a model of a bird with its wings flapping.
 \end{enumerate}
 
-Today, the most popular game engine is likely \href{https://unity.com/}{Unity} which is cross-platform\footnote{Works with multiple operating systems, including Linux.} and allows \textit{building}, or targeting, a multitude of platforms, including: Mac, Windows, WebGL, iOS, and WebGL - to name a few. Unfortunately, the license is proprietary - however it does offer exclusive support for educational purposes, making it a useful tool for pedagogical purposes. Another game engine that is gaining popularity, due to its open source nature, is \href{https://godotengine.org/}{Godot}. However, it is not as well-featured as Unity, given that it is much younger. Another popular game engine is \href{https://www.unrealengine.com/en-US/}{Unreal} which is commercial software but whose source is available online. 
+Today, the most popular game engine is likely \href{https://unity.com/}{Unity} which is cross-platform\footnote{Works with multiple operating systems, including Linux.} and allows \textit{building}, or targeting, a multitude of platforms, including: Mac, Windows, WebGL, iOS, and WebGL - to name a few. Unfortunately, the license is proprietary - however it does offer exclusive support for educational purposes, making it a useful tool for pedagogical purposes. Another game engine that is gaining popularity, due to its open source nature, is \href{https://godotengine.org/}{Godot}. However, it is not as well-featured as Unity, given that it is much younger. One final game engine we should mention is \href{https://www.unrealengine.com/en-US/}{Unreal} which is commercial in nature but whose \textit{source code} is available online. 
+
+All of these game engines, as far as XR is concerned, are suited for creating content targeting HMDs, but world-fixed systems do not seem to be natively supported. Tredinnick et al. \cite{unicave2017} propose a plug-in for the game engine Unity, which allows one to use the software with "distributed immersive tiled or projection-based VR display systems", such as a CAVE. It is possible to use internal audio routing software to decode ambisonics from other software, but perhaps one could also develop a plug-in which allowed for this natively. 
 
 \subsection{Mobile XR}
 
@@ -338,6 +340,27 @@ Unfortunately for consumers, over the last few years mobile VR SDKs have lost a 
 The recent releases of the Cardboard SDK by Google allow developers to target iOS and Android devices. One can also use the SDK inside Unity if desired. The SDK is licensed under \href{https://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}. Given the simple nature of the Cardboard HMD, the \textit{Application Programming Interface} (API) only allows for monitoring the input of a single button. Naturally, the system internally perform motion tracking and stereoscopic rendering. Because of the interactive limitations of the system, most of the apps for this system are exploration or content viewing apps. One example of these is the \textit{Within VR} which features political, kids, and science 360\textdegree \ videos.
 
 \subsubsection{Mobile AR}
+
+Mobile XR comes in two types: \textit{native} and web-based applications. For example, within mobile VR, viewing a Youtube video that is \textit{streaming} from the browser is a web-based application. Meanwhile, with apps like \textit{Within VR}, the user downloads these videos in their entirety before viewing. This is a native application that does not rely on a browser of internet connection (once the video has been downloaded). 
+
+Mobile AR also comes in these two styles: native and web-based. Since web-based applications will be discussed in more detail later, in this section we will only discuss software platforms used to develop native mobile AR applications. iOS and Android are the two most common OSs for mobile devices today, and both offer different SDKs to create AR applications. In the next few paragraphs we will discuss some of the features of the most popular SDKs for mobile AR applications. 
+
+\paragraph{ARCore}
+
+ARCore is a Google product allowing one to create AR apps for Android or iOS. It can also integrate with Unity or Unreal. Its main features include motion tracking, environmental understanding and light estimation. One can also use the SDK for developping WebXR applications. There is also an Android \textit{Native Development Kit} (NDK) written in C. The following list describes in some more detail the features of this development library.
+
+\begin{enumerate}
+    \item \textbf{Motion tracking}: ARCore uses \textit{Simultaneous Localization And Mapping} (SLAM) to "understand where the phone is relative to the world around it" \cite{Fundamen38online}. The camera detects \textit{feature points} and combines the information with IMU data to estimate the position and orientation\footnote{In the API the combination of position and orientation is called \textit{pose}.}
+    \item \textbf{Environmental understanding}: the library is also able to detect certain features such as planes from the cluster of data. It uses this information to place objects on flat surfaces. 
+    \item \textbf{Depth understanding}: the system can create depth maps using RGB\footnote{Red, Green, Blue.} data from the main camera. 
+    \item \textit{Light estimation}: ARCore also detects and understand shadows, and attempts to shade virtual objects using natural shadows. This is done to improve the sense of realism. 
+\end{enumerate}
+
+In addition to this, the system allows for\textit{ user interaction}, \textit{oriented points}, \textit{anchors} and \textit{trackables}. In order to provide interactions \textit{hit testing} is provided. This casts a ray using the \textit{pose} of the mobile device and reports what objects, if any, have collided with the ray. The oriented points feature is used to place objects on angled surfaces. Anchors are positions where virtual objects are anchored, as the name suggests, while trackables are real world objects the system tracks over time. Finally, the library is also to augment 2D images and contains methods for \textit{cloud anchoring} which allows multiple "users have the same AR experience simultaneously".  
+
+\subsection{The OS}
+
+How does the OS enable limit production of games?
 
 \subsection{WebXR}
 
