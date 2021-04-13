@@ -11,7 +11,6 @@ Question \ref{ch:xr-mus} discusses how contemporary extended reality (XR) system
 % In chapter \ref{ch:spat-mus} we discussed tools for the creation of spatial music from a computer-music standpoint, with a focus on FOSS. Furthermore, we explored spatial instruments which facilitate the creation of such music works. Later, in chapter \ref{ch:spat-aud}, we focused on recording and reproduction means for spatial audio. In particular, we focused on ambisonic recording and reproduction tools, given their popularity in the open-source community interested in spatial audio. In this chapter, we would like to discuss how Extended Reality (XR) tools can also be used as for reproduction of spatial audio works. 
 
 A large motivation for the creation and dissemination of spatial music stems from the growth of the XR industry in the last decade. Any complete discussion involving spatial music, therefore, should address how spatial music is being shaped by the development of these new tools. Over the years a number of scientists and companies have developed increasingly sophisticated XR systems in academic and commercial settings. Unfortunately, many of these XR system still remain too costly for most people. 
-
 Our intention is to shed a light on various different types of XR technologies while focusing particular attention on technologies that allow for low-cost and open-source dissemination of spatial audio. We believe WebXR, in particular, is a powerful distribution tool which should be adopted by more artists working in the spatial audio domain. Online publishing is an important part of any artists work - allowing patrons to preview artists' works before committing to a live experience. WebXR provides musicians working with spatial music the opportunity to reach a wider audience, while preserving some of the depth that was carefully crafted into their music.
 
 \section{What is XR?}
@@ -96,7 +95,7 @@ Much, much later, in the 19th century, the first \textit{stereoscope} was invent
 
 In 1878, a few years after Wheatstone's stereoscope, one of the first examples of of \textit{stroboscopic apparent motion} was created by Eadweard Muybridge\footnote{Muybridge was an English photographer important for his pioneering work in studies of photographic motion (9 April 1830 – 8 May 1904)}. This effect refers to the ability to generate apparent motion by flipping through a sequence of images at a fast rate. Figure \ref{fig:horse-motion} shows Muybridge's famous work: "The Horse in Motion", which depicts several frames of a running horse, as it seemingly moves across space. In order to capture this sequence, 24 separate cameras were required. These were triggered by the horse as it moved along a track using ropes, which the horse's legs pulled on when running. The cameras were offset equidistantly to capture movements in a synchronized fashion. In order to reproduce the images, a \textit{zoopraxiscope}, also an invention of Muybridge's, was employed. The \href{https://upload.wikimedia.org/wikipedia/commons/0/06/The_zoopraxiscope-Horse_galloping-Animated.gif}{zoopraxiscope} is a disc containing multiple image frames which can be used to project a moving image in a recirculating fashion \cite{lavalle2016virtual}. 
 
-Some 40 years later, in 1915, another well-known method in film-making used to increase realism was invented by Edwin S Porter\footnote{Edwin Stanton Porter (April 21, 1870 – April 30, 1941) was an American film pioneer, most famous as a producer, director, studio manager and cinematographer.}:\textit{3D film-making}. Modern 3D movies are created using special camera lenses and subsequently viewed using \textit{polarized} light filters. These filters, at the subjects eyes level, allow certain frequencies of light to pass into one eye, while blocking others. While there is a single image on the screen, two different images are perceived by each eye, much like with the stereoscope. \textit{Stereopsis} is the formal term describing the process of integrating two overlapping visual fields to achieve depth perception. 3D movies are still in use today in some VR experiences. They can also be found in commercial movie theatres across the world. 
+Some 40 years later, in 1915, another well-known method in film-making used to increase realism was invented by Edwin S Porter\footnote{Edwin Stanton Porter (April 21, 1870 – April 30, 1941) was an American film pioneer, most famous as a producer, director, studio manager and cinematographer.}:\textit{3D film-making}. Modern 3D movies are created using special camera lenses and subsequently viewed using \textit{polarized} light filters. These filters, at the subjects eyes level, allow certain frequencies of light to pass into one eye, while blocking others. While there is a single image on the screen, two different images are perceived by each eye, much like with the stereoscope. \textit{Stereopsis} is the formal term describing the process of integrating two overlapping visual fields to achieve depth perception. When images are encoded into this format the resulting images are also called \textit{anaglyphs}. 3D movies are still in use today in some VR experiences. They can also be found in commercial movie theatres across the world. 
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
@@ -195,7 +194,7 @@ Some controllers, such as the Sony Playstation \textit{DualSense} controller, ha
 
 Another important distinction we should make is between \textit{world-fixed} and \textit{user-fixed} systems. As we will see, user-fixed aural and visual displays offer a far more cost-effective and portable way of reproducing spatial audio and virtual scenes. World-fixed systems are less burdensome to the user, but often cost more to implement.
 
-World-fixed systems refer to surround-sound systems, in the aural domain, and CAVE-like environments, in the visual domain. User-fixed systems refer contrastingly to binaural headphone systems and binocular HMDs, in the two respective domains. Both of these approaches to presenting XR experiences can be mixed. Each of them also have their own benefits and drawbacks. For sound systems, some of the key trade-offs between user and world fixed systems are:
+World-fixed systems refer to surround-sound systems, in the aural domain\footnote{Not exclusively, this could also be a \textit{cross-talk cancellation} stereo speaker system.}, and CAVE-like environments, in the visual domain. User-fixed systems refer contrastingly to binaural headphone systems and binocular HMDs, in the two respective domains. Both of these approaches to presenting XR experiences can be mixed. Each of them also have their own benefits and drawbacks. For sound systems, some of the key trade-offs between user and world fixed systems are:
 
 \begin{enumerate}
     \item World-fixed systems require much more power (energy). Consider the power savings from binaural (headphone) reproduction versus surround-sound systems. 
@@ -210,7 +209,7 @@ The trade-offs are quite similar in the visual domain. In world-fixed environmen
 
 \subsubsection{VR Sickness}
 
-An important problem to note here is poor updating of images in VR within user-fixed experiences. The slow frame-rate, or update speed, of these systems, can cause what is known as \textit{VR sickness}. This is caused by a mismatch in sensory information coming into the brain. This happens when one's \textit{vestibular} organs, used to maintain balance, are not in sync with one's visual organs. This is similar to the nauseating feeling we get when reading a book in a moving car. Over the years, GPUs\footnote{A Graphical Processing Units (GPU) is the part of the computer responsible for calculating and displaying images.} have become increasingly powerful, and, as a result, it is possible now to update images on HMDs quickly enough that VR sickness is eliminated\footnote{The amount of sensitivity to VR sickness is different from person to person, but, generally speaking, these systems work well enough now that they are mass produced and sold worldwide.}. CAVE-like environments do not suffer from this problem, however, much like in surround-sound systems, there is an optimal viewing area beyond which the image will not be of good enough quality. Ideally, in user-fixed systems, the frame rate is at least 90Hz, meaning there are 90 \textit{frames} per second. This number has become standard in the VR industry, since it seems to be the smallest frame-rate at which VR sickness is reduced to tolerable levels. 
+An important problem to note here is poor updating of images in VR within user-fixed experiences. The slow frame-rate, or update speed, of these systems, can cause what is known as \textit{VR sickness}. This is caused by a mismatch in sensory information coming into the brain. This happens when one's \textit{vestibular} organs, used to maintain balance, are not in sync with one's visual organs. This is similar to the nauseating feeling we get when reading a book in a moving car. This conflict of sensory information is also called \textit{vection}. Over the years, GPUs\footnote{A Graphical Processing Units (GPU) is the part of the computer responsible for calculating and displaying images.} have become increasingly powerful, and, as a result, it is possible now to update images on HMDs quickly enough that VR sickness is eliminated\footnote{The amount of sensitivity to VR sickness is different from person to person, but, generally speaking, these systems work well enough now that they are mass produced and sold worldwide.}. CAVE-like environments do not suffer from this problem, however, much like in surround-sound systems, there is an optimal viewing area beyond which the image will not be of good enough quality. Ideally, in user-fixed systems, the frame rate is at least 90Hz, meaning there are 90 \textit{frames} per second. This number has become standard in the VR industry, since it seems to be the smallest frame-rate at which VR sickness is reduced to tolerable levels. 
 
 \todo[inline]{Closed-loop vs. Open-loop}
 
@@ -324,6 +323,8 @@ Today, the most popular game engine is likely \href{https://unity.com/}{Unity} w
 
 All of these game engines, as far as XR is concerned, are suited for creating content targeting HMDs, however world-fixed systems do not seem to be natively supported. Tredinnick et al. \cite{unicave2017} propose a plug-in for the game engine Unity, which allows one to use the software with "distributed immersive tiled or projection-based VR display systems", such as a CAVE. It is possible to use internal audio routing software to decode ambisonics from other software, but perhaps one could also develop a plug-in which allowed for this natively. 
 
+\todo[inline]{Middleware like FMOD and Wwise? What is SteamVR, is it also middleware?}
+
 \subsection{Mobile XR}
 
 Mobile XR SDKs are used to develop apps and experiences which can be downloaded and run on cellphones. Sometimes these experiences come in the form of 360\textdegree \ videos, other times the applications are graphical renderings of scenes composed in game engines. Various large technology companies, such as Google and Samsung, have created Mobile XR development libraries. In the next few sections, we will explore some of these projects. It should be noted that, with the proliferation of standalone HMDs, mobile VR SDKs are beginning to lose support from these companies. We believe it is only a matter of time before most of these development platforms are entirely irrelevant in the VR ecosystem. Mobile AR SDKs are still being supported, and are finding new applications every day.
@@ -379,7 +380,7 @@ Windows is the preferred OS for people working with XR, and is the most supporte
 
 This perhaps is another great argument for prioritizing development in WebXR, rather than OS-specific software. The main bottleneck with WebXR is the way programs are loaded. Instead of downloading executable files, WebXR requires temporary downloads which live in \textit{Random Access Memory} (RAM). This means that devices with less RAM will have trouble running these experiences smoothly. 
 
-\todo[inline]{Middleware like FMOD and Wwise? What is SteamVR, is it also middleware?}
+
 
 \subsection{WebXR}
 
@@ -405,13 +406,30 @@ There are likely many other WebAR libraries out there, but the one we would like
 
 Location-based AR used GPS\footnote{Global Position System.} coordinates and can be used together with marker tracking to create AR experiences that can be seen around the world through a browser on a phone. AR.js is completely open source and licensed under the \href{https://mit-license.org/}{MIT License}. The library works on any phone with WebGL and WebRTC. There are two builds for this project, one which works with \textit{three.js} and another that works with \textit{A-FRAME}. Both of these platforms will be discussed in Section \ref{subsubsec:webvr}. 
 
-\paragraph{WebGL}
+\paragraph{WebGL} 
+
+Web Graphics Library (WebGL) is a JavaScript (JS) API for rendering interactive 3D graphics within a browser without the use of plug-ins \cite{WebGL2Da70online}. This means the WebGL is not something to be imported into a project, but rather part of the browser itself. WebGL conforms to OpenGL which can be used in HTML \texttt{<canvas>} elements. It is the primary way of drawing XR content as it provides an efficient way of rendering 3D graphics in the browser \cite{WebXRSam30online}. WebGL is designed and maintained by the non-profit Khronos Group.
 
 \paragraph{WebRTC}
 
+WebRTC is a protocol for Real Time Communication (RTC). It supports many types of data including audio and video data. It is based on an open standard and is completely open-source. There are libraries available for native clients, which means one can develop Android and iOS applications with it as well, not just web apps. Much like WebGL, this is not a plug-in, but rather a standard incorporated into many modern browsers. In AR.js, WebRTC is used to provide access to cameras on mobile devices.
+
 \subsubsection{WebVR}\label{subsubsec:webvr}
 
-\todo[inline]{WebGL frameworks: three.js, babylon.js, and PlayCanvas. WebXR frameworks: A-Frame and ReactVR. (https://immersive-web.github.io/webxr-samples/explainer.html) }
+\paragraph{three.js}
+
+\textit{Three.js} is an open source JS library used to display 3D graphics on web-browsers. It provides high-level functions to exploit the graphical optimizations of WebGL, which is executed on the GPU. It has been developed by hundreds of people around the world collaboratively. 
+
+
+
+\paragraph{babylon.js}
+\paragraph{A-Frame}
+
+
+
+
+
+% \todo[inline]{PlayCanvas}
 
 \subsubsection{WebVR Audio}
 
