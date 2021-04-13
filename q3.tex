@@ -1,13 +1,12 @@
 %\chapter{Immersive Environments: XR}
-\chapter{Question 3: Low-cost Dissemination of Spatial Computer Music}
+\chapter{Low-cost Dissemination of Spatial Music}
 \label{ch:xr-mus}
 
 % \def\markchange{{\Huge\bf$\Rightarrow$}}
 % \def\markchange{\marginpar[{\Huge\bf$\Rightarrow$}]{{\Huge\bf$\Leftarrow$}}}
 % \markchange
 
-
-Question \ref{ch:xr-mus} discusses how contemporary extended reality (XR) systems\footnote{XR includes VR, AR and MR. Virtual, augmented and mixed reality correspondingly.} can be exploited to enhance spatial music. Our main focus here will be to present how XR can be used as a dissemination tool, allowing the public greater access to this type of music. As a way to contrast the access issues surrounding XR, and in order to be thorough, we will also discuss some XR tools that are not low-cost or open-source - despite this being of primary interest.
+Question \ref{ch:xr-mus} discusses how contemporary extended reality (XR) systems\footnote{XR includes VR, AR and MR. Virtual, augmented and mixed reality correspondingly.} can be exploited to distribute spatial music en masse. Our main focus here will be to present how XR can be used as a dissemination tool, allowing greater equity of access to this type of music. As a way to contrast the access issues surrounding XR, and in order to be thorough, we will also discuss some XR tools that are not low-cost or open-source - despite these two factors being of primary interest.
 
 % In chapter \ref{ch:spat-mus} we discussed tools for the creation of spatial music from a computer-music standpoint, with a focus on FOSS. Furthermore, we explored spatial instruments which facilitate the creation of such music works. Later, in chapter \ref{ch:spat-aud}, we focused on recording and reproduction means for spatial audio. In particular, we focused on ambisonic recording and reproduction tools, given their popularity in the open-source community interested in spatial audio. In this chapter, we would like to discuss how Extended Reality (XR) tools can also be used as for reproduction of spatial audio works. 
 
@@ -17,7 +16,9 @@ Our intention is to shed a light on various different types of XR technologies w
 
 \section{What is XR?}
 
-Before we dive into the role of WebXR in computer music, we should understand what exactly XR is. More specifically, for the purposes of our own work, we should understand what \textit{Virtual Reality} (VR) is. LaValle, defines VR in the introductory chapter of his free book "Virtual Reality" \cite{lavalle2016virtual} as a system containing four key elements:
+Before we dive into the role of WebXR in computer music, we should understand what exactly XR is. More specifically, for the purposes of our own work, we should understand what \textit{Virtual Reality} (VR) is. Every XR experience is a \textit{perceptual illusion}. A programmer, or designer, has the task of creating an environment that attempts to fool another person's senses. This illusion can be aural, visual, or involve multiple senses - including smell, touch and taste. It should be noted, however, that this does not always mean the end goal is to make XR experiences as realistic as possible. Animations and \textit{lo-fi}\footnote{Low-fidelity.} graphic scenes are not only popular, but sometimes preferable to extremely realistic simulations.
+
+LaValle, defines VR in the introductory chapter of his free book "Virtual Reality" \cite{lavalle2016virtual} as a system containing four key elements:
 
 \begin{enumerate}
     \item \textbf{Targeted behavior:} The organism is having an “experience” that was designed by the creator. Examples include flying, walking, exploring, watching a movie, and socializing with other organisms.
@@ -26,13 +27,13 @@ Before we dive into the role of WebXR in computer music, we should understand wh
     \item \textbf{Awareness}: While having the experience, the organism seems unaware of the interference, thereby being “fooled” into feeling present in a virtual world. This unawareness leads to a sense of presence in an altered or alternative world. It is accepted as being natural.
 \end{enumerate}
 
-Every XR experience is a \textit{perceptual illusion}. A programmer, or designer, has the task of creating an environment that attempts to fool another person's senses. This illusion can be aural, visual, or involve multiple senses - including smell, touch and taste. It should be noted, however, that this does not always mean the end goal is to make XR experiences as realistic as possible. Animations and \textit{lo-fi}\footnote{Low-fidelity.} graphic scenes are not only popular, but sometimes preferable to extremely realistic simulations.
+In contrast to \textit{Mixed Reality} (MR) and \textit{Augmented Reality} (AR), VR experiences completely block out real-world sensory stimuli\footnote{Real-world visual stimuli is totally occluded.}. Simple, overlay-style, applications are sometimes labeled as being \textit{AR experiences}. Meanwhile, MR is sometimes reserved for more sophisticated systems, which require \textit{machine vision}. This, however, is not always the case. There are various MR systems that are marketed as being AR in nature\footnote{Most Apple products are marketed as AR, but behave much like MR systems.}. 
 
-In contrast to \textit{Mixed Reality} (MR) and \textit{Augmented Reality} (AR), VR experiences completely block out real-world sensory stimuli. Simple, overlay-style, applications are sometimes labeled as being \textit{AR experiences}. Meanwhile, MR is sometimes reserved for more sophisticated systems which require \textit{machine vision}. This, however, is not always the case. There are various MR systems that are marketed as being AR in nature\footnote{Most Apple products are marketed as AR, but behave much like MR systems.}. 
+In a MR experience, an \textit{avatar} that is displayed in your \textit{Field of View} (FoV) might, for example, fall off a real table, and respond to this event by holding its knee. This is not possible without a geometric representation of the space, which is obtained using some sort of light \textit{sensor}\footnote{Such as a camera.}. Machine vision, refers to the ability of a system to use camera data to detect characteristics of the real world. These include, but are not limited to, the positions of objects, or, a person's facial expressions.
 
-In a MR experience, an \textit{avatar} that is displayed in your \textit{Field of View} (FoV) might, for example, fall off a real table and respond to this event by holding its knee. This is not possible without a geometric representation of the space, which is obtained using some sort of light \textit{sensor}\footnote{Such as a camera.}. Machine vision, refers to the ability of a system to use camera data to detect characteristics of the real world. These include, but are not limited to, the positions of objects, or, a person's facial expressions.
+In an AR experience, in contrast, we might see a simple display of time, temperature, coordinates, and humidity in the corner of one's glasses. This does not require any camera data to be generated, but instead uses other types of sensors. This information then gets automatically updated as the user moves from one location to the next. In these AR systems there is no link between the geometrical space, the objects inside it, and the system. 
 
-In an AR experience, in contrast, we might see a simple display of time, temperature, coordinates, and humidity in the corner of one's glasses. This does not require any camera data to be generated, but instead uses other types of sensors. This information then gets automatically updated as the user moves from one location to the next. In these AR systems there is no link between the geometrical space, the objects inside it, and the system. Schmalstieg and Hollerer \cite{schmalstieg2016augmented} authored a comprehensive review of AR in their book: "Augmented reality: principles and practice". According to the authors AR implies the confluence of three elements:
+Schmalstieg and Hollerer \cite{schmalstieg2016augmented} authored a comprehensive review of AR in their book: "Augmented reality: principles and practice". According to the authors AR implies the confluence of three elements:
 
 \begin{enumerate}
     \item Combination of real and virtual worlds. 
@@ -48,21 +49,21 @@ The first and second part of this definition are quite clear: the system must br
 
 In our previous example, the data from the real world is limited to: time, temperature, coordinates, and humidity. Therefore, according to Schmastieg and Hollerer, this does not qualify as AR. The MR example we provided earlier, however, would be called AR. This underlines the fact that companies and academics have different definitions of AR and MR, likely due to the infancy of the technology. 
 
-Milgram and Kishino described in 1994 a continuum which can help categorize different XR experiences \cite{schmalstieg2016augmented}. Figure \ref{fig:continuum} shows this spectrum. The term AR here, refers to systems that are more real than virtual. \textit{Augmented virtuality}, refers to systems that are more virtual than real. For example, we can imagine computer generated worlds where avatars faces are real, but the rest of the environment is digital.
+Milgram and Kishino described in 1994 a continuum which can help categorize different XR experiences \cite{schmalstieg2016augmented}. Figure \ref{fig:continuum} shows this spectrum. As you can see, in their definition, MR is a spectrum within which AR resides. The term AR here, refers to systems that are more real than virtual. \textit{Augmented virtuality}, refers to systems that are more virtual than real. For example, we can imagine computer generated worlds where avatars faces are real, but the rest of the environment is digital.
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
 \includegraphics[width=0.7\textwidth]{img/continuum.png} 
 %\captionsetup{justification=centering}
 \caption{Milgram and Kishino Continuum}
-% author: gabriel zalles ballivian (created using Apple Pages)
+% author: gabriel zalles ballivian (created using Apple Pages) [re-creation]
 % public domain
 \label{fig:continuum}
 \end{figure}
 
-Much like other authors in the field, if necessary, we will simply use the term AR in this text to avoid confusion. MR will be included in AR; we make no distinction between the two\footnote{It appears that MR is most prominent in industry products, however, fewer academic authors use this label.}. As new systems emerge, it is possible we will see even more types of "reality" emerge both in the academic and commercial sector. The lines are not always clear, especially when different senses are targeted by different systems than they were intended to. 
+Much like other authors in the field, if necessary, we will simply use the term AR in this text to avoid confusion. MR will be included in AR; we make no distinction between the two\footnote{It appears that MR is most prominent in industry products, however, fewer academic authors use this label.}. As new systems emerge, it is possible we will see even more types of "reality" emerge both in the academic and commercial sector. The lines are not always clear, especially when senses are stimulated by systems, or real-world stimuli, they were "intended" to be stimulated by. 
 
-Consider a person seeing a VR experience with a VR display\footnote{Otherwise known as Head Mounted Displays (HMDs), these are "helmets" one wears which display images via screens mounted inside them. These will be covered in more detail later.} but listening to sounds from speakers, which are inadvertently being blended with real world sounds. The confluence of synthetic and real stimuli in the auditory domain point towards an AR experience. However, what if the real world sounds are not intended to be there? Is one of their senses in AR, and another sense in VR? If the real world sounds subside, does that change how we label the experience? 
+Consider a person seeing a VR experience with a VR display\footnote{Otherwise known as Head Mounted Displays (HMDs), these are "helmets" one wears which display images via screens mounted inside them. These will be covered in more detail in section \ref{subsec:hardware}.} but listening to sounds from speakers, which are inadvertently being blended with real world sounds. The confluence of synthetic and real stimuli in the auditory domain point towards an AR experience. However, what if the real world sounds are not intended to be there? Is one of their senses in AR, and another sense in VR? If the real world sounds subside, does that change how we label the experience? 
 
 \section{History of XR}
 
@@ -81,7 +82,7 @@ Much, much before the first ever "real" VR experience was ever developed, pionee
 \endminipage
 \end{figure}
 
-Much later, in the 19th century, the first \textit{stereoscope} was invented by Charles Wheatstone \cite{hemstrom2020comparison}. A stereoscope is a device in which a pair of slightly horizontally offset images of the same scene are presented to each eye, in order to provide additional depth perception. This exploits the fact that our visual system is always integrating two separate images, offset horizontally by the \textit{inter-ocular} distance, in normal viewing conditions. A picture of this device can be seen in Figure \ref{img:stereoscope}. By the 1930s, a portable version of a stereoscope called the \textit{ViewMaster} became commercially successful. The toy allowed people to switch images and see immersive photographs of places around the world. Some of the innovations of the stereoscope were the increased FoV and blocking of distracting boundary stimulus resulting in increased immersion. The ViewMaster, and other similar products, can seen as an early precursor to today's \textit{Head Mounted Displays} (HMDs), commonly used in VR experiences. 
+Much, much later, in the 19th century, the first \textit{stereoscope} was invented by Charles Wheatstone\footnote{English scientist and \href{https://en.wikipedia.org/wiki/Charles_Wheatstone}{inventor of many scientific breakthroughs.}} \cite{hemstrom2020comparison}. A stereoscope is a device in which a pair of slightly horizontally offset images of the same scene are presented to each eye, in order to provide additional depth perception. This exploits the fact that our visual system is always integrating two separate images, offset horizontally by the \textit{inter-ocular} distance, in normal viewing conditions. A picture of this device can be seen in Figure \ref{img:stereoscope}. In the 1930s, a portable version of a stereoscope called the \textit{ViewMaster} became commercially successful. The toy allowed people to switch images and see immersive photographs of places around the world. Some of the innovations of the stereoscope were the increased FoV and blocking of distracting boundary stimulus resulting in increased immersion. The ViewMaster, and other similar products, can seen as an early precursor to today's \textit{Head Mounted Displays} (HMDs), commonly used in VR experiences. 
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
@@ -95,7 +96,7 @@ Much later, in the 19th century, the first \textit{stereoscope} was invented by 
 
 In 1878, a few years after Wheatstone's stereoscope, one of the first examples of of \textit{stroboscopic apparent motion} was created by Eadweard Muybridge\footnote{Muybridge was an English photographer important for his pioneering work in studies of photographic motion (9 April 1830 – 8 May 1904)}. This effect refers to the ability to generate apparent motion by flipping through a sequence of images at a fast rate. Figure \ref{fig:horse-motion} shows Muybridge's famous work: "The Horse in Motion", which depicts several frames of a running horse, as it seemingly moves across space. In order to capture this sequence, 24 separate cameras were required. These were triggered by the horse as it moved along a track using ropes, which the horse's legs pulled on when running. The cameras were offset equidistantly to capture movements in a synchronized fashion. In order to reproduce the images, a \textit{zoopraxiscope}, also an invention of Muybridge's, was employed. The \href{https://upload.wikimedia.org/wikipedia/commons/0/06/The_zoopraxiscope-Horse_galloping-Animated.gif}{zoopraxiscope} is a disc containing multiple image frames which can be used to project a moving image in a recirculating fashion \cite{lavalle2016virtual}. 
 
-Another well-known method in film-making used to increase realism, invented around 1915 by Edwin S Porter\footnote{Edwin Stanton Porter (April 21, 1870 – April 30, 1941) was an American film pioneer, most famous as a producer, director, studio manager and cinematographer.}, is \textit{3D film-making}. Modern 3D movies are created using special camera lenses and subsequently viewed using \textit{polarized} light filters. These filters, at the subjects eyes level, allow certain frequencies of light to pass into one eye, while blocking others. While there is a single image on the screen, two different images are perceived by each eye, much like with the stereoscope. \textit{Stereopsis} is the formal term describing the process of integrating two overlapping visual fields to achieve depth perception. 3D movies are still in use today in some VR experiences. They can also be found in commercial movie theatres across the world. 
+Some 40 years later, in 1915, another well-known method in film-making used to increase realism was invented by Edwin S Porter\footnote{Edwin Stanton Porter (April 21, 1870 – April 30, 1941) was an American film pioneer, most famous as a producer, director, studio manager and cinematographer.}:\textit{3D film-making}. Modern 3D movies are created using special camera lenses and subsequently viewed using \textit{polarized} light filters. These filters, at the subjects eyes level, allow certain frequencies of light to pass into one eye, while blocking others. While there is a single image on the screen, two different images are perceived by each eye, much like with the stereoscope. \textit{Stereopsis} is the formal term describing the process of integrating two overlapping visual fields to achieve depth perception. 3D movies are still in use today in some VR experiences. They can also be found in commercial movie theatres across the world. 
 
 \begin{figure}[ht!]%force figure here, top, strict
 \centering
@@ -106,7 +107,7 @@ Another well-known method in film-making used to increase realism, invented arou
 \label{img:cinerama}
 \end{figure}
 
-A different technique used to improve the sense of realism in movie systems involves increasing the FoV by using a wider screen that surrounds the viewer, accounting for viewers' peripheral vision. The \textit{Cinerama}, from the 1950s, is an example of such a system. It used three projectors to extend the FoV and projected the image upon a concave surface for a richer viewing experience. It was created in the 1950s, and can be seen as a precursor to the curved UltraWide LED (\textit{Light-Emitting Diode}) monitors popular today. 
+30 years later, a different technique was created to improve the sense of realism in movie systems. The method consisted of increasing the FoV by using a wider screen that surrounds the viewer, accounting for viewers' peripheral vision. The \textit{Cinerama}, from the 1950s, is an example of such a system. It used three projectors to extend the FoV and projected the image upon a concave surface for a richer viewing experience. It was created in the 1950s, and can be seen as a precursor to CAVE (Cave Automatic Virtual Environment) systems used for VR in the 90's\footnote{These are described in more detail later.}.
 
 A few years later, in 1957, Morton Heilig introduced the \textit{Sensorama}, which combined: motion pictures, stereo sound, vibration, wind, and even smells, in a personalized stereoscopic \textit{multi-modal} experience. The device resembles an arcade machine with an enclosure surrounding the subject's head, in order to reduce distractions. Unfortunately, the Sensorama had a fixed perspective, which meant the user was limited to a single orientation. It was also very large and expensive, which ultimately led to its downfall. Figures \ref{img:cinerama} and \ref{img:sensorama} depict the Cinerama and Sensorama respectively.
 
@@ -157,13 +158,11 @@ A different approach, developed in the 90's, was the \textit{CAVE} (Cave Automat
 \label{img:cave}
 \end{figure}
 
-% \subsection{Head-Mounted Displays}
-
 During this time there were also a small yet important number of artists who experimented with VR. Kazuhiko Hachiya created a two-person VR experience called \textit{Inter Discommunication Machine} in 1993, which switched one player's sight and sound for the others. The idea was to blur the lines between "you" and "me" \cite{dixon2006history} by switching sensory stimulation. At the Banff Centre, in Alberta, Canada, a number of VR projects were developed by a range of artists, all documented in Moser and McLeod's 1996 book "Immersed in Technology". Dixon \cite{dixon2006history} describes some of these projects in more detail. 
 
 \section{Contemporary XR Techniques}
 
-\subsection{Hardware}
+\subsection{Hardware} \label{subsec:hardware}
 
 \subsubsection{Degrees of Freedom (DoF)}
 
@@ -297,15 +296,15 @@ Certain successful designs exploit \textit{proprioception}, which is our sense o
 
 Once all the inputs and outputs are known, it is the task of the computer to analyze incoming data and present stimuli to the user via various displays. The capabilities of the computer will determine how much data it can analyze and how much data it can return. As we have noted, some cellphones are able to generate virtual worlds, however, because these have less powerful computing hardware, the graphic scenes generally need to be simpler. 
 
-Within the computing hardware, there are various sub-systems which work together to provide a smooth experience. The \textit{Graphical Processing Unit} (GPU), is responsible to \textit{rendering}\footnote{Calculating vertex, edge, and face positions, and subsequently displaying them. They also perform lighting and shadowing.} the graphical content. The \textit{Central Processing Unit} (CPU) is similar to the GPU, however, is not designed for graphics - instead it handles all the other calculations, commands and processed necessary. In some designs, a \textit{Micro-Controller Unit} (MCU) is also used to handle inputs and relay the information to the CPU, which may be tethered to or inside the HMD.
+Within the computing hardware, there are various sub-systems which work together to provide a smooth experience. The \textit{Graphical Processing Unit} (GPU), is responsible to \textit{rendering}\footnote{Calculating vertex, edge, and face positions, and subsequently displaying them. They also perform lighting and shadowing.} the graphical content. The \textit{Central Processing Unit} (CPU) is similar to the GPU, however, is not designed for graphics - instead it handles all the other calculations, commands and processes necessary. In some designs, a \textit{Micro-Controller Unit} (MCU) is also used to handle inputs and relay the information to the CPU, which may be tethered to or inside the HMD.
 
-Some of the important factors to consider here are portability and also the ease of prototyping. When developers are creating these experiences, they need a way to quickly create environments and test them out. Wireless devices might prove more difficult to work with in this regard.  
+Some of the important factors to consider here are portability and also the ease of prototyping. When developers are creating these experiences, they need a way to quickly create environments and test them out. Wireless devices might prove more difficult to work with in this regard.
 
 \todo[inline]{display interface chips?}
 
 \section{Software}
 
-Generally speaking, today, there are three main platforms that are \textit{targeted} by game developers. For each of these different targets, there are associated software libraries that allow us to create content. \textit{Game engines} are the most powerful of these three platforms. These software environments are designed to facilitate the creation and customization of video games and XR experiences. Secondly, there are mobile apps, for which there exist various different \textit{Software Development Kits} (SDKs) with different flavors depending on the \textit{operating system} (OS) of the mobile device. Finally, there is \textit{WebXR}. This corresponds to applications that run on the browser, be it via a mobile phone, HMD, or a traditional computer - with a mouse, keyboard and monitor. 
+Generally speaking, today, there are three main platforms that are \textit{targeted} by game developers. For each of these different targets, there are associated software libraries that allow us to create content. \textit{Game engines} are the most powerful of these three platforms. These software environments are designed to facilitate the creation and customization of video games and XR experiences. Secondly, there are mobile apps, for which there exist various different \textit{Software Development Kits} (SDKs) with different flavors depending on the \textit{operating system} (OS) of the mobile device. Finally, there is \textit{WebXR}. This corresponds to applications that run on the browser, be it via a mobile phone, HMD, or a traditional desktop computer. 
 
 \subsection{Game Engines}
 % Unity, Unreal, Godot, etc.
@@ -327,23 +326,23 @@ All of these game engines, as far as XR is concerned, are suited for creating co
 
 \subsection{Mobile XR}
 
-Mobile XR SDKs are used to develop apps and experiences which can be downloaded and run on cellphones. Sometimes these experiences come in the form of 360\textdegree \ videos, other times the applications are graphical renderings of scenes composed in game engines. Various large technology companies, such as Google and Samsung, have created mobile XR development software. In the next few sections, we will explore some of these projects. It should be noted that, with the proliferation of standalone HMDs, mobile VR SDKs are beginning to lose support from these companies. We believe it is only a matter of time before most of these development platforms are entirely irrelevant in the VR ecosystem. Mobile AR SDKs are still being supported, and are finding new applications every day.
+Mobile XR SDKs are used to develop apps and experiences which can be downloaded and run on cellphones. Sometimes these experiences come in the form of 360\textdegree \ videos, other times the applications are graphical renderings of scenes composed in game engines. Various large technology companies, such as Google and Samsung, have created Mobile XR development libraries. In the next few sections, we will explore some of these projects. It should be noted that, with the proliferation of standalone HMDs, mobile VR SDKs are beginning to lose support from these companies. We believe it is only a matter of time before most of these development platforms are entirely irrelevant in the VR ecosystem. Mobile AR SDKs are still being supported, and are finding new applications every day.
 
 \subsubsection{Mobile VR}
 
-Mobile VR SDKs are development kits used to create VR applications targeting mobile devices. The three most popular platform in this area are the: Google \textit{Cardboard}, Google \textit{Daydream}, and Samsung's \textit{Gear VR}. Each of these different platforms has different SDKs which allows users to create VR experiences for them. As we can see, all of these different platforms are proprietary and as a result there are limits to what developers can do with them. 
+Mobile VR SDKs are development kits used to create VR applications targeting mobile devices. The three most popular platform in this area are the: Google \textit{Cardboard}, Google \textit{Daydream}, and Samsung's \textit{Gear VR}. Each of these different platforms has different SDKs which allows users to create VR experiences for them. Some of these different platforms are proprietary, and, as a result, there are limits to what developers can do with them. 
 
 Unfortunately for consumers, over the last few years mobile VR SDKs have lost a lot of support\footnote{Time of writing 2021.}. This is due to the fact that both Google and Oculus\footnote{Gear VR was a collaboration between Samsung and Oculus.} have transitioned into selling standalone HMDs. Fortunately, Google still supports the Cardboard environment to create VR experiences. Since the Daydream project and Gear VR project are now both considered \textit{legacy}\footnote{Outdated systems, in computer science parlance.} systems, we will discuss a bit here only about the Cardboard environment. 
 
 \paragraph{Cardboard SDK}
 
-The recent releases of the Cardboard SDK by Google allow developers to target iOS and Android devices. One can also use the SDK inside Unity if desired. The SDK is licensed under \href{https://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}. Given the simple nature of the Cardboard HMD, the \textit{Application Programming Interface} (API) only allows for monitoring the input of a single button. Naturally, the system internally perform motion tracking and stereoscopic rendering. Because of the interactive limitations of the system, most of the apps for this system are exploration, or content-viewing apps. One example of these is the \textit{Within VR} which features political, kids, and scientific 360\textdegree \ videos.
+The recent releases of the Cardboard SDK by Google allow developers to target iOS and Android devices. One can also use the SDK inside Unity if desired. The SDK is licensed under \href{https://www.apache.org/licenses/LICENSE-2.0.html}{Apache License 2.0}. Given the simple nature of the Cardboard HMD, the \textit{Application Programming Interface} (API) only allows for monitoring the input of a single button. Naturally, the system also performs motion tracking and stereoscopic rendering, both requirements for VR. Because of the interactive limitations of the system, most of the apps for this system are simple content-viewing apps. One example of these is the \textit{Within VR} app which features political, kids, and scientific 360\textdegree \ videos. 
 
 \subsubsection{Mobile AR}
 
-Mobile XR comes in two types: \textit{native} and web-based applications. For example, within mobile VR, viewing a Youtube video that is \textit{streaming} from the browser is a web-based application. Meanwhile, with apps like \textit{Within VR}, the user downloads these videos in their entirety before viewing. This is a native application that does not rely on a browser of internet connection once the video has been downloaded. 
+Mobile XR comes in two types: \textit{native} and web-based applications. For example, within mobile VR, viewing a Youtube video that is \textit{streaming} from the browser can be considered a web-based application. Meanwhile, with apps like \textit{Within VR}, the user downloads these videos in their entirety before viewing. This is a native application that does not rely on a browser or an internet connection after the video has been downloaded. 
 
-Mobile AR also comes in these two styles: native and web-based. Web-based applications will be discussed in more detail later, in this section we will only discuss software platforms used to develop native mobile AR applications. iOS and Android are the two most common OSs for mobile devices today, and both offer different SDKs to create AR applications. In the next few paragraphs we will discuss some of the features of the most popular SDKs for mobile AR applications. 
+Mobile AR also comes in these two styles; Web-based applications will be discussed in more detail later, in this section we will only discuss software platforms used to develop native mobile AR applications. iOS and Android are the two most common OSs for mobile devices today, and both offer different SDKs to create AR applications. In the next few paragraphs we will discuss some of the features of the most popular SDKs for mobile AR applications. 
 
 \paragraph{ARCore}
 
@@ -374,30 +373,47 @@ Much like ARCore, anchors can be placed inside the scene to fix virtual objects.
 
 \subsection{The OS}
 
-Before we move on to WebXR, which is OS-agnostic, we should talk about how different computer operating systems affect the ability to create and deploy XR experiences\footnote{Here we are referring to the OS of personal work computers not mobile devices.}. Many people who own and operate OSx know that the development of XR applications is currently limited in this OS. Most of the state-of-the-art GPUs needed to play or develop XR experiences unfortunately do not work with OSx. 
+Before we move on to WebXR, which is OS-agnostic\footnote{This is only true in desktop OSs, mobile device OSs still create barriers. The best OS for WebXR on mobile devices is Android at the moment.}, we should talk about how different desktop computer OSs affect the ability to create and deploy XR experiences. Many people who own and operate OSx know that the development of XR applications is currently limited in this OS. Most of the state-of-the-art GPUs and software needed to play, or develop, XR experiences, unfortunately do not work well with OSx. 
 
-Windows is the preferred OS for people working with XR and is the most supported out of the big three - Linux and its various flavors being the third major OS. Part of the reason for this is the cost of hardware and lack of customization for Apple devices. Apple has focused more of its attention on AR experiences for mobile devices and tablets. Linux at this point has very little support for XR experiences\footnote{Time of writing April, 2021.}. The main problems with Linux are the drivers for the GPUs and proprietary software for XR which cannot be fixed by FOSS developers. 
+Windows is the preferred OS for people working with XR, and is the most supported out of the big three - Linux and its various flavors being the third major OS. The major reason for this seems to be the cost of the hardware and lack of customization for Apple devices. Apple has focused more of its attention on AR experiences for mobile devices and tablets. Linux at this point has very little support for XR experiences\footnote{Time of writing April, 2021.}. The main problems with Linux are the drivers for the GPUs and proprietary software for XR which cannot be fixed by FOSS developers. 
 
-This perhaps is another great argument for prioritizing development in WebXR, rather than OS-specific software. However, it should be noted, the main issue with WebXR is the way programs are loaded. Instead of downloading executable files, WebXR requires temporary downloads which live in \textit{Random Access Memory} (RAM). This means that devices with less RAM will have trouble running these experiences smoothly. 
+This perhaps is another great argument for prioritizing development in WebXR, rather than OS-specific software. The main bottleneck with WebXR is the way programs are loaded. Instead of downloading executable files, WebXR requires temporary downloads which live in \textit{Random Access Memory} (RAM). This means that devices with less RAM will have trouble running these experiences smoothly. 
 
 \todo[inline]{Middleware like FMOD and Wwise? What is SteamVR, is it also middleware?}
 
 \subsection{WebXR}
 
-WebXR refers to VR or AR applications that run on the browser. In contrast to mobile or computer applications that load assets and code from a hard disk, after the application has been downloaded, these applications dynamically, and temporarily, access data from one or more servers. One clear limitation of these systems, as a result, is that a constant, good quality, network connection, is required for the experience to perform smoothly. 
+WebXR refers to VR or AR applications that run on the browser. In contrast to mobile or computer applications that load assets and code from a hard disk, after the application has been downloaded, these applications dynamically, and temporarily, access data from one or more servers. One clear limitation of these systems, as a result, is that a constant, good quality, network connection, is required for the experience to perform smoothly. These program also reside in RAM, as pointed out earlier, which means they must be relatively small. 
 
 WebXR has some clear benefits when compared to native XR applications that run on mobile devices or personal computers. One of the main benefits of these systems is their flexibility and interoperability across devices. In contrast to other systems, WebXR applications tend to work on most devices connected to the internet, so long as a modern browser, which supports WebXR, is used\footnote{WebXR in iOS has very limited support. Luckily, Apple users can still see experiences on desktop Browsers. Mozilla created a \href{https://webxr-ios.webxrexperiments.com/}{WebXR Viewer} for iOS.}. A list of OSs that work with WebXR can be found \href{https://webvr.rocks/}{here}\footnote{Site accessed April, 2021.}. 
 
 In contrast, when one develops and builds an application for one particular OS, it is not always the case that the same application can be built seamlessly for another OS. Another virtue of WebXR is that a HMD is not required to attain a partial degree of immersion. There are various XR experiences built on the web for HMDs, which can be experienced over a computer or cellphone. While not fully immersive, this allows people who feel uncomfortable with wearing HMDs to experience an artist's work, at least to a limited degree. 
 
-\subsubsection{WebVR}
-
-\todo[inline]{WebGL frameworks: three.js, babylon.js, and PlayCanvas. WebXR frameworks: A-Frame and ReactVR. (https://immersive-web.github.io/webxr-samples/explainer.html) }
-
 \subsubsection{WebAR}
 \paragraph{AR.js}
 
-\subsubsection{WebXR Audio}
+There are likely many other WebAR libraries out there, but the one we would like to highlight is \textit{AR.js}. In many respects, AR.js is similar to other AR SDKs, since most AR applications perform similar functions. The three main features currently of AR.js are \textit{image tracking}, \textit{location-based AR}, and \textit{marker tracking}. Image tracking and marker tracking are similar: they both are used to display virtual objects based on top of 2D images specified and detected by the system. The different between the two is that marker tracking is much more lightweight because the images it needs to recognize are high in contrast and have many fewer features. An example of the types of markers used for this are QR codes, which is a type of matrix barcode. These are commonly scanned with mobile device cameras to quickly take users to a web page. Figure \ref{img:qr-code} shows an example of a QR code which redirects one to the Wikipedia page for QR codes.
+
+\begin{figure}[ht!]%force figure here, top, strict
+\centering
+\includegraphics[width=0.4\textwidth]{img/qr-code.png} 
+%\captionsetup{justification=centering}
+\caption{QR Code \cite{QRcodefo71online}}
+%public domain
+\label{img:qr-code}
+\end{figure}
+
+Location-based AR used GPS\footnote{Global Position System.} coordinates and can be used together with marker tracking to create AR experiences that can be seen around the world through a browser on a phone. AR.js is completely open source and licensed under the \href{https://mit-license.org/}{MIT License}. The library works on any phone with WebGL and WebRTC. There are two builds for this project, one which works with \textit{three.js} and another that works with \textit{A-FRAME}. Both of these platforms will be discussed in Section \ref{subsubsec:webvr}. 
+
+\paragraph{WebGL}
+
+\paragraph{WebRTC}
+
+\subsubsection{WebVR}\label{subsubsec:webvr}
+
+\todo[inline]{WebGL frameworks: three.js, babylon.js, and PlayCanvas. WebXR frameworks: A-Frame and ReactVR. (https://immersive-web.github.io/webxr-samples/explainer.html) }
+
+\subsubsection{WebVR Audio}
 
 Ambisonics has clear bandwidth efficiencies over \textit{Object Based Audio} (OBA) solutions due to the fact the $N$ sources can be encoded into a lower number of channels, dubbed ambisonic harmonics, and then decoded binaurally. This sound-field synthesis technique varies in quality depending on the order of the ambisonic system. A FOA system might reduce the amount of data required to represent a sound field, but a HOA might provide a more realistic experience given the improved spatial resolution of the system.
 
