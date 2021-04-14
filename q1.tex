@@ -392,21 +392,25 @@ Personalized HRTFs have been shown to improve localization, especially with rega
 \todo[inline]{Haven't talked about culling at all yet. see hacihabiboglu-2017-spat-audio-rec-sim-ren.pdf}
 
 
-\section{Open Tools for Spatial Music} \label{sec:open_tools_spat_mus}
+\section{Tools for Spatial Music-making} \label{sec:open_tools_spat_mus}
+
 % This section will provide an overview of different existing tools for computer musicians which facilitate the creation of spatial music. We will focus on free and open source tools which work in conjunction with computer music languages such as Pd, SuperCollider, Csound, etc. 
 
-Composers interested in working with computers are well aware of the various different ecosystems existing for the creation of computer-music works. A short list of these systems include: Puredata (Pd), SuperCollider, csound, MAX/MSP, RTcmix, and ChucK. 
+Composers interested in working with computers are well aware of the various different ecosystems existing for the creation of computer-music works. A short list of these systems include: Puredata (Pd), SuperCollider, Csound, MAX/MSP, RTcmix, and ChucK. In this section, we would like to focus on audio processing systems for creation of spatial music while making note of state-of-the-art commercial systems that are already shaping music in this domain. We will focus particular attention to computer music languages, however, we will also incorporate into our discussion systems which work with DAWs and entirely proprietary systems. 
 
-In this section we will focus on Pd available tools for creation of spatial works given our familiarity with the system, as well as it's free and open-source nature. Even by focusing only on Pd, there are a slew of available tools that people have developed and published, here we will try to focus on those we find most comprehensive and well supported. 
+% In this section we will focus on Pd available tools for creation of spatial works given our familiarity with the system, as well as it's free and open-source nature. Even by focusing only on Pd, there are a slew of available tools that people have developed and published, here we will try to focus on those we find most comprehensive and well supported. 
 
-Our motivation for using FOSS is to democratize access to art-making solutions and consider ways in which we can include as many students as possible into the spatial music-making process. While there are more sophisticated tools out there for making spatial music which one can purchase, we wanted to focus on improvements that can be made to FOSS to bring them up to par with the best commercial systems. 
+% Our motivation for using FOSS is to democratize access to art-making solutions and consider ways in which we can include as many students as possible into the spatial music-making process. While there are more sophisticated tools out there for making spatial music which one can purchase, we wanted to focus on improvements that can be made to FOSS to bring them up to par with the best commercial systems. 
 
-\subsection{VBAP} 
-Vector Based Amplitude Panning (VBAP) is an algorithm written by Ville Pulkki \cite{pulkki1997virtual}. The main drawback of this system is that there is no dedicated binaural rendering system, so it requires a collection of speakers in order to develop the works. One could use a binaural renderer such as \texttt{earplug\~} but there is no obvious way to use a head-tracker, which means the user will need access to a multi-channel sound system. 
+\subsection{FOSS for Spatial Music-making}
 
-The benefit of VBAP is that it is re-configurable to any speaker format, much like ambisonics. The added benefit of ambisonics is that the soundfield can be manipulated using a number of linear transformations which we will discuss later. VBAP is extremely simple to install and operate. 
+\subsubsection{VBAP for Pd} 
 
-With Pd installed, the user can simply search for the VBAP externals by typing VBAP under the "Find externals" option in \texttt{Help}. After installing, we recommend shutting down Pd and re-launching it. Make note of where Pd offers to install VBAP. It may suggest installing it inside the Pd app itself. This is a good option because it means one does not need to specify a path to the externals, Pd will automatically know where to find them. The drawback is if one installs a new version of Pd, and deletes the old, you will have to remember to download VBAP again. Alternatively, you can specify a folder of your own choosing and point Pd to it, using the \texttt{Path...} settings under preferences, or by invoking the \textit{[declare]} object in pd.
+\textit{Vector Based Amplitude Panning} (VBAP) is an algorithm written by Ville Pulkki \cite{pulkki1997virtual} over 20 years ago! The main drawback of this system is that there is no dedicated binaural rendering system, so it requires a collection of speakers in order to create spatial music. In general, all the VBAP systems we have found do not include binaural rendering. The only exception was SpatGRIS \cite{ledoux2018immersive}, which does not seem to support rotation, but instead provides a binaural rendering of the scene based on a single fixed position. 
+
+The benefit of VBAP is that it is re-configurable to any speaker format, much like ambisonics. This in contrast to surround sound formats which have stringent specifications for speaker placement. The added benefit of ambisonics is that the sound-field can be manipulated using a number of linear transformations which we will discuss later. Another benefit of VBAP for Pd, is that it is extremely simple to install and operate. 
+
+With Pd installed, the user can simply search for the VBAP externals by typing VBAP under the "Find externals" option in \texttt{Help}\footnote{Also known as the Deken package manager.}. After installing, we recommend shutting down Pd and re-launching it. Make note of where Pd offers to install VBAP. It may suggest installing it inside the Pd app itself. This is a good option because it means one does not need to specify a path to the externals: Pd will automatically know where to find them. The drawback is if one installs a new version of Pd, and deletes the old, you will have to remember to download VBAP again. Alternatively, you can specify a folder of your own choosing and point Pd to it, using the \texttt{Path...} settings under preferences, or by invoking the \textit{[declare]} object in pd.
 
 With VBAP installed now go to \texttt{Help > Browser > vbap} and open up \texttt{vbap-help.pd} to get started. Figure \ref{fig:vbap-5.0} shows an example of using VBAP for a 5.0 set-up\footnote{The example says it is 5.1 but as you can see the sub channel is missing.}. The speaker angles are specified in 2D. The \texttt{vbap} object spits out a list of gain values for each speaker in the order they were specified by the \texttt{define\_loudspeakers} message\footnote{Remember to enable as many speakers as needed under \texttt{Media > Audio Settings} by changing output channels to the desired number.}.
 
@@ -416,7 +420,7 @@ With VBAP installed now go to \texttt{Help > Browser > vbap} and open up \texttt
 %\captionsetup{justification=centering}
 \caption{VBAP 5.0 example}
 \label{fig:vbap-5.0}
-%license: cc by sa 3.0
+%license: cc by sa 3.0 (screenshot of Pd example code)
 \end{figure}
 
 In the example shown the speakers are set up in a quadraphonic arrangement with an extra speaker in the center. It does not follow the International Telecommunications Union (ITU) standard for 5.1 systems \cite{series2010multichannel} for the angles of the speakers. The ordering is also different that the standard. One has to be careful with the routing and ordering of signals, as well as angles, for good multi-channel sound reproduction. It is more common to use the ordering L/C/R/LS/RS\footnote{Left, Center, Right, Left-Surround, Right-Surround} in this format. In the example provided the order is LS/L/C/R/RS instead. 
@@ -427,23 +431,24 @@ In the example shown the speakers are set up in a quadraphonic arrangement with 
 %\captionsetup{justification=centering}
 \caption{ITU Standard 5.1 surround \cite{File51su81-online}}
 \label{fig:5-1-itu}
-%license: This file is licensed under the Creative Commons Attribution-Share Alike 3.0 Unported license.
+%license: This file is licensed under the Creative Commons Attribution-Share Alike 3.0 Unported license. File was edited because it was cut-off. Mismatch in fonts.
 \end{figure}
-
-\todo[inline]{The image is cut off, I have to replace it.}
 
 One of the main drawbacks of this is the fact that if we wanted to change from a 5.0 system to something much larger, like 22.2, we will have to manually route each gain value to its own multiply object. It is possible to use an external library with matrix operations to make things a bit simpler but for most non-experts this will likely prove too complex. Adding height is relatively simple, the message sent to the \texttt{vbap} object has to be sent a modified \texttt{define\_loudspeakers} message where the first argument is 3, which specifies 3D coordinate. The pairs of number following designate the azimuth and elevation of each speaker. 
 
 The vbap folder also has a second abstraction called texttt{[rvbap]} which is meant to add distance effects to the signal. In our trials this external caused Pd to crash, so we recommend sticking with \texttt{[vbap]} instead and adding one's own reverb unit before the panning algorithm. This is far cheaper computationally than applying a reverb to each copy of your signal. Pd vanilla comes with 3 built-in reverb units \texttt{[rev1~]}, \texttt{[rev2~]}, and \texttt{[rev3~]}. Any one of these can be used in conjunction with VBAP to simulate distance. We recommend using a dry/wet control to dictate the simulated distance. 
 
-\subsection{iem\_ambi}
+\subsubsection{iem\_ambi for Pd}
 
 Institute for Electronic Music and Acoustics (IEM) in Graz, Austria, has developed another useful spatialization tool for Pd. Much like VBAP this tool can also be found easily in Pd via the \texttt{Find externals} option in \texttt{Help}. Unlike, VBAP, this ambisonic toolkit is far less intuitive to operate but it does provide some improvements over VBAP. 
 
-Perhaps the most important of these benefits is the fact that ambisonic files can be uploaded and played back over the web in scenarios where asynchronous demonstrations of spatial music are needed. The second benefit, is that a rotation on a soundfield is a linear, non-destructive, transformation which allows us to easily binaurally audition our soundfield without the need for loudspeakers. Finally, there are
+Perhaps the most important of these benefits is the fact that ambisonic files can be uploaded and played back over the web in scenarios where asynchronous demonstrations of spatial music are needed. The second benefit, is that a rotation on a sound-field is a linear non-destructive transformation, which allows us to easily binaurally audition our sound-field without the need for loudspeakers. 
 
-\todo[inline]{According to pysiewicz-2016-spat-inst-chapter.pdf the label diffusion is specific to stereophonic sound projection and loudspeaker orchestras. However, in lynch-2017-engulfment.pdf it says "Sound diffusion refers to the practice of localizing and moving sound throughout a space using multiple loudspeakers." }
+This particular ambisonic library is well suited for encoding, rotating, decoding, and has externals for binaural decoding. 
 
+\todo[inline]{spat, not open source but comprehensive. iem VSTs, sparta VSTs. other pd ambisonic stuff = CEAMMC and CICM}
+
+\todo[inline]{According to pysiewicz-2016-spat-inst-chapter.pdf the label diffusion is specific to stereophonic sound projection and loudspeaker orchestras. However, in lynch-2017-engulfment.pdf it says "Sound diffusion refers to the practice of localizing and moving sound throughout a space using multiple loudspeakers."}
 
 \section{Spatial Instruments}
 
@@ -569,8 +574,8 @@ This section corresponds to instruments which require to physical touch for thei
     
     \item \textbf{Pupitre d'Espace:} is perhaps the oldest of all the instruments in our list. It was developed by Pierre Schaeffer in 1952 and operated on the basis of electromagnetic inductance. Four induction coils are mounted around the performer as receiver rings. One additional coil is held in the hand of the performer. The distance between the receiver rings and the moving coil in the performer's hand induces four currents which are used to control the amplitude of four speakers. 
     
-    \item \textbf{NAISA:}
-    \item \textbf{Gesture Controller for a WFS System}:
+    % \item \textbf{NAISA:} not sure if will include here
+    % \item \textbf{Gesture Controller for a WFS System}: not sure if will include here
     
     \item \textbf{Holistic Spatialisation System for Multiple Sound Sources:} (HSSMSS) is a controller presented by Diatkine et al. in 2015, which makes use of a "short-range infrared sensor" capable of tracking hand gestures and mapping these to musical parameters. The system relies on HOA for the spatialization of sound sources, a LeapMotion\footnote{https://developer.leapmotion.com/} controller, and MAX/MSP as the main environment. It also supports binaural synthesis with head-tracking for auditioning of sound-fields via the \texttt{Sarcoder\~} MAX/MSP external.
 \end{enumerate}
