@@ -391,12 +391,11 @@ Personalized HRTFs have been shown to improve localization, especially with rega
 
 \todo[inline]{Haven't talked about culling at all yet. see hacihabiboglu-2017-spat-audio-rec-sim-ren.pdf}
 
-
 \section{Tools for Spatial Music-making} \label{sec:open_tools_spat_mus}
 
 % This section will provide an overview of different existing tools for computer musicians which facilitate the creation of spatial music. We will focus on free and open source tools which work in conjunction with computer music languages such as Pd, SuperCollider, Csound, etc. 
 
-Composers interested in working with computers are well aware of the various different ecosystems existing for the creation of computer-music works. A short list of these systems include: Puredata (Pd), SuperCollider, Csound, MAX/MSP, RTcmix, and ChucK. In this section, we would like to focus on audio processing systems for creation of spatial music while making note of state-of-the-art commercial systems that are already shaping music in this domain. We will focus particular attention to computer music languages, however, we will also incorporate into our discussion systems which work with DAWs and entirely proprietary systems. 
+Composers interested in working with computers are well aware of the various different ecosystems existing for the creation of computer-music works. A short list of these systems include: Puredata (Pd), SuperCollider (SC), Csound, MAX/MSP, RTcmix, and ChucK. In this section, we would like to focus on audio processing systems for creation of spatial music while making note of state-of-the-art commercial systems that are already shaping music in this domain. We will focus particular attention to computer music languages, however, we will also incorporate into our discussion systems which work with DAWs and which might be entirely proprietary. 
 
 % In this section we will focus on Pd available tools for creation of spatial works given our familiarity with the system, as well as it's free and open-source nature. Even by focusing only on Pd, there are a slew of available tools that people have developed and published, here we will try to focus on those we find most comprehensive and well supported. 
 
@@ -444,8 +443,78 @@ Institute for Electronic Music and Acoustics (IEM) in Graz, Austria, has develop
 
 Perhaps the most important of these benefits is the fact that ambisonic files can be uploaded and played back over the web in scenarios where asynchronous demonstrations of spatial music are needed. The second benefit, is that a rotation on a sound-field is a linear non-destructive transformation, which allows us to easily binaurally audition our sound-field without the need for loudspeakers. 
 
-This particular ambisonic library is well suited for encoding, rotating, decoding, and has externals for binaural decoding. 
+This particular ambisonic library is well suited for encoding, rotating, decoding, and has externals for binaural decoding. Unfortunately, the project does not have examples for binaural decoding. There are two included externals which calculate a reduced set of convolution arrays in frequency and time domain. Therefore, while at present this is one of the simpler HOA libraries to install in Pd, the limited documentation makes it difficult to work binaurally. 
 
+Musil et al. \cite{musil2005library} describes the development of such a project. Despite the shortcomings of the library, the paper does provide some valuable insight into the development of binaural systems:
+
+\begin{enumerate}
+    \item Assuming left/right symmetry allows one to reduce the number of HRTFs necessary by 50\%. This is also is implemented in modern binaural engines such as \cite{gorzel2019efficient}.
+    \item HRIR filters with less than 128 taps have shown to decrease localization accuracy\footnote{No reference is given for this statement by the author.}. 
+    \item Convolution in the frequency domain is less computationally demanding.
+    \item Finally, the number of iFFTs can be reduced to two by adding all signals in the frequency domain for each ear before applying the inverse transform.
+\end{enumerate}
+
+The paper mentions a room simulation external and a reverberation sub-patch that are not found directly in the library. A deeper seach in the \href{https://git.iem.at/pd}{IEM Pd Libraries GitLab page} shows the existence of the room simulator but the reverberation patch could not be found. 
+
+This demonstrates one of the frustrations that open-source software can present - while libraries are free to be used and modified, often the documentation can sub-par and one might be required to compile programs themselves in order for them to work. This might require modifying complex shell scripts depending on the OS, something which can be burdensome for musicians.
+
+Nonetheless, for HDLAs, this library is still incredibly powerful and quite comprehensive. The only other major limitation would be the lack of transforms available to the user: while rotations are already provided, warping and directional loudness modifications, as described in \cite{kronlachner2014spatial} are not. For those still interested in going this route, the \href{https://git.iem.at/pd/acre-amb}{ACRE-amb}, is still being developed at IEM. 
+
+\subsubsection{Other Pd Options}
+
+% CICM, CEAMMC, SPACE~.
+
+\subsubsection{ambiX}
+
+\href{http://www.matthiaskronlachner.com/?p=2015}{AmbiX} is a plug-in suite developed by Matthias Kronlachner which is cross-platform and can be used in conjunction with Reaper, Ardour, MAX/MSP, or as standalone applications. They use the ambiX convention which includes ACN ordering and SN3D normalization. Kronlachner also has an \href{http://www.matthiaskronlachner.com/?p=1910}{mcfx suite}\footnote{Short for multi-channel effects suite.} which includes:
+
+\begin{enumerate}
+    \item \textbf{mcfx\_convolver}: multi-channel convolution which can be used to create ambisonic reverberation effects or encode microphone arrays to the ambisonic domain. 
+    \item \textbf{mcfx\_delay}: which delays each channel about the same time.
+    \item \textbf{mcfx\_filter}: which filters each channel with the same filter and displays a frequency analyzer of the sum of all channels.
+    \item \textbf{mcfx\_gain\_delay}: which sets different delay times for each channel and is used mainly for speaker calibration.
+    \item \textbf{mcfx\_meter}: which is a multi-channel level meter.
+\end{enumerate}
+
+Much like other ambisonic toolkits, Kronlachner provides: binaural decoding, multi-channel decoding, format converting\footnote{To switch between standards. For example converting from N3D normalization to SN3D, or from FuMa ordering to ACN.}, encoding, and rotating plug-ins. Rather than discussing these functions, we would like to point out what is distinct from this plug-in suite. 
+
+Kronlachner \cite{kronlachner2014spatial} describes some of the additional spatial transforms implemented in ambiX. These include:
+
+\begin{enumerate}
+    \item \textbf{ambix\_directional\_loudness}: which allows the user to "amplify, attenuate or filter out certain parts of the sound-field". 
+    \item \textbf{ambix\_maxre}: applies \textit{MaxRe} weighting to an ambisonic signal, which suppresses side-lobes when panning. Typically used for decoding.
+    \item \textbf{ambix\_mirror}: simple algorithm which allows mirroring about the x, y, or z axis. Exploits spherical harmonic symmetry.
+    \item \textbf{ambix\_vmic}: generates a \textit{virtual microphone} from a linear combination of spherical harmonics. Similar in principle to directional loudness but outputs a mono signal extracted from the sound-field. 
+    \item \textbf{ambix\_warp}: warps a sound-field towards the equator, poles, front, or back. 
+    \item \textbf{ambix\_widening}: frequency dependant rotation around the z-axis, use this for source widening or creating diffuse early reflections \cite{zotter2014efficient}.
+    
+\end{enumerate}
+
+%ambix_maxre
+%ambix_mirror
+%ambix_vmic
+%ambix_warp
+%ambix_widening
+
+% \subsubsection{IEM Plug-in Suite}
+% \subsubsection{Sparta Plug-in Suite}
+% \subsubsection{Other Computer Music Languages}
+
+% SuperCollider (SC): 3Dj
+% Csound:
+% MAX/MSP: ICST
+% RTcmix:
+% ChucK:
+
+\subsection{Non-FOSS for Spatial Music-making}
+
+\subsubsection{Spat for MAX}
+
+\subsubsection{Envelop for MAX}
+
+%jaroszewicz-2015-spat-cpu-mus
+    %cross-synthesis and spectral shredding 
+    
 \todo[inline]{spat, not open source but comprehensive. iem VSTs, sparta VSTs. other pd ambisonic stuff = CEAMMC and CICM}
 
 \todo[inline]{According to pysiewicz-2016-spat-inst-chapter.pdf the label diffusion is specific to stereophonic sound projection and loudspeaker orchestras. However, in lynch-2017-engulfment.pdf it says "Sound diffusion refers to the practice of localizing and moving sound throughout a space using multiple loudspeakers."}
