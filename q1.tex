@@ -487,8 +487,64 @@ Kronlachner \cite{kronlachner2014spatial} describes some of the additional spati
     \item \textbf{ambix\_vmic}: generates a \textit{virtual microphone} from a linear combination of spherical harmonics. Similar in principle to directional loudness but outputs a mono signal extracted from the sound-field. 
     \item \textbf{ambix\_warp}: warps a sound-field towards the equator, poles, front, or back. 
     \item \textbf{ambix\_widening}: frequency dependant rotation around the z-axis, use this for source widening or creating diffuse early reflections \cite{zotter2014efficient}.
-    
 \end{enumerate}
+
+\textit{MaxRE} will be covered in more detail in Chapter \ref{ch:spat-aud}. Mirroring will be covered in Chapter \ref{ch:xr-mus}, as will virtual microphones - also known as beam-forming. \textit{Directional loudness}, \textit{warping} and \textit{widening} will be described in the next few paragraphs. 
+
+\paragraph{Directional loudness}
+
+The goal of direction loudness is to amplify a particular region of the sound-field. In contrast to beam-forming, the output of this effect is multi-channel: we maintain the same number of spherical harmonics. In Kronlachner's paper \cite{kronlachner2014spatial} a \textit{t-design} approach is used for spherical sampling. T-designs are attributed to Hardin and Sloane \cite{hardin1996mclaren}. In order to accurate sample represent ambisonic sound-fields of a given order $L$, the number of directions, must be equal to or greater than the number of harmonics $(N +1)^2$. Furthermore, the condition number of $\mathbf{Y}$, the matrix of spherical harmonics, needs to be sufficiently small\footnote{The condition number of a function measures how much the output value of the function can change for a small change in the input argument. A problem with low condition number is said to be well-conditioned. For an ambisonic problem, this means that small changes in coordinates should not substantially change the spherical domain sampling.}. 
+
+\todo[inline]{I need to better understand condition numbers. I think what I said in the footnote is fine though.}
+
+The coordinates for these t-designs are ideal for sampling the spherical domain because they allow us to perform \textit{Discrete Spherical Harmonic Transforms} (DSHT) without pseudo-inversion\footnote{They can be found \href{http://neilsloane.com/sphdesigns/}{here}.}. Spherical t-designs vary in size, the maximum size Sloane provides is a 21-design with 240 which allows ambisonics up to order $N = 10$. Kronlachner describes the DSHT sans pseudo-inversion mathematically:
+
+\begin{equation}
+\boldsymbol{T}=\operatorname{diag}\{\boldsymbol{b}\} \boldsymbol{Y}^{\mathrm{T}}\left(\boldsymbol{\Theta}_{t}\right) \operatorname{diag}\left\{\boldsymbol{g}\left(\boldsymbol{\Theta}_{t}\right)\right\} \boldsymbol{Y}\left(\mathcal{T}^{-1}\left\{\boldsymbol{\Theta}_{t}\right\}\right)
+\end{equation}
+ 
+$\textbf{T}$ corresponds to the transformation matrix we seek to obtain.
+
+\begin{equation}
+\boldsymbol{b}=\left[\frac{2 n_{A C N}+1}{\mathrm{~L}}\right]_{A C N}
+\end{equation}
+
+$\boldsymbol{b}$ is a vector where $n$ is the order of the spherical harmonic, based on ACN format, and the values are ordered in ACN format. Once calculated the vector is diagonalized into a matrix. $\boldsymbol{Y}^{\mathrm{T}}\left(\boldsymbol{\Theta}_{t}\right)$ corresponds to the spherical harmonic sampling using our traditional ambisonic equation\footnote{More information about this Equation can be found in Chapter \ref{ch:spat-aud}, Section \ref{subsec:sf-mics}.}:
+
+$$
+Y_{n}^{m}(\varphi, \vartheta)=N_{n}^{|m|} P_{n}^{|m|}(\sin (\vartheta))\left\{\begin{array}{ll}
+\sin |m| \varphi, & \text { for } m<0 \\
+\cos |m| \varphi, & \text { for } m \geq 0
+\end{array}\right.
+$$
+
+according to ACN standards. Each row of the matrix correspond to a single harmonic, and each column corresponds to a direction. $\boldsymbol{\Theta}_{t}$ is a $L$ by 3 matrix corresponding to the coordinates of our t-design in Cartesian coordinates\footnote{In Cartesian coordinates these vectors are triplets with coordinates (x, y, z).}, which are converted to spherical coordinates represented by $\phi$. and $\theta$. These are converted to spherical coordinates and used to compute the coefficients from the spherical harmonic sampling. 
+
+$$
+\boldsymbol{\Theta}=\left[\boldsymbol{\theta}_{1}, \ldots, \boldsymbol{\theta}_{\mathrm{L}}\right]^{T}
+$$
+
+The resulting $L$ by $(N + 1)^2$ matrix is transposed and multiplied with the \textit{weighting function} $\boldsymbol{g}\left(\boldsymbol{\Theta}_{t}\right)$ which is a vector of amplitudes calculated to achieve the desired result: there is one weighting value for each sampling point in the t-design. For direction loudness modifications, we use a neutral direction mapping: $\mathcal{T}\{\boldsymbol{\theta}\}=\boldsymbol{\theta}$, which means for this operation, it can simply be ignored. The weighting function for directional loudness modification is given by:
+
+\begin{equation}
+g(\boldsymbol{\theta})=u\left(\boldsymbol{\theta}_{\mathrm{c}}^{\mathrm{T}} \boldsymbol{\theta}-\cos \frac{\gamma_{\mathrm{c}}}{2}\right)
+\end{equation}
+
+Where $u(\cdot)$ is the unit step function\footnote{Which is equal to 1 for all inputs greater than or equal to 0.}. $\gamma_{\mathrm{c}}$ corresponds to the size of our region, which can be changed by the user\footnote{This is a \textit{modulateable} parameter.}. For each direction in $\boldsymbol{\Theta}_{t}$ we take the inner product between the coordinate of the center of our directional loudness region and the coordinate of the sampling point in the t-design to crop out part of the surround sound scene. Adding this cropped region to the original will result in a boost in the given direction. 
+
+\begin{equation}
+g(\boldsymbol{\theta})=g_{1} u\left(\boldsymbol{\theta}_{\mathrm{c}}^{\mathrm{T}} \boldsymbol{\theta}-\cos \frac{\gamma_{\mathrm{c}}}{2}\right)+g_{2} u\left(\cos \frac{\gamma_{\mathrm{c}}}{2}-\boldsymbol{\theta}_{\mathrm{c}}^{\mathrm{T}} \boldsymbol{\theta}\right)
+\label{eq:dlm-in-out}
+\end{equation}
+
+Equation \ref{eq:dlm-in-out} shows a modified function that allows one to determine the gains for both the areas within and outside our cropped region. $g_{1}$ corresponds to the gain for the inner region, and $g_{2}$ corresponds to the gain for the outer region. 
+
+\paragraph{Warping}
+
+Warping combines a weighting function and rotation into a single operation. 
+
+\paragraph{Widening}
+
 
 %ambix_maxre
 %ambix_mirror
