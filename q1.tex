@@ -518,7 +518,7 @@ Y_{n}^{m}(\varphi, \vartheta)=N_{n}^{|m|} P_{n}^{|m|}(\sin (\vartheta))\left\{\b
 \end{array}\right.
 $$
 
-according to ACN standards. Each row of the matrix correspond to a single harmonic, and each column corresponds to a direction. $\boldsymbol{\Theta}_{t}$ is a $L$ by 3 matrix corresponding to the coordinates of our t-design in Cartesian coordinates\footnote{In Cartesian coordinates these vectors are triplets with coordinates (x, y, z).}, which are converted to spherical coordinates represented by $\phi$. and $\theta$. These are converted to spherical coordinates and used to compute the coefficients from the spherical harmonic sampling. 
+according to ACN standards. Each row of the matrix correspond to a single harmonic, and each column corresponds to a direction. $\boldsymbol{\Theta}_{t}$ is a $L$ by 3 matrix corresponding to the coordinates of our t-design in Cartesian coordinates\footnote{In Cartesian coordinates these vectors are triplets with coordinates (x, y, z).}, which are converted to spherical coordinates represented by $\phi$ and $\theta$. Using these angles we compute the coefficients corresponding to our spherical harmonic sampling. 
 
 $$
 \boldsymbol{\Theta}=\left[\boldsymbol{\theta}_{1}, \ldots, \boldsymbol{\theta}_{\mathrm{L}}\right]^{T}
@@ -541,10 +541,98 @@ Equation \ref{eq:dlm-in-out} shows a modified function that allows one to determ
 
 \paragraph{Warping}
 
-Warping combines a weighting function and rotation into a single operation. 
+Warping combines a weighting function and angle changes into a single operation. Warping is used to stretch a certain region of the sound-field while squeezing other regions to prevent overlap \cite{kronlachner2014spatial}. Kronlachner describes the warping operation for elevation angle $\vartheta$ to $\tilde{\vartheta}$. Warping in other directions can be done by pre- and post-rotations. To preserve the total loudness of sounds within the stretched and squeezed parts of the sound-field, a gain weight is applied as part of warping. This can either be done as pre- or post-emphasis. Regions where energy is compressed will need to be de-emphasized. 
+
+Kronlachner proposes two types of warpings:
+
+\begin{enumerate}
+    \item \textbf{Warping to elevate or lower the equator}: which moves all the energy towards the north pole, or the south pole, depending on the value of $\alpha$.
+    \item \textbf{Warping towards or away from equator}: which moves all the energy towards both poles simultaneously, or away from both poles simultaneously, depending on the value of $\beta$.
+\end{enumerate}
+
+\subparagraph{Elevating or Lowering the Equator}
+
+Our Cartesian unit direction vector is composed of three variable for each axis in 3D space.
+
+$$
+\boldsymbol{\theta}=\left(\begin{array}{l}
+\theta_{x} \\
+\theta_{y} \\
+\theta_{z}
+\end{array}\right)=\left(\begin{array}{c}
+\cos \varphi \cos \vartheta \\
+\sin \varphi \cos \vartheta \\
+\sin \vartheta
+\end{array}\right)
+$$
+
+We use the substitution:
+
+$$
+\begin{array}{ll}
+\mu=\sin (\vartheta), & \text { original, } \\
+\tilde{\mu}=\sin (\tilde{\vartheta}), & \text { warped, }
+\end{array}
+$$
+
+to simplify our equations, and consider only \textit{monotonically}\footnote{Monotonic functions are functions that either entirely non-increasing or non-decreasing. Their first derivative, therefore, never changes sign.} rising warping curves that map $\mu$ with interval $[-1, 1]$ to $\tilde{\mu}$ with the same interval. In order to perform warping towards or away from the equator we use a \textit{bilinear transform} of the form:
+
+$$
+\tilde{\mu}=\frac{\mu+\alpha}{1+\alpha \mu}
+$$
+
+Our spherical angle $\vartheta$ is a function of all three coordinates. The simplest way to implement this algorithm is to first isolate $\theta_{x}$, $\theta_{y}$, and $\theta_{z}$ in equation \ref{eq:cart2sph-elev}. $\alpha$ is user controlled parameter which should remain between -1 and 1.
+
+\begin{equation}
+\vartheta=\arctan \frac{\theta_{z}}{\sqrt{\theta_{x}^{2}+\theta_{y}^{2}}}
+\label{eq:cart2sph-elev}
+\end{equation}
+
+With these three variables isolated we can replace $\vartheta$ for $\tilde{\vartheta}$, which equals $\arcsin \left(\frac{\mu+\alpha}{1+\alpha \mu}\right)$. The three resulting values can then be plugged back into \ref{eq:cart2sph-elev} to calculate our warped elevation angle. These new elevations angles are then used to calculate our spherical harmonic coefficients. The final step is to calculate the gain weighting which compensates for any added energy. The gain values for this type of warping are calculated using Equation \ref{eq:warp-gain-wrt}. Note that these gain values need to be calculated after warping, so the new coordinates found should be used. 
+
+\begin{equation}
+g(\mu)=\frac{\sqrt{1-\alpha^{2}}}{1+\alpha \mu}
+\label{eq:warp-gain-wrt}
+%wrt = with respect to, this is what zotters book calls it.
+\end{equation}
+
+\todo[inline]{This is still confusing. If certain parts of squeezed and others stretched doesn't this naturally balance the energy? I think what's happening is that we don't want speakers to overload, so we make things quieter in regions where energy is compressed. One of the papers said the opposite however, that stretching is what cause energy to increase??? Ask Zotter. Ps. see quals/img for photos of hand-written math. Might convert to latex later. Perhaps as appendix info.}
+
+\subparagraph{Warping Towards of Away from Equator}
+
+This second type of warping is quite similar to the first in terms of its implementation, the only difference is that we are no longer using the bilinear transform. This type of warping pushes all the energy towards the top of the sphere or the bottom of the sphere. Much like before, if we wanted to push energy in other directions, all we would need is a rotation before and after the warping. This warping also requires a gain compensation which has a different formula than Equation \ref{eq:warp-gain-wrt}.
+
+Equations \ref{eq:warp-angle-2} and \ref{eq:warp-gain-2} describe the angle and gain modifications respectively \cite{kronlachner2014spatial}. 
+
+\begin{equation}
+\tilde{\mu}=\left\{\begin{array}{ll}
+\frac{(|\beta|-1)+\sqrt{(|\beta|-1)^{2}+4|\beta| \mu^{2}}}{2|\beta| \mu}, & \text { for } \beta>0 \\
+\frac{(1-|\beta|) \mu}{1-|\beta| \mu^{2}}, & \text { for } \beta<0
+\end{array}\right.
+\label{eq:warp-angle-2}
+\end{equation}
+
+\begin{equation}
+g(\mu)=\left(\frac{1-|\beta| \mu^{2}}{\sqrt{(1-|\beta|)\left(1+|\beta| \mu^{2}\right)}}\right)^{\operatorname{sgn}\{\beta\}}
+\label{eq:warp-gain-2}
+\end{equation}
+
+\paragraph{Metering}
+
+While not part of the same library of objects\footnote{Technically the metering plug-in is part of \texttt{mcfx}, not \texttt{ambiX}.}, we should also talk about the development of Kronlachner's metering plug-in described in \cite{kronlachner2014spatial}. This plug-in was used to confirm that warping operations had been properly implemented, which can be difficult to determine using only our ears. The plug-in calculates \textit{Root Mean Square} (RMS) and \textit{peak values} for each sampled point in the t-design and has adjustable \textit{release time}. \textit{Logarithmic} values of both measures are used, a common practice in audio systems design. The $v$ by $h$\footnote{Vertical $v$ by horizontal $h$.} texture is used to display the directional RMS values. The color is selected based on the loudness of the signal at the point in the spherical grid. A Mollweide projection is also used to map the surround image to a 2D image. Figure \ref{fig:ambix-meter} shows the 3D representation of the metering plug-in on the right and the Mollweide projection on the left.
+
+\begin{figure}[ht!]%force figure here, top, strict
+\centering
+\includegraphics[width=0.75\textwidth]{img/ambix-meter.png} 
+%\captionsetup{justification=centering}
+\caption{Ambix Meter: Mollweide Projection (left), 3D representation (right) \cite{kronlachner2014spatial}}
+\label{fig:ambix-meter}
+%license: probably ok to use. Screenshot without permission. The code is GNU so I assume he likes to share. Also, one can download the software so it's irrelevant.
+\end{figure}
 
 \paragraph{Widening}
 
+Widening is described in 
 
 %ambix_maxre
 %ambix_mirror
