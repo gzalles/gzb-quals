@@ -386,7 +386,7 @@ This perhaps is another great argument for prioritizing development in WebXR, ra
 
 WebXR refers to VR or AR applications that run on the browser. In contrast to mobile or computer applications that load assets and code from a hard disk, after the application has been downloaded, these applications dynamically, and temporarily, access data from one or more servers. One clear limitation of these systems, as a result, is that a constant, good quality, network connection, is required for the experience to perform smoothly. These program also reside in RAM, as pointed out earlier, which means they must be relatively small. 
 
-WebXR has some clear benefits when compared to native XR applications that run on mobile devices or personal computers. One of the main benefits of these systems is their flexibility and interoperability across devices. In contrast to other systems, WebXR applications tend to work on most devices connected to the internet, so long as a modern browser, which supports WebXR, is used\footnote{WebXR in iOS has very limited support. Luckily, Apple users can still see experiences on desktop Browsers. Mozilla created a \href{https://webxr-ios.webxrexperiments.com/}{WebXR Viewer} for iOS.}. A list of OSs that work with WebXR can be found \href{https://webvr.rocks/}{here}\footnote{Site accessed April, 2021.}. 
+WebXR has some clear benefits when compared to native XR applications that run on mobile devices or personal computers. One of the main benefits of these systems is their flexibility and interoperability across devices. In contrast to other systems, WebXR applications tend to work on most devices connected to the internet, so long as a modern browser, which supports WebXR, is used\footnote{WebXR in iOS has very limited support. Luckily, Apple users can still see experiences on desktop browsers such as Firefox or Chromium. Mozilla created a \href{https://webxr-ios.webxrexperiments.com/}{WebXR Viewer} for iOS.}. A list of browsers that work with WebXR can be found \href{https://webvr.rocks/}{here}\footnote{Site accessed April, 2021.}. 
 
 In contrast, when one develops and builds an application for one particular OS, it is not always the case that the same application can be built seamlessly for another OS. Another virtue of WebXR is that a HMD is not required to attain a partial degree of immersion. There are various XR experiences built on the web for HMDs, which can be experienced over a computer or cellphone. While not fully immersive, this allows people who feel uncomfortable with wearing HMDs to experience an artist's work, at least to a limited degree. 
 
@@ -423,9 +423,12 @@ WebRTC is a protocol for Real Time Communication (RTC). It supports many types o
 There are three ways we can use three.js, and in fact many of these libraries, in our projects. 
 
 \begin{enumerate}
-    \item \textbf{Download the complete project:} this is the easiest way to do it. The only problem with this method is that you will have to upload a possibly large file each time you make a new project. 
+    \item \textbf{Download the complete project:} this is the easiest way to do it. The only problem with this method is that you will have to upload a possibly large file to your server each time you make a new project. 
     
-    \item \textbf{Use a package manager:} Node Package Manager (NPM) for example, is a JS library manager which allows one to update libraries easily. With NPM installed, the user downloads the latest version of the 
+    \item \textbf{Use a package manager:} Node Package Manager (NPM) for example, is a JS library manager which allows one to update libraries easily. With NPM installed, the user can download the latest version of the library. This is in many ways identical to option one, just slightly more elegant.
+    
+    \item \textbf{Use a Content Delivery Network (CDN)}: the final option is to get the file from another server. Sites such as \href{https://www.jsdelivr.com/package/npm/three}{jsdelivr} or \href{https://cdnjs.com/libraries/three.js}{cdnjs} allow one to get a particular version of the library. 
+    
 \end{enumerate}
 
 
@@ -557,7 +560,8 @@ Kronlachner's technique, adopted from Zotter's work, involves using a single $R_
 \todo[inline]{I don't quite understand how this works. I will try to ask Justin to explain.}
 
 Politis \cite{politis2016jsambisonics}, and a number of other authors, instead compute all rotation matrices using a recursive algorithm. Spherical harmonics are not only found in the audio domain, but are pertinent in chemistry, physics, and mechanics. The rotation matrices derived in Politis's work come originally from Ivanic and Ruedenberg's paper in "The Journal of Physical Chemistry" \cite{ivanic1996rotation}. 
-The details of these calculations are outside the scope of this chapter. However, implementations of these formulas can be found in Politis's Spherical Harmonic Transform (SHT) library. Politis has implemented these formulas both in JS and in MATLAB. Gorzel et al. \cite{gorzel2019efficient} have implemented these in numerous other computer languages. For those wishing to write these from scratch we recommend the paper by Blanco et al. \cite{blanco1997evaluation} which contains pseudo-code and easy to understand formulations. 
+
+The details of these calculations are outside the scope of this chapter. However, implementations of these formulas can be found in Politis's Spherical Harmonic Transform (SHT) library. Politis has implemented these formulas both in JS and in MATLAB. Gorzel et al. \cite{gorzel2019efficient} have implemented these in numerous other computer languages. For those wishing to write these from scratch we recommend the paper by Blanco et al. \cite{blanco1997evaluation} which contains pseudo-code and more or less easy to understand formulations. 
 
 \subparagraph{Ambisonic Reflection}
 
@@ -596,11 +600,9 @@ x_{\mathrm{vm}}\left(t, \boldsymbol{\gamma}_{0}\right)=\mathbf{w}^{\mathrm{T}}\l
 \item  $\mathbf{b}(t)$ corresponds to the ambisonic spherical harmonics, otherwise known as B-format signals (at time $t$). Using vector notation to denote a block size of 1.
 \end{description}
 
-\todo[inline]{use this format for all equation where listing variable. using the begin description command.}
+\todo[inline]{use this format for all equation where listing variables. using the begin description command. q1 has one of these with a different formatting.}
 
-Equation \ref{eq:ambi-beamform} shows the equation provided by Politis \cite{politis2016jsambisonics} for this task. The library allows for various different types of microphone patterns with different front/back \textit{rejection ratios}\footnote{Measure of how much sound incident from the front is captured relative to sound incident from behind.}. Politis \cite{politis2016jsambisonics} provides additional equations for the derivation of specific polar patterns including: \textit{cardioid}, \textit{hypercardioid} and a \textit{max-rE} which "maximizes the acoustic intensity vector in an isotropic diffuse field." The max-rE derivation comes from the decoding literature. The $\mathbf{b}(t)$ term is obtained by taking the outer product of your original source signal and the vector $\mathbf{y}$ of \textit{spherical harmonic coefficients} described by Equation \ref{eq:r-sph-harm}.
-
-If the two vectors have dimensions $n$ and $m$, then their outer product is an $n$ by $m$ matrix\footnote{$n$ and $m$ here should not be confused with indices for spherical harmonics. These values refer instead to the rows and columns of the product $\mathbf{B}$}. The outer product is defined as: 
+Equation \ref{eq:ambi-beamform} shows the equation provided by Politis \cite{politis2016jsambisonics} for this task. The library allows for various different types of microphone patterns with different front/back \textit{rejection ratios}\footnote{Measure of how much sound incident from the front is captured relative to sound incident from behind.}. Politis \cite{politis2016jsambisonics} provides additional equations for the derivation of specific polar patterns including: \textit{cardioid}, \textit{hypercardioid} and a \textit{max-rE} which "maximizes the acoustic intensity vector in an isotropic diffuse field." The max-rE derivation comes from the decoding literature. The $\mathbf{b}(t)$ term is obtained by taking the outer product of your original source signal and the vector $\mathbf{y}$ of \textit{spherical harmonic coefficients} described by Equation \ref{eq:r-sph-harm}. If the two vectors have dimensions $n$ and $m$, then their outer product is an $n$ by $m$ matrix\footnote{$n$ and $m$ here should not be confused with indices for spherical harmonics. These values refer instead to the rows and columns of the product $\mathbf{B}$}. The outer product is defined as: 
 
 \begin{equation}
 \mathbf{s} \otimes \mathbf{y}=\mathbf{B}=\left[\begin{array}{cccc}
@@ -610,6 +612,45 @@ s_{2} y_{1} & s_{2} y_{2} & \ldots & s_{2} y_{n} \\
 s_{m} y_{1} & s_{m} y_{2} & \ldots & s_{m} y_{n}
 \end{array}\right]
 \end{equation}
+
+\todo[inline]{gamma here is the direction vector. kronlachner uses bold font theta. need to be consistent.}
+
+The weight vector $\mathbf{w}^{T}$ is arranged to match the indexing of the spherical harmonics and can be expressed as a "pattern-dependent" part, and a "rotation-dependent" part \cite{politis2016jsambisonics}. 
+
+\begin{equation}
+\left[\mathbf{w}\left(\gamma_{0}\right)\right]_{q}=w_{n m}=c_{n} Y_{n m}\left(\gamma_{0}\right)
+\end{equation}
+
+There are (N+1) coefficients $c_{n}$ which are derived according to the desired properties of the virtual microphone. For each order $n$ all harmonics of ascending degree share the same "pattern-dependent" coefficient. The "rotation-dependent" coefficient, is unique for each harmonic. The subscript $q$ refers to the ACN index of the spherical harmonic, which can be expressed as:
+
+\begin{equation}
+\begin{aligned}
+\lbrack\mathbf{y}(\boldsymbol{\gamma})\rbrack_{q}=Y_{n m}(\boldsymbol{\gamma}), & \text { with } q=1,2, \ldots,(N+1)^{2} \\
+& \text { and } q=n^{2}+n+m+1 .
+\end{aligned}
+\end{equation}
+
+In JSAmbisonics a number of different types of virtual microphone responses have been implemented including cardioid, hypercardioid and max-rE, which originates from the ambisonic literature. A few formulas are provided by the author to recreate these patterns via spherical domain beam-forming. 
+
+\begin{equation}
+\begin{aligned}
+\text { cardioid }: & c_{n}=\frac{N ! N !}{(N+n+1) !(N-n) !} \\
+\text { hypercardioid : } & c_{n}=\frac{1}{(N+1)^{2}} \\
+\max -\mathrm{rE}: & c_{n}=\frac{P_{n}\left(\cos \kappa_{N}\right)}{\sum_{n=0}^{N}(2 n+1) P_{n}\left(\cos \kappa_{N}\right)}
+\end{aligned}
+\label{vmic-responses}
+\end{equation}
+
+\noindent where
+\begin{description}
+\item  $\kappa_{N} = cos(2.407/(N + 1.51))$ given in \cite{zotter2012all} 
+\item $N$ is maximum the ambisonic order
+\item $n$ is the ambisonic order of harmonic with index $q$, and
+\item $P_{n}$ are the associated Legendre functions\footnote{Solution to the Legendre equation, encountered when solving Laplace's equation in spherical coordinates. Laplace's equation is a special case of Helmholtz equation which is used to describe the wave and diffusion behaviors.}. 
+\end{description}
+
+We should note Politis uses coordinate system $\gamma=[\cos \phi \cos \theta, \sin \phi \cos \theta, \sin \theta]^{\mathrm{T}}$, using alternate coordinate systems will require modifying these formulae. A few other microphone polar patterns are implemented in the library, however, no formulas are provided for these. Unfortunately, these author also does not provide insight into the derivation of equations for responses in Equation \ref{vmic-responses}. 
+
 
 \paragraph{Web Audio API}
 
