@@ -215,7 +215,7 @@ A final sound art work we sought to include is Alvin Curran's 1987 \textit{Notes
 
 Several authors have explored the use of space in composition with varying degrees of success. In this section we will explore the techniques and aesthetics employed by these composers. The following pieces in this section were selected because the composers all use "spatial articulation as a central element in the musical construction\footnote{Lyon in Sound Anthology Program Notes CMJ 41:1}". Our hope is that by understanding the methods and processes used by some of these composers the reader might be better equipped to create impactful spatial music and carve their own style to differentiate themselves from the many other artists in this field.
 
-\subsection{Concert music}
+\subsection{Concert music} \label{subsec:concert-mus}
 
 \cite{hagan2017sound} offers an overview of some of the current leading figures in the development of spatial music. Before diving into the particular composers and their works two noteworthy facts stand out from these program notes. The first interesting information is that the delivery of the musical material\footnote{Found \href{https://muse.jhu.edu/article/656037}{here}. Jump to end of page to download audio files.} for public consumption used a stereo format with binaural properties. What this means is that the music does have spatial attributes, but much of it will be lost because the listener will not have the ability to rotate the soundfield in relation to their head orientation. The second noteworthy piece of information is that in this anthology Hagan and Lopez-Lezcano opted for \textit{static binaural synthesis} while the rest create binaural recordings - using a dummy head. This offers the listener the possibility, albeit with different materials, to experience the quality changes between both spatial audio rendering methods.
 
@@ -229,6 +229,7 @@ We will discuss the different composers in order of appearance within the progra
 \end{figure}
 
 \textit{Sveti Kliment} (2007) by Robert Sazdov and was recorded at the Sonic Lab of the Sonic Arts Research Centre (SARC) in Belfast, Northern Ireland. The composition was inspired by Saint Clement of Ohrid from the Orthodox Church of Macedonia, a patron saint of education and language who committed his life to: research, teaching, and improving the lives of "those in his diocese". The piece open with the natural sound of a flute but quickly morphs into a soundscape of reversed noises and unintelligible speech snippets. The timbre of the flute reappears as a thematic motif and its reverberation is frozen and played over, using the same instrument. The timbre of the flute seems to be that of a ethnic instrument perhaps in reference to the Balkans. 
+
 \cite{lynch2017perceptual}, co-authored by Sazdov, discusses some of the most popular and powerful spatialization techniques, used routinely by composers. In this paper, the author used four of these critical techniques in a subjective experiment in order to determine listener preferences. The techniques used in that experiment are described as follows:
 
 \begin{itemize}
@@ -476,7 +477,7 @@ Nonetheless, for HDLAs, this library is still incredibly powerful and quite comp
     \item \textbf{mcfx\_meter}: which is a multi-channel level meter.
 \end{enumerate}
 
-Much like other ambisonic toolkits, Kronlachner provides: binaural decoding, multi-channel decoding, format converting\footnote{To switch between standards. For example converting from N3D normalization to SN3D, or from FuMa ordering to ACN.}, encoding, and rotating plug-ins. Rather than discussing these functions, we would like to point out what is distinct from this plug-in suite. 
+Much like other ambisonic toolkits, Kronlachner provides: binaural decoding, multi-channel decoding, format converting\footnote{To switch between standards. For example converting from N3D normalization to SN3D, or from FuMa ordering to ACN.}, encoding, and rotating plug-ins. Rather than discussing these common functions, we would like to discuss what is distinct about this plug-in suite. 
 
 Kronlachner \cite{kronlachner2014spatial} describes some of the additional spatial transforms implemented in ambiX. These include:
 
@@ -491,7 +492,7 @@ Kronlachner \cite{kronlachner2014spatial} describes some of the additional spati
 
 \textit{MaxRE} will be covered in more detail in Chapter \ref{ch:spat-aud}. Mirroring will be covered in Chapter \ref{ch:xr-mus}, as will virtual microphones - also known as beam-forming. \textit{Directional loudness}, \textit{warping} and \textit{widening} will be described in the next few paragraphs. 
 
-\paragraph{Directional loudness}
+\paragraph{Directional loudness}\label{par:dir-ldnss}
 
 The goal of direction loudness is to amplify a particular region of the sound-field. In contrast to beam-forming, the output of this effect is multi-channel: we maintain the same number of spherical harmonics. In Kronlachner's paper \cite{kronlachner2014spatial} a \textit{t-design} approach is used for spherical sampling. T-designs are attributed to Hardin and Sloane \cite{hardin1996mclaren}. In order to accurate sample represent ambisonic sound-fields of a given order $L$, the number of directions, must be equal to or greater than the number of harmonics $(N +1)^2$. Furthermore, the condition number of $\mathbf{Y}$, the matrix of spherical harmonics, needs to be sufficiently small\footnote{The condition number of a function measures how much the output value of the function can change for a small change in the input argument. A problem with low condition number is said to be well-conditioned. For an ambisonic problem, this means that small changes in coordinates should not substantially change the spherical domain sampling.}. 
 
@@ -517,6 +518,8 @@ Y_{n}^{m}(\varphi, \vartheta)=N_{n}^{|m|} P_{n}^{|m|}(\sin (\vartheta))\left\{\b
 \cos |m| \varphi, & \text { for } m \geq 0
 \end{array}\right.
 $$
+
+\todo[inline]{Never got an answer from Matthias, Zotter's book has a different weight than the b vector. Pretty sure my interpretation of the eq is correct.}
 
 according to ACN standards. Each row of the matrix correspond to a single harmonic, and each column corresponds to a direction. $\boldsymbol{\Theta}_{t}$ is a $L$ by 3 matrix corresponding to the coordinates of our t-design in Cartesian coordinates\footnote{In Cartesian coordinates these vectors are triplets with coordinates (x, y, z).}, which are converted to spherical coordinates represented by $\phi$ and $\theta$. Using these angles we compute the coefficients corresponding to our spherical harmonic sampling. 
 
@@ -598,7 +601,7 @@ g(\mu)=\frac{\sqrt{1-\alpha^{2}}}{1+\alpha \mu}
 
 \todo[inline]{This is still confusing. If certain parts of squeezed and others stretched doesn't this naturally balance the energy? I think what's happening is that we don't want speakers to overload, so we make things quieter in regions where energy is compressed. One of the papers said the opposite however, that stretching is what cause energy to increase??? Ask Zotter. Ps. see quals/img for photos of hand-written math. Might convert to latex later. Perhaps as appendix info.}
 
-\subparagraph{Warping Towards of Away from Equator}
+\subparagraph{Warping Towards or Away from Equator}
 
 This second type of warping is quite similar to the first in terms of its implementation, the only difference is that we are no longer using the bilinear transform. This type of warping pushes all the energy towards the top of the sphere or the bottom of the sphere. Much like before, if we wanted to push energy in other directions, all we would need is a rotation before and after the warping. This warping also requires a gain compensation which has a different formula than Equation \ref{eq:warp-gain-wrt}.
 
@@ -632,16 +635,34 @@ While not part of the same library of objects\footnote{Technically the metering 
 
 \paragraph{Widening}
 
-Widening is described in 
+\todo[inline]{I am still reading this paper. It's almost like FM in the ambisonic domain. Kronlachner's thesis has another transform that was not implemented but super interesting.}
 
-%ambix_maxre
-%ambix_mirror
-%ambix_vmic
-%ambix_warp
-%ambix_widening
+\subsubsection{IEM Plug-in Suite}
 
-% \subsubsection{IEM Plug-in Suite}
+IEM's plug-in suite is one of the most comprehensive ambisonic tool-kits available today. Much like Kronlachner's suite, these VSTs were developed with JUCE and are completely open source, which allows any developer to copy the files and create their own versions of these effects. In total this toolbox has 20 independent blocks of software that work together to facilitate ambisonic production. 
+
+The first element in the toolkit is the \textbf{AllRADecoding} (All-Round Ambisonic Decoding) based on Zotter and Frank's 2012 paper \cite{zotter2012all}. The general idea with this system is to try to combine VBAP and Ambisonics, both of which have benefits. Ambisonic decoding has been shown to suffer in performance when being rendered using irregularly-spaced speaker arrays. In AllRAD, the ambisonic sound-field is virtually decoded using a t-design, and subsequently, the signals are re-decoded using the VBAP algorithm. This "maintains the overall variation of the energy while keeping the energy spread small". 
+
+The second plug-in is the \textbf{BinauralDecoder} which uses the \textit{MagLS} approach proposed in \cite{schorkhuber2018binaural}. Rather than convolving each virtual speaker feed with a corresponding IR, this algorithm encodes HRTF sets into the ambisonic domain using a \textit{Least Squares} algorithm. In \cite{gorzel2019efficient} this process is described as a multiplication of the IRs with a transposed matrix $\mathbf{D}$, which is the \textit{pseudo-inverse}\footnote{This can be calculated using free mathematics software such as Julia.} of the HRTF positions evaluated using spherical harmonic sampling: in particular $\hat{\mathbf{H}}=\mathbf{H D}^{\mathbf{T}}$. This provides significant computational improvements, considering some data-sets with thousands of HRTFs, can be suitably represented with a far smaller number of spherical harmonics. 
+
+Many of the other plug-ins provided by IEM unfortunately do not have extensive publications which accompany them, however, for many of them, we can deduce how they might be implemented using previously discussed concepts. For example the \textbf{DirectionalCompressor} is a dynamics compressor that lets you control the dynamics of a spatial region. Using Kronlachner's \cite{kronlachner2014spatial} method for cropping the sound-field, as discussed in Section \ref{par:dir-ldnss}\footnote{Describes the implementation of directional loudness plug-in.}, would be one way to accomplish this. Daniel Rudrich, who authored this plug-in also included a side-chain feature that allows one to compress the rest of the sound-field based on the dynamics of our cropped region.
+
+The \textbf{DirectivityShaper} is another plug-in from Rudrich which alludes to the earlier discussed concept of \textit{Timbre Spatialization} (Section \ref{subsec:concert-mus}). In Rudrich's design, the input mono signal is filtered into "four independent bands, to which different directivity patterns can be applied to" \cite{PluginDe47online}. This design goes a bit further however; after the signal is split and panned in ambisonic, the user can also control the directivity pattern by virtual beam-forming. These signals are subsequently re-encoded into the ambisonic domain for mixing with other signals, or applying other effects. Rudrich calls the output of the shaper, "directivity signals" \cite{Directiv20online}.
+
+\textbf{DualDelay} is another effect by Rudrich that performs a stereo delay where the delay lines are panned in ambisonics using LFOs. \cite{rudrichefficient} describes the prototyping of this effect which was done using the ambiX suite in Reaper. The ambisonics workstation developed by Rudrich in Reaper was controlled using a pedal-board on stage. Subsequently the effect was turned into a plug-in for more streamlined usage. "The most exciting feature is the rotation of the whole sound-field every single time it runs through the delay-line. \cite{PluginDe47online}"
+
+Sebastin Grill developed the \textbf{FdnReverb} for ambisonic diffuseness control, based on the Feedback Delay Network (FDN) designs by Gerzon \cite{gerzon1976unitary} and Stautner and Puckette \cite{stautner1982designing}. What is exemplary about these networks is that much like with ambisonics linear combinations of audio signals - in this case delay taps - are combined to produce various speaker feeds. The fact that by their design multiple outputs are produced makes them ideal for multi-channel effect processing. \cite{alary2019directional} discusses the development of an ambisonic reverberator which preserves directional properties of the sound-field. The traditional $\mathbf{A}$ matrix in the FDN design is expanded to included sub-matrices created to fit the number of harmonics required for the ambisonic order. Alary et al. \cite{alary2019directional} note the computational cost of this task. With 4 delay lines and 3OA\footnote{16 channels.}, 64 total delay lines are required. However, FDNs are normally designed with 32 or 64 independent delay lines to "ensure a sufficiently high modal and echo density". This means the user will need to find a compromise between reverb density and ambisonic order.
+
+\todo[inline]{could talk more about FDN}
+
+The \textbf{MultiBandCompressor} is another dynamics effect that splits the ambisonic signal into four bands and compresses them individually. Multi-band compressors are common to most DAWs. In this case, two relevant factor stand out from the development of this VST. First, the filters employed use a \textit{Linkwitz-Rilely} crossover to retain the magnitude response of the mix, without introducing phase issues which might affect localization. Secondly, to further ensure localization is preserved, the plug-in analyzes the W (omni) channel, in all four bands, and applies the same gain reduction to all harmonics. This ensures that higher order harmonics still accurately represent the sound-field. The \textbf{OmniCompressor} by Daniel Ridruch simplifies this a bit. It also uses the W channel to attenuate all harmonics but there is no multi-band filtering. 
+
+
+
 % \subsubsection{Sparta Plug-in Suite}
+% \subsubsection{York Plug-in Suite}
+
+
 % \subsubsection{Other Computer Music Languages}
 
 % SuperCollider (SC): 3Dj
