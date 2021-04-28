@@ -657,11 +657,75 @@ Sebastin Grill developed the \textbf{FdnReverb} for ambisonic diffuseness contro
 
 The \textbf{MultiBandCompressor} is another dynamics effect that splits the ambisonic signal into four bands and compresses them individually. Multi-band compressors are common to most DAWs. In this case, two relevant factor stand out from the development of this VST. First, the filters employed use a \textit{Linkwitz-Rilely} crossover to retain the magnitude response of the mix, without introducing phase issues which might affect localization. Secondly, to further ensure localization is preserved, the plug-in analyzes the W (omni) channel, in all four bands, and applies the same gain reduction to all harmonics. This ensures that higher order harmonics still accurately represent the sound-field. The \textbf{OmniCompressor} by Daniel Ridruch simplifies this a bit. It also uses the W channel to attenuate all harmonics but there is no multi-band filtering. 
 
+There are some other interesting effects, most notably the \textbf{RoomEncoder}, which seems to be based on a real-time \textit{Image Source Method} (ISM) implementation\footnote{Upon inspecting the source code.}. The ISM is used to simulate room acoustics by modeling reflections from walls using delay lines. These effects are generally very expensive computationally but offer the ability to change the listener position relative to the source, which ambisonics can't offer unless extended via multiple proximal sound-fields \cite{tylka2019domains}. 
 
+\subsubsection{Sparta Plug-in Suite}
 
-% \subsubsection{Sparta Plug-in Suite}
+The Sparta Plug-in Suite from Aalto University is another important toolbox for production of ambisonic music. Thankfully, there are great number of academic papers related to its development so we don't need to speculate how these were created. 
+Much like before we will try to focus our attention on plug-ins that are specific to this toolbox, and ignore those that are ubiquitous to all suites. The SPARTA suite is generally split into four main sections:
+
+\begin{enumerate}
+    \item \textbf{SPARTA suite}: this is the main part of the total suite. It includes all the basic ambisonic plug-ins, however, the decoders provide additional features compared to IEM, and there are a few unique effects as well.
+    
+    \item \textbf{COMPASS suite}: based on the Coding and Multi-directional Parameterisation of Ambisonic Sound Scenes (COMPASS) \cite{politis2018compass}. 
+    
+    \item \textbf{HO-DirAC suite}: Higher Order Directional Audio Coding suite is based on the DirAC method \cite{pulkki2007spatial}.
+    
+    \item \textbf{Other}: this category includes the \textbf{cropac\_decoder} (Cross-Pattern Coherence Decoder) and the \textbf{HOSSIR} Higher-order Spatial Impulse Response Rendering.
+\end{enumerate}
+
+\paragraph{SPARTA Suite}
+
+The first plug-in in the SPARTA suite is called \textbf{AmbiBIN} which, as the name suggests, is a binaural decoder. The decoder has a built-in rotation and accepts OSC data from a head-tracker. According to the online documentation \cite{research75online} "the rotation angles are updated after the time-frequency transform, which allows for reduced latency compared to \textbf{AmbiDEC} + \textbf{Rotator}". This means that the rotation matrices are calculated using complex spherical harmonics, rather than just strictly real-valued ones. The plug-in also allows SOFA \cite{majdak2013spatially} HRTFs to be imported. The plug-in also allows for four different types of binaural decoding: Least-Squares (LS), Spatial Re-Sampling, Time-Alignment, and Magnitude Least-Squares (MagLS). As the LS and MagLS methods will be discussed in Chapter \ref{ch:xr-mus} we will focus here instead on a description of the two other methods. 
+
+Bernschütz et al. \cite{bernschutz2014binaural} describes the process of Spatial Re-Sampling. The methods objective is to reduce coloration usually associated with the LS method of HRTF encoding. In this method, rather than using the largest possible number of HRTFs than adhere to some spatial sampling scheme, the encoding is performed with a subset of IRs. This subset of IRs are selected to match to some degree the spatial resolution of the ambisonic signals. In addition, the binaural decoding matrix can be re-sampled at various orders to examine the impact in quality. 
+
+\begin{quote}
+    "Down-sampling\footnote{The binaural decoder, in the spatial domain.} reduces the spatial sensitivity of the HRTFs, and enables their adaptation to a system with lower modal resolution\footnote{For example FOA.}."
+\end{quote}
+
+The author also found that the type of grid used for sampling the HRTFs had an effect on the reproduction quality. A MUSHRA test revealed improvements towards the unwanted high-frequency roll-off associated with previous methods. It also quantified how many orders can be removed for satisfactory reproduction. This is useful for determining the smallest number of convolutions required for suitable playback of low order ambisonic signals.
+
+% the equations are a bit complicated, I am just going to describe generally what the papers are proposing.
+
+The second method is called the Time-Alignment \cite{zaunschirm2018binaural} method with is paired with a diffuse-coherence constraint/correction in the associated paper, although the plug-in allows one to apply this correction to any of the other decoder methods as well. We will explain the time alignment and diffuseness constraint separately. As the authors note, the proposed binaural renderer is based on two stages: pre-processing and and optimization. The pre-processing stage refers to the time-alignment, which involves a frequency-dependent ITD equalization which retains ITDs at low frequencies \footnote{Below 1.5kHz in this paper ("empirically chosen").} and removes them for high frequencies\footnote{ITDs are a more salient binaural cue at low-frequencies. ILDs are more salient at high frequencies. This is called Duplex theory, proposed by Rayleigh in 1907.}. According to the authors: "Due to the time alignment, lower SH orders are sufficient to represent the directivity patterns of the ears at higher frequencies." This means a smaller number of SH are needed to retain directional information. This process is accomplished by using an all-pass filter whose phase response is dictated by a value $\tau$ corresponding to the time difference between ears relative to the center of the head, according to a simple geometric model:
+
+\begin{equation}
+\tau_{p}^{r}=\cos \left(\theta_{p}\right) \sin \left(\phi_{p}\right) r_{H} c^{-1}, \quad \tau_{p}^{l}=-\tau_{p}^{r}
+\label{eq:geometric-time-del}
+\end{equation}
+
+\noindent where:
+\begin{description}
+\item $\tau_{p}^{r}$ is the time offset for the left ear for grid node $p$,
+\item $\theta_{p}$ is the elevation angle of the grid node\footnote{Traditional ambisonic coordinate system. Azimuth increases counterclockwise, elevation spans $\pm90$\textdegree.},
+\item $\phi_{p}$ is the azimuth angle of the grid node,
+\item $r_{H}$ is the head radius, 8.5cm in this paper,
+\item $c$ is the speed of sound (343 m/s)
+\end{description}
+
+The all-pass filters for each corresponding ear and individual grid node position are calculated according to:
+
+\begin{equation}
+A_{p}^{l, r}(\omega)=\left\{\begin{array}{ll}
+1 & \text { for } \omega<\omega_{c} \\
+e^{-i\left(\omega-\omega_{c}\right) \tau_{p}^{l, r}} & \text { for } \omega \geq \omega_{c}
+\end{array}\right.
+\end{equation}
+
+Where $\omega_{c} = 2 \pi f_{c}$ with $f_{c}$ being the cut-off frequency of 1.5kHz, and, $i = \sqrt{-1}$ being the imaginary number. $\tau_{p}^{l, r}$ comes from Equation \ref{eq:geometric-time-del}. Each HRTF for each position and ear is then multiplied in the frequency domain with its corresponding all-pass filter:
+
+\begin{equation}
+\hat{h l}, r\left(\Omega_{p}, \omega\right)=h^{l, r}\left(\Omega_{p}, \omega\right) A_{p}^{l, r}(\omega)
+\end{equation}
+
+where $\Omega_{p}$ is the matrix containing all grid node positions. 
+
+The optimization stage refers to the aforementioned diffuse-coherence constraint/correction. The purpose of this is to achieve the diffuse-field response and Interaural Coherence (IC) behavior of the original HRTF set. The LS approach is once more employed but these with additional constraints which force the solution to remain as similar as possible with regards to these criteria as the original HRTF set.
+
+The diffuse-field response criteria is employed using a covariance matrix, which holds variance values for the left and right ear along the main diagonal and true covariance in anti-diagonal elements.
+
 % \subsubsection{York Plug-in Suite}
-
 
 % \subsubsection{Other Computer Music Languages}
 
@@ -675,12 +739,14 @@ The \textbf{MultiBandCompressor} is another dynamics effect that splits the ambi
 
 \subsubsection{Spat for MAX}
 
+\todo[inline]{spat, not open source but comprehensive. iem VSTs, sparta VSTs. other pd ambisonic stuff = CEAMMC and CICM}
+
 \subsubsection{Envelop for MAX}
 
 %jaroszewicz-2015-spat-cpu-mus
     %cross-synthesis and spectral shredding 
     
-\todo[inline]{spat, not open source but comprehensive. iem VSTs, sparta VSTs. other pd ambisonic stuff = CEAMMC and CICM}
+
 
 \todo[inline]{According to pysiewicz-2016-spat-inst-chapter.pdf the label diffusion is specific to stereophonic sound projection and loudspeaker orchestras. However, in lynch-2017-engulfment.pdf it says "Sound diffusion refers to the practice of localizing and moving sound throughout a space using multiple loudspeakers."}
 

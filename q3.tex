@@ -229,7 +229,7 @@ With the increasing pace of technological development, it can sometimes be diffi
 
 \paragraph{Displays}
 
-Displays, in the context of XR systems, refers to anything that is used to stimulate one's senses. They are simply outputs. Optical displays include projectors, such as in a CAVE, or HMDs - the counterpart to projectors in a user-fixed format. HMDs can be broken down into two main categories: \textit{dedicated HMDs}, and \textit{mobile HMDs}. Dedicated HMDs refer to visual displays whose function is solely to generate XR experiences. Dedicated HMDs can be broken down into two categories: \textit{tethered} and \textit{un-tethered}. 
+Displays, in the context of XR systems, refers to anything that is used to stimulate one's senses. They are simply outputs. Optical displays include projectors and HMDs. HMDs can be broken down into two main categories: \textit{dedicated HMDs}, and \textit{mobile HMDs}. Dedicated HMDs refer to visual displays whose function is solely to generate XR experiences. Dedicated HMDs can be broken down into two categories: \textit{tethered} and \textit{un-tethered}. 
 
 \todo[inline]{make a simple flow chart to show the breakdown.}
 
@@ -452,21 +452,31 @@ There are three ways we can use three.js, and in fact many of these libraries, i
 
 Ambisonics has clear bandwidth efficiencies over \textit{Object Based Audio} (OBA) solutions due to the fact the $N$ sources can be encoded into a lower number of channels, dubbed ambisonic harmonics, and then decoded binaurally. This sound-field synthesis technique varies in quality depending on the order of the ambisonic system. A FOA system might reduce the amount of data required to represent a sound field, but a HOA might provide a more realistic experience given the improved spatial resolution of the system.
 
-There is a key trade-off here that must be reconciled in order to determine what is the minimum number of ambisonic channels that are required for a suitable XR experience. In addition to this criterion, we must also consider that a number of high-quality data compression ambisonic systems are able to further reduce this data load at the expense of quality of experience (QoE). 
+There is a key trade-off here that must be reconciled in order to determine what is the minimum number of ambisonic channels that are required for a suitable XR experience. In addition to this criterion, we must also consider that a number of high-quality data compression ambisonic systems are able to further reduce this data load at the expense of \textit{Quality of Experience} (QoE). 
 
-The data compression algorithms use perceptual features of the auditory system to reduce the amount of data required for satisfying playback. Among these algorithms, the MP3 system is perhaps the most familiar to consumers. MP3 is not well suited for spatial audio, however other compression systems exist for this task. These compression systems exploit our ear's inability to hear tones below a certain \textit{masking threshold}. When we hear a tone a narrow region of our \textit{basilar membrane} gets activated. It has been shown that when two tones, both inside this region, are played together, if one is not sufficiently loud, it will not be perceived at all. This is only one of various mechanisms artfully exploited by compression systems. Herre \cite{herre2015mpeg} provides a good overview of multi-channel data compression systems which informed the design of MPEG-H - one of the more popular CODECs for spatial audio.
+% The data compression algorithms use perceptual features of the auditory system to reduce the amount of data required for satisfying playback. Among these algorithms, the MP3 system is perhaps the most familiar to consumers. MP3 is not well suited for spatial audio, however other compression systems exist for this task. These compression systems exploit our ear's inability to hear tones below a certain \textit{masking threshold}. When we hear a tone a narrow region of our \textit{basilar membrane} gets activated. It has been shown that when two tones, both inside this region, are played together, if one is not sufficiently loud, it will not be perceived at all. This is only one of various mechanisms artfully exploited by compression systems. 
+
+Herre et al.\cite{herre2015mpeg} provides a good overview of multi-channel data compression systems which informed the design of MPEG-H - one of the more popular CODECs for spatial audio. In contrast to stereo, where only two channels can be examined for redundancies, spatial audio CODECs have to account for dozens of channels in OBA, HOA, and other formats simultaneously. For HOA in particular, two methods are discussed by Herre et al.: decomposition of the sound-field in encoder, and, decorrelation of signals prior to transmission.  In the first stage, the HOA coefficients are decomposed into predominant and ambient sound components. Meta-data is created to describe the changes in harmonic importance over time. The ambient components are considered less important, and transmitted at lower resolution. In the second stage, the harmonics are decorrelated. It is common for multiple harmonics to contain similar information, decorrelation removes these similarities, which allows us to represent the same information using less data. At the decoder stage, the meta-data created and transmitted is used to recreate the signal as best as possible. 
 
 Three minutes of uncompressed audio at 44,100 samples per second, and 24 bits per sample, results in roughly 2.2GB of audio data at 9OA. In contrast a 3OA system would result in 6 times less amount of space required - with only 0.35GB of data required to reproduce the sound field. A FOA file, with 3 minutes of music, would only require roughly 0.09GB of data\footnote{Or 90MB.}. The size of the music file is an important bottleneck in these types of works. In cases where sound is transmitted live in an ambisonic format it is also important to determine the \textit{bit-rate} of the audio stream. This is the amount of data per unit time - generally seconds - that is required for proper reproduction. 
 
-In order to perform the binaural synthesis required for immersive \textit{Virtual Auditory Environments} (VAE) recreation, WebXR frameworks must perform multiple convolutions with HRIRs. Convolution, even in the frequency domain, is a CPU intensive operation. In a "virtual speaker" approach to binaural decoding, two convolutions are needed for each virtual speaker. The number of virtual speakers will affect the \textit{Quality of Experience} (QoE), thus a balance needs to once more been struck, this time between high "virtual speaker" count and low-CPU requirements. 
+In order to perform the binaural synthesis required for immersive \textit{Virtual Auditory Environments} (VAE) recreation, WebXR frameworks must perform multiple convolutions with HRIRs. Convolution, even in the frequency domain, is a CPU intensive operation. In a "virtual speaker" approach to binaural decoding, two convolutions are needed for each virtual speaker. The number of virtual speakers will also affect the QoE, thus, a balance needs to be struck between high "virtual speaker" count and low-CPU requirements. 
 
-\paragraph{Resonance}
+In the next few few sections we describe some of the most popular WebVR audio platforms. 
 
-There are several implementations of binaural spatial audio online. Among them, the most popular open-source solution is Resonance. In \cite{gorzel2019efficient}, Gorzel describes some techniques to optimize HOA playback. Firstly, the author describes the implementation of a Look Up Table (LUT) instead of using $cos$ or $sin$ functions inside ones code. This way the spherical harmonic coefficients are pre-computed and can be retrieved based on the current angles of the sound source. In order to provide smooth transitions between coefficients well known interpolation schemes can be used. More importantly, however, this paper points out the possibility of exploiting spherical harmonic symmetries in order to reduce the memory requirements of the system. Gorzel points out that spherical harmonics have well-known symmetries making it possible to derive all coefficient from a single quadrant determined by the azimuth and elevation angle of the sound source. By simply calculating the front-left-top quadrant of the sphere, all the other values can be known by simply applying sign changes. 
+\paragraph{Resonance} \label{par:resonance}
 
-Another optimization undertaken by the authors involves reducing the number of convolutions required for binaural synthesis by assuming left/right hemispherical symmetry. Consider a sound source at 45\textdegree to the left of the subject with an elevation of 0\textdegree. If we were to simply swap the left and right channels then in essence it would be like presenting the sound source at 45\textdegree to the right of the subject. Of course, this assumes that the head is exactly symmetrical, which is not true. Further studies are required to see if these optimizations degrade the sound quality of the renderer in a substantive fashion. Another small optimization is the use of a single HRIR for sources with azimuth 0. Since the left and right channel are assumed to be symmetric, a single convolution is needed to process these sources. 
+There are several frameworks for binaural 3D audio online. Among them, the most popular open-source solution is likely Resonance. 
 
-Gorzel et al. also use spherical domain representations of the SADIE HRTF data-set in lieu of the traditional virtual speaker approach in order to reduce the number of convolutions required. In this approach a decoding matrix is constructed based on the positions of the IRs, much like in normal virtual speaker approach. A matrix of impulse responses, corresponding to the same directions, is then multiplied by this matrix, which effectively encodes the IRs into the spherical domain. The decoding matrix is found by finding the \textit{Moore-Penrose pseudo-inverse} of the matrix $L$ defined in Equation \ref{eq:re-enc-mat}. 
+In \cite{gorzel2019efficient}, Gorzel describes some of the techniques used to optimize HOA playback implemented in Resonance. Firstly, the author describes the implementation of a \textit{Look Up Table} (LUT) instead of using $cos$ or $sin$ functions inside ones code. This way the spherical harmonic coefficients are pre-computed and can be retrieved based on the current angles of the sound source. In order to provide smooth transitions between coefficients well known interpolation schemes can be used. 
+
+Secondly, this paper points out the possibility of exploiting spherical harmonic symmetries in order to reduce the memory requirements of the system. Gorzel points out that spherical harmonics have well-known symmetries making it possible to derive all coefficient from a single quadrant determined by the azimuth and elevation angle of the sound source. By simply calculating the front-left-top quadrant of the sphere, all the other values can be known by simply applying sign changes. 
+
+Another optimization undertaken by the authors involves reducing the number of convolutions required for binaural synthesis by assuming left/right hemispherical symmetry. Consider a sound source at 45\textdegree \ to the left of the subject with an elevation of 0\textdegree. If we were to simply swap the left and right channels then in essence it would be like presenting the sound source at 45\textdegree \ to the right of the subject. Of course, this assumes that the head is exactly symmetrical. Further studies are required to see if this optimization degrades the sound quality of the renderer in a substantive fashion. Another small optimization is the use of a single HRIR for sources with azimuth 0. Since the left and right channel are assumed to be symmetric, a single convolution is needed to process these sources. 
+
+Gorzel et al. also use spherical domain representations of the SADIE HRTF data-set \cite{kearney2015hrtf} in lieu of the traditional virtual speaker approach in order to reduce the number of convolutions required. In this approach a decoding matrix is constructed based on the positions of the IRs, much like in normal multi-channel decoding. A matrix of impulse responses, corresponding to the same directions, is then multiplied by this matrix, which effectively encodes the IRs into the spherical domain. The decoding matrix is found via a \textit{Moore-Penrose pseudo-inverse} of the matrix $L$ shown in Equation \ref{eq:re-enc-mat}. As we can see, each column of our matrix corresponds to a direction, and each row corresponds to a harmonic. The binaural signals are the result of the inner product between the ambisonic coefficients and the SH coefficients of the HRTFs \cite{politis2016jsambisonics}. 
+
+%This takes advantage of Paseval's theorem.
 
 \begin{equation}
 \mathbf{L}=\left[\begin{array}{cccc}
@@ -478,21 +488,36 @@ Y_{n}^{m}\left(\Phi_{1}, \Theta_{1}\right) & Y_{n}^{m}\left(\Phi_{i}, \Theta_{i}
 \label{eq:re-enc-mat}
 \end{equation}
 
-\todo[inline]{Describe Moore-Penrose pseudo-inverse.}
+Computing the Moore-Penrose pseudo-inverse is given by \cite{gorzel2019efficient}:
 
-The result is a matrix with $(N=1)^2$ columns and an arbitrary number of filter coefficients, which can directly be convolved with the B-Format ambisonics spherical harmonics. In the case of a 3OA signal and a 26-point Lebedev grid the number of convolutions is reduced from 26 to 16 (\~62\% reduction). An added benefit of this method is that any \textit{shelf-filtering}, such as a \textit{MaxRe} shelf-filtering, can be done offline, prior to the decoding stage. This reduces the required amount of CPU and improves speed on low-end mobile devices \cite{gorzel2019efficient}.
+\begin{equation}
+\mathbf{D}=\mathbf{L}^{\dagger}=\mathbf{L}^{\mathbf{T}}\left(\mathbf{L} \mathbf{L}^{\mathbf{T}}\right)^{-\mathbf{1}}
+\end{equation}
 
-\todo[inline]{Describe Lebedev grid.}
+Any matrix regardless of dimensions can be multiplied by its transpose to yield a square matrix. Transposing is as trivial as swapping rows and columns. The inverted matrix\footnote{Inverting matrix involves Gaussian elimination. This can be done by hand but for large matrices we usually use computing libraries to perform the task.} is subsequently multiplied with a transposed version of the original matrix $\mathbf{L}$. The transposed $\mathbf{D}$ is used to "expand" HRTFs into the the spherical harmonic domain. Equation \ref{eq:hrtf-sph-harm-expansion} shows the HRFT spherical harmonic expansion. 
 
-In addition to all these optimizations Resonance also has methods for controlling the sound source spread, simulation of near-field sources, and, specialized reverbs which simulate different room effects. One of the contributions the authors suggest is allowing for personalized HRTFs. The source code includes MATLAB and C++ code and the Github repository shows how to build these components to target different platforms making it highly flexible. The code is open-source and licensed under Apache 2.0. 
+\begin{equation}
+\hat{\mathbf{H}}=\mathbf{H D}^{\mathbf{T}}
+\label{eq:hrtf-sph-harm-expansion}
+\end{equation}
 
-\todo[inline]{Consider breaking into paragraphs?}
+\todo[inline]{Still feel like I need to better explain pseudo-inverse.}
+
+The result is a matrix with $(N=1)^2$ columns and an arbitrary number of filter coefficients, which can directly be convolved with the B-Format ambisonics spherical harmonics. In the case of a 3OA signal and a 26-point Lebedev grid\footnote{Lebedev quadrature is a special sampling scheme for spherical harmonics in which the number and location of points, along with integration weights, are determined by enforcing exact integration of spherical harmonics up up to a given order. T-designs and Fliege grids are other examples of sampling schemes that enforce exact integration.} the number of convolutions is reduced from 26 to 16 (\~62\% reduction). An added benefit of this method is that any \textit{shelf-filtering}, such as a \textit{MaxRe} shelf-filtering, can be done offline, prior to the decoding stage. This reduces the required amount of CPU and improves speed on low-end mobile devices \cite{gorzel2019efficient}.
+
+% \todo[inline]{Describe Lebedev grid.}
+
+In addition to all these optimizations Resonance also has methods for controlling the sound source spread, simulation of near-field sources, and, specialized reverbs which simulate different room effects. One of the contributions the authors suggest is allowing for personalized HRTFs. The Spatially Oriented Format for Acoustics (SOFA) has become the standard for personalized HRTF integration. It is described in  \cite{majdak2013spatially} by Madjak et al. The source code for Resonance includes MATLAB and C++ code and the Github repository shows how to build these components to target different platforms making it highly flexible. The code is open-source and licensed under Apache 2.0. 
+
+% \todo[inline]{Consider breaking into paragraphs?}
 
 \paragraph{Pluggy}
 
+\todo[inline]{Write a bit about this project.}
+
 \paragraph{JSAmbisonics}
 
-Politis et al. \cite{politis2016jsambisonics} describe another implementation of an open-source webVR solution in their 2016 publication. The authors present an ambisonic library built using the Web Audio API (WAA), written in JavaScript (JS), for interactive spatial audio rendering. It supports HOA and implements the most fundamental processing blocks for generating and reproducing sound scenes, such as rotations and binaural decoding. In the next paragraphs we will provide more detail regarding these transforms. 
+Politis et al. \cite{politis2016jsambisonics} describe another implementation of an open-source WebVR solution in their 2016 publication. The authors present an ambisonic library built using the Web Audio API (WAA), written in JavaScript (JS), for interactive spatial audio rendering. It supports HOA and implements the most fundamental processing blocks for generating and reproducing sound scenes, such as rotations and binaural decoding. In the next paragraphs we will provide more detail regarding these transforms. 
 
 \subparagraph{Ambisonic Rotation}
 
@@ -528,7 +553,7 @@ R_{x}(\gamma)=\left(\begin{array}{ccc}
 \end{array}\right)
 \end{equation}
 
-The letters $\alpha, \beta, \gamma$ correspond the to the \textit{yaw}, \textit{pitch} and \textit{roll} angles respectively. The coordinate system for these matrices has the x-axis pointing towards the front, the y-axis pointing towards the left, and the z-axis pointing to the right. When multiplying your signal matrix, the order will also affect the results. In this case, the signals should be ordered $[x, y, z]$, and then re-ordered if necessary\footnote{Rotating the 0th order harmonic has no effect.}. These three rotation matrices can also be combined into a single larger matrix by multiplying them together. Note that the order in which these transforms are combined is important, the convention we will use is roll, pitch, yaw. The combined formula, resulting from multiplying these three matrices in this order yields:
+The letters $\alpha, \beta, \gamma$ correspond the to the \textit{yaw}, \textit{pitch} and \textit{roll} angles respectively. The coordinate system for these matrices has the x-axis pointing towards the front, the y-axis pointing towards the left, and the z-axis pointing to the right. When multiplying with our signal matrix, the order of harmonics will affect the results. In this case, the signals should be ordered $[x, y, z]$, and then re-ordered if necessary\footnote{Rotating the 0th order harmonic has no effect.}. These three rotation matrices can also be combined into a single larger matrix by multiplying them together. Note that the order in which these transforms are combined is important, the convention we use in Equation \ref{eq:roll-pitch-yaw} is roll, pitch, yaw. The combined formula, resulting from multiplying these three matrices in this order yields \cite{Yawpitch57online}:
 
 \begin{equation}
 \begin{array}{l}
@@ -539,9 +564,10 @@ R(\alpha, \beta, \gamma)=R_{z}(\alpha) R_{y}(\beta) R_{x}(\gamma)= \\
 -\sin \beta & \cos \beta \sin \gamma & \cos \beta \cos \gamma
 \end{array}\right)
 \end{array}
+\label{eq:roll-pitch-yaw}
 \end{equation}
 
-Finally, care should be given to understand the direction of rotation. Counter-intuitively, what we seek is for the ambisonic rotation to compensate for the listener's head movement. Picture a sound source at 45\textdegree. If the user moves his or her head 45\textdegree clockwise, from their perspective, the source will remain at 45\textdegree, while it should actually now be at 0\textdegree. Thus, the clockwise rotation of the user, should result in a counterclockwise ambisonic rotation. 
+Finally, care should be given to understand the direction of rotation. Counter-intuitively, what we seek is for the ambisonic rotation to compensate for the listener's head movement. Picture a sound source at 45\textdegree. If the user moves his or her head 45\textdegree \ clockwise, from their perspective, the source will remain at 45\textdegree, while it should actually now be at 0\textdegree. Thus, the clockwise rotation of the user, should result in a counterclockwise ambisonic rotation. 
 
 Rotations in $\mathbb{R}^{4}$ and above are more complicated but necessary to move beyond FOA. There are two common methods used to accomplish this task. One involves computing a single higher order rotation of $\pm90\textdegree$ in $R_{y}$. $R_{z}$ rotation matrices of higher order are relatively easy to compute. Kronlachner's thesis shows the following derivation of this matrix up to second order.
 
@@ -561,17 +587,30 @@ Rotations in $\mathbb{R}^{4}$ and above are more complicated but necessary to mo
 \end{array}\right)
 \end{equation}
 
-Kronlachner's technique, adopted from Zotter's work, involves using a single $R_{y}$ rotation matrix to position the spherical harmonic for variable rotation using the more easily computable $R_{z}$ matrix, and later using a second $R_{y}$ rotation of 90\textdegree, to return the harmonic to its original state. These 90\textdegree rotation matrices can be found at IEM's website\footnote{\href{https://ambisonics.iem.at/xchange/fileformat/docs/spherical-harmonics-rotation}{Site} accessed April 1, 2021.}
+Kronlachner's technique, adopted from Zotter's work, involves using a single $R_{y}$ rotation matrix to position the spherical harmonic for variable rotation using the more easily computable $R_{z}$ matrix, and later using a second $R_{y}$ rotation of 90\textdegree, to return the harmonic to its original state. These 90\textdegree rotation matrices can be found at IEM's website\footnote{\href{https://ambisonics.iem.at/xchange/fileformat/docs/spherical-harmonics-rotation}{Site} accessed April 1, 2021.}. Figure \ref{fig:zotter-rot} shows the head rotations according to Equation \ref{eq:single-ry} when $\alpha, \beta, \gamma$ are all set to 0. We see clearly that the starting position on the left, returns to it's original position after these 5 rotations.
 
-\todo[inline]{I don't quite understand how this works. I will try to ask Justin to explain.}
+\begin{equation}
+    R(\alpha,\beta,\gamma) = R_{z}(\alpha+90) \cdot R_{y}(90) \cdot R_{z}(\beta+180) \cdot R_{y}(90) \cdot R_{z}(\gamma+90)
+    \label{eq:single-ry}
+\end{equation}
+
+\begin{figure}[ht!]%force figure here, top, strict
+\centering
+\includegraphics[width=0.9\textwidth]{img/zotter-rot.png} 
+%\captionsetup{justification=centering}
+\caption{Rotation Using Single $R_{y}$ Matrix}
+\label{fig:zotter-rot}
+\end{figure}
+
+% \todo[inline]{I don't quite understand how this works. I will try to ask Justin to explain.}
 
 Politis \cite{politis2016jsambisonics}, and a number of other authors, instead compute all rotation matrices using a recursive algorithm. Spherical harmonics are not only found in the audio domain, but are pertinent in chemistry, physics, and mechanics. The rotation matrices derived in Politis's work come originally from Ivanic and Ruedenberg's paper in "The Journal of Physical Chemistry" \cite{ivanic1996rotation}. 
 
-The details of these calculations are outside the scope of this chapter. However, implementations of these formulas can be found in Politis's Spherical Harmonic Transform (SHT) library. Politis has implemented these formulas both in JS and in MATLAB. Gorzel et al. \cite{gorzel2019efficient} have implemented these in numerous other computer languages. For those wishing to write these from scratch we recommend the paper by Blanco et al. \cite{blanco1997evaluation} which contains pseudo-code and more or less easy to understand formulations. 
+The details of these calculations are outside the scope of this chapter. However, implementations of these formulas can be found in Politis's Spherical Harmonic Transform (SHT) library. Politis has implemented these formulas both in JS and in MATLAB. Gorzel et al. \cite{gorzel2019efficient} have implemented these in numerous other computer languages. For those wishing to write these from scratch we recommend the paper by Blanco et al. \cite{blanco1997evaluation} which contains pseudo-code and reasonably straightforward formulas.  
 
 \subparagraph{Ambisonic Reflection}
 
-Reflection is a simple operation in the ambisonic domain given the symmetry of spherical harmonics. Reflection, or mirroring, refers to the ability to rotate the sound-field 180\textdegree along any of the three coordinate planes (yz, xz, or xy). This simplifies to polarity changes of specific harmonics, based on whether they are symmetric or anti-symmetric\footnote{All harmonics are one or the other.}. Politis provides Equation \ref{eq:ambi-reflect} to accomplish this task.
+Reflection is a simple operation in the ambisonic domain given the symmetry of spherical harmonics. Reflection, or mirroring, refers to the ability to rotate the sound-field 180\textdegree \ along any of the three coordinate planes (yz, xz, or xy). This simplifies to polarity changes of specific harmonics, based on whether they are symmetric or anti-symmetric\footnote{All harmonics are one or the other.}. Politis provides Equation \ref{eq:ambi-reflect} to accomplish this task.
 
 \begin{equation}
 \begin{aligned}
@@ -582,7 +621,7 @@ m<0: \mathbf{x z}\\
 \label{eq:ambi-reflect}
 \end{equation}
 
-This might be desired, for example, if a microphone is suspended from the ceiling in a concert hall, and we now wish to use the recording in a more traditional orientation. For each case when the desired harmonics are found a multiplication by -1 results in a change of polarity, giving us our desired result. In other words:
+This might be desired, for example, if a microphone is suspended from the ceiling in a concert hall, and we now wish to use the recording a different orientation. For each case when the desired harmonics are found a multiplication by -1 results in a change of polarity, giving us our desired result. In other words:
 
 \begin{enumerate}
     \item For rotation about the \textbf{yz} plane, we must find all harmonics with ambisonic degree $m$ that are smaller than 0 and even, as well as those that are greater than or equal to 0 and odd. This is a front-back flip.
@@ -606,9 +645,9 @@ x_{\mathrm{vm}}\left(t, \boldsymbol{\gamma}_{0}\right)=\mathbf{w}^{\mathrm{T}}\l
 \item  $\mathbf{b}(t)$ corresponds to the ambisonic spherical harmonics, otherwise known as B-format signals (at time $t$). Using vector notation to denote a block size of 1.
 \end{description}
 
-\todo[inline]{use this format for all equation where listing variables. using the begin description command. q1 has one of these with a different formatting.}
+% \todo[inline]{use this format for all equation where listing variables. using the begin description command. q1 has one of these with a different formatting.}
 
-Equation \ref{eq:ambi-beamform} shows the equation provided by Politis \cite{politis2016jsambisonics} for this task. The library allows for various different types of microphone patterns with different front/back \textit{rejection ratios}\footnote{Measure of how much sound incident from the front is captured relative to sound incident from behind.}. Politis \cite{politis2016jsambisonics} provides additional equations for the derivation of specific polar patterns including: \textit{cardioid}, \textit{hypercardioid} and a \textit{max-rE} which "maximizes the acoustic intensity vector in an isotropic diffuse field." The max-rE derivation comes from the decoding literature. The $\mathbf{b}(t)$ term is obtained by taking the outer product of your original source signal and the vector $\mathbf{y}$ of \textit{spherical harmonic coefficients} described by Equation \ref{eq:r-sph-harm}. If the two vectors have dimensions $n$ and $m$, then their outer product is an $n$ by $m$ matrix\footnote{$n$ and $m$ here should not be confused with indices for spherical harmonics. These values refer instead to the rows and columns of the product $\mathbf{B}$}. The outer product is defined as: 
+Equation \ref{eq:ambi-beamform} shows the equation provided by Politis \cite{politis2016jsambisonics} for this task. The library allows for various different types of microphone patterns with different front/back \textit{rejection ratios}\footnote{Measure of how much sound incident from the front is captured relative to sound incident from behind.}. Politis \cite{politis2016jsambisonics} provides additional equations for the derivation of specific polar patterns including: \textit{cardioid}, \textit{hypercardioid} and a \textit{max-rE} which "maximizes the acoustic intensity vector in an isotropic diffuse field." The max-rE derivation comes from the ambisonic literature. The $\mathbf{b}(t)$ term is obtained by taking the outer product of your original source signal and the vector $\mathbf{y}$ of \textit{spherical harmonic coefficients} described by Equation \ref{eq:r-sph-harm}. If the two vectors have dimensions $n$ and $m$, then their outer product is an $n$ by $m$ matrix\footnote{$n$ and $m$ here should not be confused with indices for spherical harmonics. These values refer instead to the rows and columns of the product $\mathbf{B}$}. $\boldsymbol{\gamma}_{0}$ may either be a triplet of Cartesian coordinates, or a duple containing azimuth $\phi$ and elevation $\theta$. The outer product is defined as: 
 
 \begin{equation}
 \mathbf{s} \otimes \mathbf{y}=\mathbf{B}=\left[\begin{array}{cccc}
@@ -619,7 +658,7 @@ s_{m} y_{1} & s_{m} y_{2} & \ldots & s_{m} y_{n}
 \end{array}\right]
 \end{equation}
 
-\todo[inline]{gamma here is the direction vector. kronlachner uses bold font theta. need to be consistent.}
+% \todo[inline]{gamma here is the direction vector. kronlachner uses bold font theta. need to be consistent.}
 
 The weight vector $\mathbf{w}^{T}$ is arranged to match the indexing of the spherical harmonics and can be expressed as a "pattern-dependent" part, and a "rotation-dependent" part \cite{politis2016jsambisonics}. 
 
@@ -627,7 +666,7 @@ The weight vector $\mathbf{w}^{T}$ is arranged to match the indexing of the sphe
 \left[\mathbf{w}\left(\gamma_{0}\right)\right]_{q}=w_{n m}=c_{n} Y_{n m}\left(\gamma_{0}\right)
 \end{equation}
 
-There are (N+1) coefficients $c_{n}$ which are derived according to the desired properties of the virtual microphone. For each order $n$ all harmonics of ascending degree share the same "pattern-dependent" coefficient. The "rotation-dependent" coefficient, is unique for each harmonic. The subscript $q$ refers to the ACN index of the spherical harmonic, which can be expressed as:
+There are (N+1) coefficients $c_{n}$ which are derived according to the desired properties of the virtual microphone. For each ambisonic order $n$ all harmonics of ascending degree share the same "pattern-dependent" coefficient. The "rotation-dependent" coefficient, is unique for each harmonic. The subscript $q$ refers to the ACN index of the spherical harmonic, which can be expressed as:
 
 \begin{equation}
 \begin{aligned}
@@ -636,7 +675,7 @@ There are (N+1) coefficients $c_{n}$ which are derived according to the desired 
 \end{aligned}
 \end{equation}
 
-In JSAmbisonics a number of different types of virtual microphone responses have been implemented including cardioid, hypercardioid and max-rE, which originates from the ambisonic literature. A few formulas are provided by the author to recreate these patterns via spherical domain beam-forming. 
+In JSAmbisonics a number of different types of virtual microphone responses have been implemented including cardioid, hypercardioid and max-rE. A few formulas are provided by the author to recreate these patterns via spherical domain beam-forming. 
 
 \begin{equation}
 \begin{aligned}
@@ -657,14 +696,156 @@ In JSAmbisonics a number of different types of virtual microphone responses have
 
 We should note Politis uses coordinate system $\gamma=[\cos \phi \cos \theta, \sin \phi \cos \theta, \sin \theta]^{\mathrm{T}}$, using alternate coordinate systems will require modifying these formulae. A few other microphone polar patterns are implemented in the library, however, no formulas are provided for these. Unfortunately, these author also does not provide insight into the derivation of equations for responses in Equation \ref{vmic-responses}. 
 
+\subparagraph{Decoding}
+
+The next section of Politis's paper discusses decoding. Three main decoding strategies are discussed: \textit{Sampling}, \textit{Mode-matching} and \textit{ALLRAD}. Most web browsers do not support multi-channel audio past 5.1 \cite{WebAudio33online}, however, these methods can still be implemented in the generation of binaural decoding matrices offline. Politis provides three equations which correspond to three well-known decoding methods:
+
+\begin{equation}
+\begin{aligned}
+\text { Sampling }: \mathbf{D}_{\mathrm{ls}} &=\frac{1}{L} \mathbf{Y}_{L}^{\mathrm{T}} \\
+\text { Mode }-\text { matching }: \mathbf{D}_{\mathrm{ls}} &=\left(\mathbf{Y}_{L}^{\mathrm{T}} \mathbf{Y}_{L}+\beta^{2} \mathbf{I}\right)^{-1} \mathbf{Y}_{L}^{\mathrm{T}} \\
+\text { ALLRAD }: \mathbf{D}_{\mathrm{ls}} &=\frac{1}{N_{\mathrm{td}}} \mathbf{G}_{\mathrm{td}} \mathbf{Y}_{\mathrm{td}}^{\mathrm{T}}
+\end{aligned}
+\end{equation}
+
+For all of these $\mathbf{D}_{\mathrm{ls}}$ corresponds to the decoding matrix which generates loudspeaker signals via a linear combination of SH ambisonic signals: $\mathbf{x}_{\mathrm{ls}}(t)=\mathbf{D}_{\mathrm{ls}} \mathbf{b}(t)$, where $\mathbf{x}_{\mathrm{ls}}(t)$ is a vector with a single sample for each loudspeaker. 
+
+The sampling approach is the least sophisticated, and only works well for regular arrangements. In the mode-matching approach, the solution involves the LS method with a regularization value $\beta$. \cite{zotter2013comparison} suggests a value of $\beta=\frac{1}{4} \frac{\mathrm{G}}{\pi}$, which they describe as the "reciprocal of a suitable scalar times the mean angular segment covered by each loudspeaker."
+
+Finally, in the ALLRAD method, \cite{zotter2012all} describes the \textit{All Round Ambisonic Decoding} method which combines VBAP and ambisonic decoding into a unified system. Rather than using the directions of the speakers, the SH matrix is designed using coordinates from a t-design\footnote{The subscript $td$ means t-design.}. An additional $\mathbf{G}$ matrix is designed based on the VBAP method, also using the same t-design coordinates as initialization values for the VBAP algorithm. Finally, we generate $G$ vectors which adjust the gain of our final signals, located inside these t-design triplets, using this "virtual" t-design configuration. 
+
+This is done in order to achieve direction-independent energy and spread in arbitrary ambisonic layouts \cite{zotter2012all}.
+Two measures are used to validate results: \textit{total signal power} and \textit{angular spread}. Equations \ref{eq:total-sig-pow} and \ref{eq:angular-spread} show these two metrics.
+
+\begin{equation}
+\hat{E}=\frac{4 \pi}{\mathrm{L}} \sum_{l=1}^{\mathrm{L}} g_{l}^{2}=\frac{4 \pi}{\mathrm{L}}\|\boldsymbol{g}\|^{2},
+\label{eq:total-sig-pow}
+\end{equation}
+
+where $g_{l}$ correspond to the gain weights for our $L$ loudspeakers, and,
+
+\begin{equation}
+\hat{\sigma}_{\mathrm{E}}=2 \arccos \left\{\left\|\hat{\boldsymbol{r}}_{\mathrm{E}}\right\|\right\} 180^{\circ} / \pi,
+\label{eq:angular-spread}
+\end{equation}
+
+where,
+
+\begin{equation}
+\hat{\boldsymbol{r}}_{\mathrm{E}}=\sum_{l=1}^{\mathrm{L}} \boldsymbol{\theta}_{l} g_{l}^{2} / \sum_{l=1}^{\mathrm{L}} g_{l}^{2}.
+\end{equation}
+
+$\boldsymbol{\theta}_{l}$ corresponds to the direction vector triplet for each loudspeaker. The $\boldsymbol{r}_{\mathrm{E}}$ is a recurring measure in ambisonic literature, described in \cite{zotter2012all} as the center of gravity, or \textit{centroid}, of the sound-field. Note that for ambisonics, in contrast to other methods, there is both an encoding and decoding stage, thus, in order to find our speaker weights, we need to account for both stages\footnote{Section 6.1 \cite{zotter2012all}.}.
+
+\todo[inline]{In Q2, I might be able to provide more info on VBAP. Not sure if this decoding section should be moved to Q2. I would be repeating myself.}
+
+% The paper does provide a good starting place and concise equations for Sampling, Mode-matching and ALLRAD decoding.
+
+In Section \ref{par:resonance} we already discussed binaural decoding using SH expansion of HRTF data. For sake of completeness, in this section we will talk about the \textit{virtual loudspeaker} approach. It should be noted that both methods can be used to generate the binaural decoding matrix offline so long as the decoder layout a priori.
+
+It is interesting to note that computational savings are not always achieved with the SH expansion method. Consider a 26-point Lebedev grid once more but with 5OA signal. The resulting 36 harmonics would require in a greater number of convolutions if expanded. This means the ambisonic order, along with the number of points our decoder considers, should both be taken into account. 
+
+In order to validate the final design, it might also be useful to examine subjectively if binaural decoders with the same number of sampling points perform better or worse with each method. 
+
+In the virtual loudspeaker approach, we imagine that we are decoding to an array of real loudspeakers, and find a suitable decoding matrix according to this criteria. Any of the three aforementioned decoding methods are valid here.
+
+Subsequently, we acquire our matrix of decoded signals, and match each speaker direction with its corresponding HRTF from our data-set. Naturally, this means that is essential that the decoder be designed, such that the HRTFs will be present in the set. The main constraint, however, is that the number of decoding directions be larger than the number of harmonics ($G > (N + 1)^2$), in order to accurately represent the sound-field\footnote{If the decoder does not meet this criteria, multiple orders of SHs can be discarded at the expense of spatial resolution.}. 
+
+\cite{politis2016jsambisonics} provides Equation \ref{eq:vls-dec} describing the virtual loudspeaker approach to binaural decoding in the frequency domain.
+
+\begin{equation}
+\mathbf{x}_{\mathrm{bin}}(f)=\mathbf{H}_{\mathrm{LR}}(f) \mathbf{D}_{\mathrm{vls}} \mathbf{b}(f)=\mathbf{D}_{\mathrm{bin}}(f) \mathbf{b}(f)
+\label{eq:vls-dec}
+\end{equation}
+
+\noindent where
+\begin{description}
+\item  $\mathbf{x}_{\mathrm{bin}}(f)$ is the (2 by 1) output binaural signals\footnote{These two values correspond to two frequency bins of the signal. After all FFT points are computed, and iFFT gives us a block of audio.},
+\item $\mathbf{H}_{\mathrm{LR}}(f)$ is the (2 by $G$)\footnote{Where each row corresponds to a direction, and each column to an ear.} matrix of L/R HRTF data suitably arranged, and,
+\item $\mathbf{D}_{\mathrm{vls}}$ is the ($G$ by $(N+1)^2$) virtual loudspeaker matrix (not in the frequency domain). 
+\end{description}
+
+$\mathbf{b}(f)$ is the ($(N+1)^2$ by 1) encoded audio signal in the frequency domain, where each value is a single bin of a single harmonics\footnote{The paper uses $\mathbf{a}$ but we prefer $\mathbf{b}$ to denote B-format signals.}, and $\mathbf{D}_{\mathrm{bin}}$ is the binaural decoding matrix for the virtual loudspeaker approach. Much like \cite{gorzel2019efficient} the number of HRTFs is reduced by 50\% in this implementation by assuming L/R symmetry. The binaural signals filtered with the proper HRTFs are then delivered to the client using the Web Audio API (WAA) browser specification.
+
+\subparagraph{Acoustic Visualization}
+
+Politis also implemented some examples of sound-field visualization to help the user verify that their sound-field is suitably composed. In his paper on "Parametric Spatial Audio Effects" \cite{politis2012parametric}, the author describes how to analyze sound-fields in order to visualize them. The author notes one possible improvement would be to use the biquad filter structure in the WAA to perform frequency-dependent visualizations using the \textit{intensity} and \textit{diffuseness} analysis.
+
+\todo[inline]{Not sure if I want to dive into those metrics here. PARAMETRIC SPATIAL AUDIO EFFECTS. Politis. They fit better in Q1.}
+
+\subparagraph{Decoding Filter Generation (SOFA)}
+
+\todo[inline]{to do. plus transition sentence.}
+
+% The Web Audio Api (WAA) section is very similar to our discussion in the HOAST section\footnote{HOAST in fact uses JSAmbisonics.}, we will therefore ignore it (Section \ref{par:hoast}, subparagraph on signal flow.). We also ignore the format converters, and refer the reader instead to the original paper \cite{politis2016jsambisonics}.
+
+% \todo[inline]{make sure notation makes sense...}
 
 \paragraph{Web Audio API}
 
-\paragraph{HOAST}
+The WAA \cite{WebAudio33online} describes the capabilities of browsers with this built-in framework. In contrast to JSAmbisonic or Omnitone, the WAA does not need to be imported to ones project as it is internally bundled with Chrome or Firefox distributions. The WAA defines how these methods must be implemented to conform to the standard. There are three main functions for spatialization with the WAA: 
 
-Deppisch et al. \cite{deppisch2020hoast} in 2020 published a paper describing the development of a Higher Order Ambisonic STreaming platform (HOAST). This collaboration between IEM, Aalto, Hofer Web Solutions and Zylia resulted in an open source\footnote{GNU GPLv3 licencese.} web player for 360\textdegree  video and HOA. As the authors noted, most video players for this type of media only allow up to 2OA; most, in fact, only support FOA. The goal of this project was to create a video player capable of outputting up to 4OA with an associated VR video. 
+\begin{enumerate}
+    \item \textbf{PannerNode}: which allows for HRTF panning.
+    \item \textbf{Distance Effects:} which calculates a gain based on the position of listener and source. Sounds are amplified as they approach and vice versa.
+    \item \textbf{Sound Cones}: which determine the directivity of the sound source (omni, cardioid, etc.).
+\end{enumerate}
 
-HOAST is built upon the already existing Web Audio API, which is compatible with most modern browsers. One of the problems with these systems is that despite their superior flexibility, there are still only certain browsers, in certain configurations, that support this type of media. Luckily, all the browsers are free to install and use. In the case of HOAST, Firefox and Chromium-based browsers are recommended. An additional issue is that, due to the infancy of this technology, there are still programming changes happening routinely, which means maintenance and support is required to maintain these applications operational. Deppisch et al., for example, describe the deprecation of \textit{ScriptProcessorNodes} for \textit{AudioWorklets}, which despite their superiority can cause glitches on some devices. 
+\cite{carpentier2015binaural} provides a good summary of the abilities of this API along with some of its limitations. According to Carpentier, both Mozilla's Firefox and Google's Chrome are based on the Blink engine \cite{BlinkRen54online}. Some of the deficits of this library, at the time of writing (2015), are that filter kernels are not partitioned, which causes extra latency of half the FFT size, and that the IRCAM Listen HRTF data-set \cite{LISTENHR47online} is hard-coded into the panner method. Additionally, the documentation does not explain how the HRTF set was selected, or why the IRs were truncated to half their size, both of which likely affect psycho-acoustic performance. 
+
+As a result of this investigation, Carpentier developed some routines to allow HRTF sets to be swapped. JSAmbisonics \cite{politis2016jsambisonics} borrows from Carpentier's library called \textit{BinauralFIR Node}, which is part of the BiLi project. In the next paragraph we will talk about what this work involved.
+
+\paragraph{BiLi: JS Binaural Listening}
+
+\cite{carpentier2015binaural} discusses two binaural approaches: parametric and convolution-based. In addition the author provides a lengthy discussion on suitable methods for retrieving HRTF data-sets from servers using the SOFA architecture \cite{majdak2013spatially}. This work is part of the \href{http://www.bili-project.org/}{BiLi project} which is a collaboration between IRCAM and several other French institutions.
+
+The convolution-based approach is rather short, because most of the implementation relies on native nodes from the WAA. IRs are loaded into \textit{AudioBuffers}, convolved with \textit{ConvolverNodes}, and cross-faded using \textit{GainNodes}. In contrast to binaural decoding of ambisonic signals, in this implementation the author is employing a \textit{nearest neighbor} approach that interpolates between HRTFs as the source moves in space. Carpentier notes that a \textit{k-d tree} would improve the performance of this algorithm (complexity $\mathcal{O}(\log n)$ instead of $\mathcal{O}(n)$.
+
+\todo[inline]{k-d tree and nearest neighbor?}
+
+The second part of the paper talks about the parametric approach to binaural synthesis. In this section the author describes a method for practical real-time applications which is based on \textit{minimum-phase filter} combined with a \textit{pure delay}. 
+
+In Carpentier's approach, each HRTF is decomposed into a minimum-phase filter and an additional all-pass filter which describes the "excess" phase. The excess phase can then be modeled using a pure delay, while the minimum-phase filter is used for magnitude response changes. \cite{carpentier2015binaural} provides the following formulation:
+
+\begin{equation}
+\begin{aligned}
+\mathrm{HRTF} &=\operatorname{mag} \cdot \exp (\mathbf{i} \cdot \varphi) \\
+&=\mathrm{mag} \cdot \exp (\mathbf{i} \cdot m p h) \cdot \exp (\mathbf{i} \cdot e x c) \\
+&=H_{\min } \cdot H_{e x c}
+\end{aligned}
+\end{equation}
+
+\noindent where
+\begin{description}
+\item  $\operatorname{mag}$ refers to the magnitude of the HRTF signal (after FFT),
+\item  $\exp (\mathbf{i} \cdot \varphi)$ refers to the phase of the HRTF (after FFT), 
+\item  $\exp (\mathbf{i} \cdot m p h)$ refers to the phase of the minimum phase filter, and,
+\item  $\exp (\mathbf{i} \cdot e x c)$ refers to the phase of the all-pass filter (excess phase).
+\end{description}
+
+In order to decompose the HRTF into excess and minimum phase parts the author uses the Hilbert transform. The minimum-phase filter is then implemented as an IIR filter, using the \textit{yulewalk} method, which is a recursive digital filter design tool, based on the Yule-Walker algorithm described in \cite{yulewalk74online}. 
+
+In order to implement these two parts of the model Carpentier created custom bi-quad filters, for the IIR minimum-phase filter section, and a custom fractional delay line with different magnitude response than that provided by the WAA. 
+
+\todo[inline]{If I am going to include this section I need more detail.}
+
+The final part of the paper discusses the SOFA architecture \cite{majdak2013spatially} and how it can be used to archive and retrieve personalized HRTFs from a server. Carpentier describes how a web server can be configured in order to accept URL requests from networked applications. Specifically, the author notes that the SOFA specification makes it compatible with OpenDAP (Open Data Access Protocol), which "allows for data transport over HTTP." 
+
+\begin{quote}
+    "More specifically an OpenDAP server can host a collection of data (typically in HDF or netCDF\footnote{SOFA relies on netCDF.} format) and serve them to remote clients such as web browsers, web applications, graphics programs or any DAP-aware software."
+\end{quote}
+
+
+
+\paragraph{HOAST}\label{par:hoast}
+
+%The A-frame ambisonic component says most modern browsers can only decode 8 channels at a time. How does HOAST work?
+
+Deppisch et al. \cite{deppisch2020hoast} in 2020 published a paper describing the development of a Higher Order Ambisonic STreaming platform (HOAST). This collaboration between IEM, Aalto, Hofer Web Solutions and Zylia resulted in an open source\footnote{GNU GPLv3 licencese.} web player for 360\textdegree \ video and HOA. As the authors noted, most video players for this type of media only allow up to 2OA; most, in fact, only support FOA. The goal of this project was to create a video player capable of outputting up to 4OA with an associated VR video. 
+
+HOAST is built upon the already existing Web Audio API, which is compatible with most modern browsers. One of the problems with these systems is that despite their superior flexibility, there are still only certain browsers, in certain configurations, that support this type of media. Luckily, all the browsers are free to install and use. 
+
+In the case of HOAST, Firefox and Chromium-based browsers are recommended. An additional issue is that, due to the infancy of this technology, there are still programming changes happening routinely, which means maintenance and support is required to maintain these applications operational. Deppisch et al., for example, describe the deprecation of \textit{ScriptProcessorNodes} for \textit{AudioWorklets}, which despite their superiority can cause glitches on some devices. 
 
 Another issue with HOAST, or any 360\textdegree video player with HOA for that matter, is the need of a large amount of data and processing power for a proper experience. This means that HOAST, as other players, might work well in some mobile devices but not all. They might also work relatively well on a laptop device but these do not provide as immersive an experience as HMDs. HOAST does however work on native VR HMDs such as on an Oculus Rift or an HTC Vive. 
 
@@ -686,9 +867,13 @@ Figure \ref{fig:hoast-sig-flow} shows the signal flow of HOAST. 4OA files, encod
 \label{fig:hoast-sig-flow}
 \end{figure}
 
-Ambisonic zoom is outside the scope of what we wish to cover here, but details about it can be found in the Appendix \ref{ch:appendix-math} under Section \ref{sec:ambi-zoom}. In the next paragraphs we will continue discussing the decoding scheme used, video rendering, and website implementation of HOAST.
+In the next paragraphs we will continue discussing the decoding scheme used, video rendering, and website implementation of HOAST.
+
+\todo[inline]{The basis for our [zoom] transform is a combination of the Directional Level Modification/Windowing and Warping methods described in the book. We use different functions for the warping though (see e-brief) [github issue]}
 
 \subparagraph{Binaural Decoding}
+
+\todo[inline]{This section is too repetitive, already talked about this in JSAmbisonic.}
 
 The \textit{binaural decoding} implemented in HOAST does not involve the traditional \textit{virtual loudspeaker} approach\footnote{As a reminder: in the virtual loudspeaker system, linear combinations of ambisonic harmonics are used to create speaker feeds, identically to ambisonic decoding. The resulting feeds are convolved with HRTFs in the direction of the virtual speaker.}. Instead, the HOAST binaural decoder are based on the solution to a \textit{Least Squares} (LS) problem which results in decoding filters. Deppisch et al. provide the following equation:
 
@@ -697,7 +882,7 @@ The \textit{binaural decoding} implemented in HOAST does not involve the traditi
 \label{eq:ls-bin-dec}
 \end{equation}
 
-The $(N+1)^2$ decoding filters\footnote{Recall that $N$ refers to the ambisonic order. So we will have a single filter for each ambisonic harmonic.} $\omega_{\mathrm{LS}}$ will minimize the least squares error between HRTF measurements in $\boldsymbol{h}_{\Upsilon}$ and the spherical harmonics in $\boldsymbol{Y}_{\Upsilon}$ evaluated at all HRTF directions in the measurement grid $\Upsilon$ \cite{deppisch2020hoast}. In this case a Lebedev grid\footnote{See appendix} of HRTF measurements is used, and in order to improve the perceptual decoding of binaural signals, the magnitude least squares (MagLS) approach is used. For low frequencies, a LS solution is applied. For reference Equation \ref{eq:arg-min} shows the definition of the $\arg \min$ operator. 
+The $(N+1)^2$ decoding filters\footnote{Recall that $N$ refers to the ambisonic order. So we will have a single filter for each ambisonic harmonic.} $\omega_{\mathrm{LS}}$ will minimize the least squares error between HRTF measurements in $\boldsymbol{h}_{\Upsilon}$ and the spherical harmonics in $\boldsymbol{Y}_{\Upsilon}$ evaluated at all HRTF directions in the measurement grid $\Upsilon$ \cite{deppisch2020hoast}. In this case a Lebedev grid\footnote{ \href{https://people.math.sc.edu/Burkardt/m_src/sphere_lebedev_rule/sphere_lebedev_rule.html}{Link} to Lebedev code.} of HRTF measurements is used, and in order to improve the perceptual decoding of binaural signals, the magnitude least squares (MagLS) approach is used. For low frequencies, a LS solution is applied. For reference Equation \ref{eq:arg-min} shows the definition of the $\arg \min$ operator. 
 
 \begin{equation}
 \underset{x \in S}{\arg \min } f(x):=\{x \in S: f(s) \geq f(x) \text { for all } s \in S\}
@@ -716,7 +901,7 @@ In addition to this LS optimization, the authors also describe the use of a FOA 
 
 \subparagraph{Video Rendering}
 
-In order to display 360\textdegree video along with the ambisonic audio, Video.js was used in combination with the videojs-contrib-dash plug-in \cite{deppisch2020hoast}. This allowed the authors to receive and play back MPEG-DASH audio/video streams while supporting equirectangular video\footnote{Equirectangular projection is a typical transform used to display 360 degree content in 2D.} via a custom made plug-in called videojs-xr, which is an update to the pre-existing videojs-vr relying on the newer WebXR API. A polyfill\footnote{Polyfill is a library that: injects an XR implementation into a browser if one does not exist, patches browsers that have incomplete implementations of the API, and, provides a synthesized VR display when WebXR is not supported.} makes HMDs usable in Firefox and Chromium-based browsers. In Chromium-based browsers enabling the \textit{\#webxr} flag, setting the \textit{\#webxr-runtime} and disabling \textit{\#xr-sandbox} might be required.
+In order to display 360\textdegree \ video along with the ambisonic audio, Video.js was used in combination with the videojs-contrib-dash plug-in \cite{deppisch2020hoast}. This allowed the authors to receive and play back MPEG-DASH audio/video streams while supporting equirectangular video\footnote{Equirectangular projection is a typical transform used to display 360 degree content in 2D.} via a custom made plug-in called videojs-xr, which is an update to the pre-existing videojs-vr relying on the newer WebXR API. A polyfill\footnote{Polyfill is a library that: injects an XR implementation into a browser if one does not exist, patches browsers that have incomplete implementations of the API, and, provides a synthesized VR display when WebXR is not supported.} makes HMDs usable in Firefox and Chromium-based browsers. In Chromium-based browsers enabling the \textit{\#webxr} flag, setting the \textit{\#webxr-runtime} and disabling \textit{\#xr-sandbox} might be required. These can be found by typing \texttt{chrome://flags} in the URL text box.
 
 \subparagraph{Website Implementation}
 
@@ -731,7 +916,6 @@ On the backend side the HOAST web application allows basic CRUD (Create, Read, U
 % However, most frameworks will also hide away the details of interacting with the WebXR API. That's generally great for users, but not terribly useful when the entire point of your code is to demonstrate how to use the API! At the same time, we don't want the WebXR logic to be obscured by hundreds of lines of WebGL calls. As a result, these samples make use of their own minimalistic rendering library that is specifically designed to highlight use of the WebXR API and de-emphasize the WebGL rendering logic. It is not recommended that you use this library in your own projects, as you will almost certainly be better served by one of the more popular, better established frameworks.
 
 \todo[inline]{Simultaneous Localization and Mapping (SLAM), 360 cameras, matched zone, locomotion}
-
 
 \section{Open XR Tools}
 
